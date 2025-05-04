@@ -27,12 +27,16 @@ def get_classification(item: ItemData) -> ItemClassification:
         Items.HOLOGUISE,
         Items.CODEBOT,
         Items.RARITANIUM,
+        Items.HOVERBOARD,
+        Items.ZOOMERATOR,
+        Items.BOMB_GLOVE,
+        Items.DEVASTATOR,
+        Items.VISIBOMB,
     ]:
         return ItemClassification.progression
     if item in [
         Items.BOLT_GRABBER,
         Items.PERSUADER,
-        Items.GOLD_BOLT,
         Items.PREMIUM_NANOTECH,
         Items.ULTRA_NANOTECH,
     ]:

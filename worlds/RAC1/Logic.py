@@ -64,14 +64,13 @@ def has_taunter(state: CollectionState, player: int) -> bool:
     return state.has(Items.TAUNTER.name, player)
 
 def has_explosive_weapon(state: CollectionState, player: int) -> bool:
-    return state.has(Items.BOMB_GLOVE.name, player) or state.has(Items.DEVASTATOR.name, player) # or any other that work
+    return (state.has_any([Items.BOMB_GLOVE.name, Items.DEVASTATOR.name], player))
 
 def has_long_range_weapon(state: CollectionState, player: int) -> bool:
-    return (state.has(Items.BLASTER.name, player) 
-            or state.has(Items.DEVASTATOR.name, player) 
-            or state.has(Items.VISIBOMB.name, player) 
-            or state.has(Items.RYNO.name, player)) 
-            # or any other that work
+    return (state.has_any([Items.BLASTER.name,
+                           Items.DEVASTATOR.name,
+                           Items.VISIBOMB.name,
+                           Items.RYNO.name], player)) 
 
 
 # Novalis
@@ -81,79 +80,82 @@ def novalis_underwater_caves_rule(state: CollectionState, player: int) -> bool:
 
 # Rilgar
 def rilgar_hoverboard_rule(state: CollectionState, player: int) -> bool:
-    return has_hoverboard(state, player) and can_improved_jump(state, player)
+    return (has_hoverboard(state, player) and can_improved_jump(state, player))
 
 
 # Umbris
 def umbris_snagglebeast_rule(state: CollectionState, player: int) -> bool:
-    return can_swingshot(state, player) and can_improved_jump(state, player) and has_hydrodisplacer(state, player)
+    return (can_swingshot(state, player) and can_improved_jump(state, player) and has_hydrodisplacer(state, player))
 
 def umbris_pressure_bolt_rule(state: CollectionState, player: int) -> bool:
-    return can_swingshot(state, player) and can_improved_jump(state, player)
+    return (can_swingshot(state, player) and can_improved_jump(state, player))
 
 def umbris_jump_bolt_rule(state: CollectionState, player: int) -> bool:
-    return can_swingshot(state, player) and can_improved_jump(state, player) and has_hydrodisplacer(state, player)
+    return (can_swingshot(state, player) and can_improved_jump(state, player) and has_hydrodisplacer(state, player))
 
 
 # Orxon
 def orxon_nanotech_rule(state: CollectionState, player: int) -> bool:
-    return has_o2_mask(state, player) and can_improved_jump(state, player)
+    return (has_o2_mask(state, player) and can_improved_jump(state, player))
 
 def orxon_visibomb_bolt_rule(state: CollectionState, player: int) -> bool:
-    return has_o2_mask(state, player) and has_visibomb(state, player)
+    return (has_o2_mask(state, player) and has_visibomb(state, player))
+
+def orxon_ratchet_infobot_rule(state: CollectionState, player: int) -> bool:
+    return (has_o2_mask(state, player) and can_improved_jump(state, player) and can_swingshot(state, player) and has_magneboots(state, player))
 
 
 # Pokitaru
 def pokitaru_ship_rule(state: CollectionState, player: int) -> bool:
-    return has_pilots_helmet(state, player) and can_ground_pound(state, player)
+    return (has_pilots_helmet(state, player) and can_ground_pound(state, player))
 
 def pokitaru_persuader_rule(state: CollectionState, player: int) -> bool:
-    return has_raritanium(state, player) and has_tresspasser(state, player) and has_hydrodisplacer(state, player)
+    return (has_raritanium(state, player) and has_tresspasser(state, player) and has_hydrodisplacer(state, player))
 
 
 # Gemlik
 def gemlik_quark_rule(state: CollectionState, player: int) -> bool:
-    return has_magneboots(state, player) and can_improved_jump(state, player)
+    return (has_magneboots(state, player) and can_improved_jump(state, player))
 
 
 # Oltanis
 def oltanis_main_bolt_rule(state: CollectionState, player: int) -> bool:
-    return can_grind(state, player) and can_swingshot(state, player)
+    return (can_grind(state, player) and can_swingshot(state, player))
 
 def oltanis_final_bolt_rule(state: CollectionState, player: int) -> bool:
-    return can_grind(state, player) and can_swingshot(state, player) and has_magneboots(state, player)
+    return (can_grind(state, player) and can_swingshot(state, player) and has_magneboots(state, player))
 
 
 # Quartu
 def quartu_infiltrate_rule(state: CollectionState, player: int) -> bool:
-    return has_hologuise(state, player) and can_swingshot(state, player) and can_ground_pound(state, player)
+    return (has_hologuise(state, player) and can_swingshot(state, player) and can_ground_pound(state, player))
 
 def quartu_codebot_rule(state: CollectionState, player: int) -> bool:
-    return has_codebot(state, player) and can_swingshot(state, player)
+    return (has_codebot(state, player) and can_swingshot(state, player))
 
 def quartu_bolt_grabber_rule(state: CollectionState, player: int) -> bool:
-    return has_hydro_pack(state, player) and has_o2_mask(state, player)
+    return (has_hydro_pack(state, player) and has_o2_mask(state, player))
 
 
 # Kalebo III
 def kalebo_hologuise_rule(state: CollectionState, player: int) -> bool:
-    return has_hoverboard(state, player) and can_swingshot(state, player) and can_grind(state, player)
+    return (has_hoverboard(state, player) and can_swingshot(state, player) and can_grind(state, player))
 
 
 # Drek's Fleet
 def fleet_infobot_rule(state: CollectionState, player: int) -> bool:
-    return has_magneboots(state, player) and has_pilots_helmet(state, player) and has_hologuise(state, player)
+    return (has_magneboots(state, player) and has_pilots_helmet(state, player) and has_hologuise(state, player))
 
 def fleet_water_rule(state: CollectionState, player: int) -> bool:
-    return has_o2_mask(state, player) and has_hydro_pack(state, player)
+    return (has_o2_mask(state, player) and has_hydro_pack(state, player))
 
 def fleet_second_bolt_rule(state: CollectionState, player: int) -> bool:
-    return has_hologuise(state, player) and can_swingshot(state, player)
+    return (has_hologuise(state, player) and can_swingshot(state, player))
 
 
 # Veldin
 def veldin_grind_bolt_rule(state: CollectionState, player: int) -> bool:
-    return can_improved_jump(state, player) and can_grind(state, player)
+    return (can_improved_jump(state, player) and can_grind(state, player))
 
 def veldin_defeat_drek_rule(state: CollectionState, player: int) -> bool:
-    return can_swingshot(state, player) and can_ground_pound(state, player)
+    return (can_swingshot(state, player) and can_ground_pound(state, player))

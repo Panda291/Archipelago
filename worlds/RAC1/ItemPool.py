@@ -67,10 +67,10 @@ def create_equipment(world: "RacWorld") -> list["Item"]:
     # elif world.options.starting_weapons == StartingWeapons.option_unrestricted:
     #     weapons = list(Items.LV1_WEAPONS)
 
-    if len(weapons) > 0:
-        world.random.shuffle(weapons)
-    else:
-        weapons = [Items.BOMB_GLOVE]
+    # if len(weapons) > 0:
+    #     world.random.shuffle(weapons)
+    # else:
+    weapons = [Items.BOMB_GLOVE]
 
     world.multiworld.push_precollected(world.create_item(weapons[0].name))
     world.starting_weapons = [weapons[0]]

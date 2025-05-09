@@ -82,6 +82,13 @@ def novalis_underwater_caves_rule(state: CollectionState, player: int) -> bool:
 def rilgar_hoverboard_rule(state: CollectionState, player: int) -> bool:
     return (has_hoverboard(state, player) and can_improved_jump(state, player))
 
+def rilgar_bouncer_rule(state: CollectionState, player: int) -> bool:
+    return (can_swingshot(state, player) and can_improved_jump(state, player))
+
+def rilgar_underwater_bolt_rule(state: CollectionState, player: int) -> bool:
+    return (rilgar_bouncer_rule(state, player) and has_o2_mask(state, player))
+
+
 
 # Umbris
 def umbris_snagglebeast_rule(state: CollectionState, player: int) -> bool:
@@ -112,6 +119,12 @@ def pokitaru_ship_rule(state: CollectionState, player: int) -> bool:
 def pokitaru_persuader_rule(state: CollectionState, player: int) -> bool:
     return (has_raritanium(state, player) and has_tresspasser(state, player) and has_hydrodisplacer(state, player))
 
+# Hovem
+def hoven_infobot_rule(state: CollectionState, player: int) -> bool:
+    return (has_long_range_weapon(state, player) and can_improved_jump(state, player))
+
+def hoven_raritanium_rule(state: CollectionState, player: int) -> bool:
+    return (can_swingshot(state, player) and can_improved_jump(state, player))
 
 # Gemlik
 def gemlik_quark_rule(state: CollectionState, player: int) -> bool:
@@ -154,8 +167,14 @@ def fleet_second_bolt_rule(state: CollectionState, player: int) -> bool:
 
 
 # Veldin
+def veldin_global_rule(state: CollectionState, player: int) -> bool:
+    return (can_improved_jump(state, player) and has_tresspasser and has_magneboots and has_hydrodisplacer)
 def veldin_grind_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (can_improved_jump(state, player) and can_grind(state, player))
+    return (veldin_global_rule(state, player) and can_grind(state, player))
+def veldin_halfway_bolt_rule(state: CollectionState, player: int) -> bool:
+    return (veldin_global_rule(state, player))
+def veldin_taunter_bolt_rule(state: CollectionState, player: int) -> bool:
+    return (veldin_global_rule(state, player) and has_taunter(state, player))
 
 def veldin_defeat_drek_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player) and can_ground_pound(state, player))
+    return (veldin_global_rule(state, player) and can_ground_pound(state, player))

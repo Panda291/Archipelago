@@ -12,6 +12,9 @@ def can_improved_jump(state: CollectionState, player: int) -> bool:
 def can_heli_high_jump(state: CollectionState, player: int) -> bool: # relevant for eudora gold bolt
     return state.has(Items.HELI_PACK.name, player)
 
+def can_glide(state: CollectionState, player: int) -> bool: # gliding is not possible without the heli pack
+    return state.has(Items.HELI_PACK.name, player)
+
 def can_ground_pound(state: CollectionState, player: int) -> bool:
     return state.has(Items.THRUSTER_PACK.name, player)
 
@@ -77,13 +80,19 @@ def has_long_range_weapon(state: CollectionState, player: int) -> bool:
 def novalis_underwater_caves_rule(state: CollectionState, player: int) -> bool:
     return has_hydro_pack(state, player)
 
+# Eudora
+def eudora_suck_cannon_rule(state: CollectionState, player: int) -> bool:
+    return can_improved_jump(state, player) and can_glide(state, player)
+
+def eudora_henchman_rule(state: CollectionState, player: int) -> bool:
+    return can_swingshot(state, player) and can_tresspass(state, player) and can_improved_jump(state, player)
 
 # Rilgar
 def rilgar_hoverboard_rule(state: CollectionState, player: int) -> bool:
     return (has_hoverboard(state, player) and can_improved_jump(state, player))
 
 def rilgar_bouncer_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player) and can_improved_jump(state, player))
+    return (can_swingshot(state, player) and can_improved_jump(state, player) and has_hydrodisplacer(state, player))
 
 def rilgar_underwater_bolt_rule(state: CollectionState, player: int) -> bool:
     return (rilgar_bouncer_rule(state, player) and has_o2_mask(state, player))
@@ -103,13 +112,13 @@ def umbris_jump_bolt_rule(state: CollectionState, player: int) -> bool:
 
 # Orxon
 def orxon_nanotech_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player) and can_improved_jump(state, player))
+    return (has_o2_mask(state, player) and can_glide(state, player))
 
 def orxon_visibomb_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player) and has_visibomb(state, player))
+    return (has_o2_mask(state, player) and has_visibomb(state, player) and can_glide(state, player) and can_swingshot(state, player) and has_magneboots(state, player))
 
 def orxon_ratchet_infobot_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player) and can_improved_jump(state, player) and can_swingshot(state, player) and has_magneboots(state, player))
+    return (has_o2_mask(state, player) and can_glide(state, player) and can_swingshot(state, player) and has_magneboots(state, player))
 
 
 # Pokitaru

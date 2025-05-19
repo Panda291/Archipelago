@@ -35,8 +35,8 @@ KERWAN_TRAIN_STATION_GOLD_BOLT = LocationData(19, "Kerwan: Get the gold bolt jus
 KERWAN_LONE_TOWER_GOLD_BOLT = LocationData(20, "Kerwan: Get the gold bolt on the lone tower", can_improved_jump)
 
 # Eudora
-EUDORA_HENCHMAN = LocationData(21, "Eudora: Get the infobot after the swingshot section", can_swingshot)
-EUDORA_SUCK_CANNON = LocationData(22, "Eudora: get the suck cannon", can_improved_jump)
+EUDORA_HENCHMAN = LocationData(21, "Eudora: Get the infobot after the swingshot section", eudora_henchman_rule)
+EUDORA_SUCK_CANNON = LocationData(22, "Eudora: get the suck cannon", eudora_suck_cannon_rule)
 EUDORA_VENDOR_GLOVE_OF_DOOM = LocationData(23, "Eudora: Buy the glove of doom from the vendor")
 EUDORA_GOLD_BOLT = LocationData(24, "Eudora: Get the gold bolt near your ship", can_heli_high_jump)
 

@@ -45,8 +45,8 @@ PERSUADER = ItemData(35, "Persuader")
 ZOOMERATOR = ItemData(48, "Zoomerator")
 RARITANIUM = ItemData(49, "Raritanium")
 CODEBOT = ItemData(50, "Codebot")
-PREMIUM_NANOTECH = ItemData(51, "Premium_nanotech")
-ULTRA_NANOTECH = ItemData(52, "Ultra_nanotech")
+PREMIUM_NANOTECH = ItemData(52, "Premium_nanotech")
+ULTRA_NANOTECH = ItemData(53, "Ultra_nanotech")
 
 NOVALIS_INFOBOT = ItemData(101, "Novalis")
 ARIDIA_INFOBOT = ItemData(102, "Aridia")
@@ -73,7 +73,7 @@ class CollectableData(ItemData):
 
 
 # Collectables
-GOLD_BOLT = CollectableData(301, "Platinum Bolt", 40)
+GOLD_BOLT = CollectableData(301, "Gold Bolt", 40)
 
 EQUIPMENT: Sequence[ItemData] = [
     HELI_PACK,

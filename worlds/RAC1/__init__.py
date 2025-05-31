@@ -118,9 +118,11 @@ class RacWorld(World):
 
     def get_options_as_dict(self) -> Dict[str, Any]:
         return self.options.as_dict(
-            "death_link",
-            "starting_weapons",
+            # "death_link",
+            # "starting_weapons",
         )
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         return self.get_options_as_dict()
+
+    

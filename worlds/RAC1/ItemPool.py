@@ -32,6 +32,7 @@ def get_classification(item: ItemData) -> ItemClassification:
         Items.BOMB_GLOVE,
         Items.DEVASTATOR,
         Items.VISIBOMB,
+        Items.METAL_DETECTOR,
     ]:
         return ItemClassification.progression
     if item in [

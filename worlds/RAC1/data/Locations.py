@@ -30,21 +30,21 @@ KERWAN_SWINGSHOT = LocationData(14, "Kerwan: Buy the swingshot from Helga")
 KERWAN_HELIPACK  = LocationData(15, "Kerwan: Buy the helipack from Al")
 KERWAN_TRAIN_INFOBOT = LocationData(16, "Kerwan: Get the infobot after the train section", can_improved_jump)
 KERWAN_VENDOR_BLASTER = LocationData(17, "Kerwan: Buy the blaster from the vendor")
-KERWAN_BELOW_SHIP_GOLD_BOLT = LocationData(18, "Kerwan: Get the gold bolt below your ship", can_improved_jump)
+KERWAN_BELOW_SHIP_GOLD_BOLT = LocationData(18, "Kerwan: Get the gold bolt below your ship", can_glide)
 KERWAN_TRAIN_STATION_GOLD_BOLT = LocationData(19, "Kerwan: Get the gold bolt just before the flying train section", can_improved_jump)
-KERWAN_LONE_TOWER_GOLD_BOLT = LocationData(20, "Kerwan: Get the gold bolt on the lone tower", can_improved_jump)
+KERWAN_LONE_TOWER_GOLD_BOLT = LocationData(20, "Kerwan: Get the gold bolt on the lone tower", can_glide)
 
 # Eudora
 EUDORA_HENCHMAN = LocationData(21, "Eudora: Get the infobot after the swingshot section", eudora_henchman_rule)
 EUDORA_SUCK_CANNON = LocationData(22, "Eudora: get the suck cannon", eudora_suck_cannon_rule)
-EUDORA_VENDOR_GLOVE_OF_DOOM = LocationData(23, "Eudora: Buy the glove of doom from the vendor")
+EUDORA_VENDOR_GLOVE_OF_DOOM = LocationData(23, "Eudora: Buy the glove of doom from the vendor", has_metal_detector)
 EUDORA_GOLD_BOLT = LocationData(24, "Eudora: Get the gold bolt near your ship", can_heli_high_jump)
 
 # Rilgar
 RILGAR_QUARK_INFOBOT = LocationData(25, "Rilgar: Pay the bouncer to meet Captain Quark", rilgar_bouncer_rule)
 RILGAR_PLATINUM_ZOOMERATOR = LocationData(26, "Rilgar: Win the hoverboard race", rilgar_hoverboard_rule)
-RILGAR_MINE_GLOVE = LocationData(27, "Rilgar: buy the mine glove from the vendor")
-RILGAR_RYNO = LocationData(28, "Rilgar: Buy the RYNO", can_improved_jump)
+RILGAR_MINE_GLOVE = LocationData(27, "Rilgar: buy the mine glove from the vendor", has_metal_detector)
+RILGAR_RYNO = LocationData(28, "Rilgar: Buy the RYNO", rilgar_ryno_rule)
 RILGAR_MAZE_GOLD_BOLT = LocationData(29, "Rilgar: Get the gold bolt in the maze", can_improved_jump)
 RILGAR_WATERWORKS_GOLD_BOLT = LocationData(30, "Rilgar: Get the gold bolt in the flooded area", rilgar_underwater_bolt_rule)
 
@@ -62,38 +62,38 @@ UMBRIS_PRESSURE_PUZZLE_GOLD_BOLT = LocationData(38, "Umbris: Get the gold bolt f
 UMBRIS_JUMP_DOWN_GOLD_BOLT = LocationData(39, "Umbris: Get the gold bolt from jumping down onto it", umbris_jump_bolt_rule)
 
 # Batalia
-BATALIA_VENDOR_DEVESTATOR = LocationData(40, "Batalia: Buy the devastator from the vendor")
+BATALIA_VENDOR_DEVESTATOR = LocationData(40, "Batalia: Buy the devastator from the vendor", has_metal_detector)
 BATALIA_GRINDRAIL_INFOBOT = LocationData(41, "Batalia: Buy the infobot at the end of the grindrail", can_grind)
 BATALIA_COMMANDER_INFOBOT = LocationData(42, "Batalia: Get the infobot from the commander")
 BATALIA_METAL_DETECTOR = LocationData(43, "Batalia: Get the metal detector from the plumber", has_magneboots)
-BATALIA_CLIFFSIDE_GOLD_BOLT = LocationData(44, "Batalia: Get the gold bolt at the cliffside")
+BATALIA_CLIFFSIDE_GOLD_BOLT = LocationData(44, "Batalia: Get the gold bolt at the cliffside", can_improved_jump)
 BATALIA_TRESSPASSER_GOLD_BOLT = LocationData(45, "Batalia: Get the gold bolt above the tresspasser lock")
 
 # Gaspar
-GASPAR_VENDOR_WALLOPER = LocationData(46, "Gaspar: Buy the walloper from the vendor")
+GASPAR_VENDOR_WALLOPER = LocationData(46, "Gaspar: Buy the walloper from the vendor", has_metal_detector)
 GASPAR_PILOT_HELMET = LocationData(47, "Gaspar: Get the pilot helmet")
 GASPAR_SWINGSHOT_GOLD_BOLT = LocationData(48, "Gaspar: Get the gold bolt from the swingshot sidepath", can_swingshot)
 GASPAR_VOLCANO_GOLD_BOLT = LocationData(49, "Gaspar: Get the gold bolt after a path through the volcano", can_improved_jump)
 
 # Orxon
-ORXON_VENDOR_VISIBOMB = LocationData(50, "Orxon: Buy the visibomb gun from the vendor", has_o2_mask)
+ORXON_VENDOR_VISIBOMB = LocationData(50, "Orxon: Buy the visibomb gun from the vendor", orxon_visibomb_rule)
 ORXON_CLANK_INFOBOT = LocationData(51, "Orxon: Get the infobot in the clank section")
 ORXON_RATCHET_INFOBOT = LocationData(52, "Orxon: Get the infobot as ratchet", orxon_ratchet_infobot_rule)
 ORXON_CLANK_MAGNEBOOTS = LocationData(53, "Orxon: Get the magneboots in the clank section")
 ORXON_PREMIUM_NANOTECH = LocationData(54, "Orxon: Buy the premium nanotech", orxon_nanotech_rule)
-ORXON_ULTRA_NANOTECH = LocationData(55, "Orxon: Buy the ultra nanotech", orxon_nanotech_rule)
+ORXON_ULTRA_NANOTECH = LocationData(55, "Orxon: Buy the ultra nanotech", orxon_ultra_nanotech_rule)
 ORXON_CLANK_GOLD_BOLT = LocationData(56, "Orxon: Get the gold bolt in the clank section as ratchet", has_o2_mask)
 ORXON_VISIBOMB_GOLD_BOLT = LocationData(57, "Orxon: Get the gold bolt requiring the visibomb", orxon_visibomb_bolt_rule)
 
 # Pokitaru
-POKITARU_VENDOR_DECOY_GLOVE = LocationData(58, "Pokitaru: Buy the decoy glove from the vendor")
+POKITARU_VENDOR_DECOY_GLOVE = LocationData(58, "Pokitaru: Buy the decoy glove from the vendor", has_metal_detector)
 POKITARU_O2_MASK = LocationData(59, "Pokitaru: Destroy all ships using the pilot's helmet", pokitaru_ship_rule)
 POKITARU_SEWER_PERSUADER = LocationData(60, "Pokitaru: Trade raritanium for the persuader", pokitaru_persuader_rule)
 POKITARU_THRUSTER_PACK = LocationData(61, "Pokitaru: Buy the thruster pack")
 POKITARU_GOLD_BOLT = LocationData(62, "Pokitaru: Get the gold bolt on the waterfalls", can_ground_pound)
 
 # Hoven
-HOVEN_VENDOR_DRONE_DEVICE = LocationData(63, "Hoven: Buy the drone device from the vendor")
+HOVEN_VENDOR_DRONE_DEVICE = LocationData(63, "Hoven: Buy the drone device from the vendor", has_metal_detector)
 HOVEN_TURRET_INFOBOT = LocationData(64, "Hoven: Destroy the ship and get the infobot", hoven_infobot_rule)
 HOVEN_HYDRO_PACK = LocationData(65, "Hoven: Buy the hydropack", has_hydrodisplacer)
 HOVEN_RARITANIUM = LocationData(66, "Hoven: Get the raritanium", hoven_raritanium_rule)
@@ -102,10 +102,10 @@ HOVEN_WALLJUMP_GOLD_BOLT = LocationData(68, "Hoven: Get the gold bolt at the top
 
 # Gemlik
 GEMLIK_QUARK_FIGHT = LocationData(69, "Gemlik: Defeat Captain Quark", gemlik_quark_rule)
-GEMLIK_GOLD_BOLT = LocationData(70, "Gemlik: Get the gold bolt after shooting its tower with the visibomb", has_visibomb)
+GEMLIK_GOLD_BOLT = LocationData(70, "Gemlik: Get the gold bolt after shooting its tower with the visibomb", gemlik_bolt_rule)
 
 # Oltanis
-OLTANIS_VENDOR_TESLA_CLAW = LocationData(71, "Oltanis: Buy the tesla claw from the vendor")
+OLTANIS_VENDOR_TESLA_CLAW = LocationData(71, "Oltanis: Buy the tesla claw from the vendor", has_metal_detector)
 OLTANIS_INFOBOT = LocationData(72, "Oltanis: Buy the infobot after traversing the grindrail", can_grind)
 OLTANIS_PDA = LocationData(73, "Oltanis: Buy the PDA from Steve", has_magneboots)
 OLTANIS_MORPH_O_RAY = LocationData(74, "Oltanis: Get the Morph-o-Ray", can_swingshot)

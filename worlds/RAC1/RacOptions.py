@@ -40,8 +40,8 @@ class ExtendWeaponProgression(Toggle):
 
 @dataclass
 class RacOptions(PerGameCommonOptions):
-    start_inventory_from_pool: StartInventoryPool
-    death_link: DeathLink
-    starting_weapons: StartingWeapons
-    enable_bolt_multiplier: EnableBoltMultiplier
-    extend_weapon_progression: ExtendWeaponProgression
+    # start_inventory_from_pool: StartInventoryPool
+    # death_link: DeathLink
+    # starting_weapons: StartingWeapons
+    # enable_bolt_multiplier: EnableBoltMultiplier
+    # extend_weapon_progression: ExtendWeaponProgression

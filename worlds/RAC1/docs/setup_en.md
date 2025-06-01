@@ -50,6 +50,13 @@ If you're generating the multiworld, follow the instructions in the previous sec
 Once you have the zip file corresponding to your multiworld, follow [these steps](https://archipelago.gg/tutorial/Archipelago/setup/en#hosting-an-archipelago-server) to host a room.
 Follow the instructions for hosting on the website from a locally generated game or on a local machine.
 
+## Installing the Ratchet & Clank Multiplayer Mod
+To install the Ratchet & Clank Multiplayer Mod, it would be best to follow its [installation guide](https://github.com/bordplate/rac1-multiplayer/blob/main/README.md).
+A short TL;DR:
+- Have NPEA00385 installed to either your emulator or PS3
+- Get the latest release of the [mod](https://github.com/bordplate/rac1-multiplayer/releases)
+- Install the mod to your emulator or PS3 (this requires a modded PS3, i will not be going into the details here. Look up PS3 HEN if you don't know where to start)
+
 ## Connecting to a Room
 
 - If you host the multiworld on the website, you can use the public multiplayer server to join it.

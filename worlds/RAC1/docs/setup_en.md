@@ -4,7 +4,7 @@ This guide is meant to help you get up and running with Ratchet & Clank in your 
 
 ## Requirements
 
-The following are required in order to play Ratchet & Clank 2 in Archipelago
+The following are required in order to play Ratchet & Clank in Archipelago
 
 - Installed [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) v0.5.0 or higher.\
    **Make sure to install the Generator if you intend to generate multiworlds.**
@@ -65,7 +65,7 @@ Follow the instructions for hosting on the website from a locally generated game
 
 ## Connection Troubleshooting
 
-- Use the latest Ratchet & Clank 2 Archipelago release
+- Use the latest Ratchet & Clank Archipelago release
 
   - Ratchet & Clank Archipelago: [Releases](https://github.com/Panda291/Archipelago/releases)
 

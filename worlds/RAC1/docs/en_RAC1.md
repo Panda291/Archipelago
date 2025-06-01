@@ -34,3 +34,6 @@ Some of the changes include:
   - The Metal Detector has a 50x multiplier for found bolts.
   - If you turn on cheat mode in the lobby, you can enable ghost ratchet for 1 second by pressing R1 while paused. (ghost ratchet means you can walk through walls, among other things speedrunners use)
   - You can also play in coop in the same world as your friend. One person sets up a lobby and fills in the archipelago details, the others can join for jolly cooperation.
+
+# Credit
+This AP implementation was largely inspired on the [work by evilwb](https://github.com/evilwb/APRac2)

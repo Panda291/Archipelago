@@ -9,7 +9,9 @@ The following are required in order to play Ratchet & Clank in Archipelago
 - Installed [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) v0.5.0 or higher.\
    **Make sure to install the Generator if you intend to generate multiworlds.**
 - The latest version of the [Ratchet & Clank apworld](https://github.com/Panda291/Archipelago/releases).
-- [RPCS3 Emulator](https://rpcs3.net/download).
+- A device to play on:
+  - [RPCS3 Emulator](https://rpcs3.net/download).
+  - A Homebrew enabled PS3 (easiest is PS3 HEN).
 - A Ratchet & Clank PAL ISO (`NPEA00385`)
 - The latest version of the [Ratchet & Clank Multiplayer Client](https://github.com/bordplate/rac1-multiplayer/releases).
 - (optional) The latest version of the [Ratchet & Clank Multiplayer Server](https://github.com/bordplate/Lawrence/releases).

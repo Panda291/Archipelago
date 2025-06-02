@@ -51,10 +51,10 @@ RILGAR_WATERWORKS_GOLD_BOLT = LocationData(30, "Rilgar: Get the gold bolt in the
 # Blarg
 BLARG_HYDRODISPLACER = LocationData(31, "Blarg: Get the hydrodisplacer as Clank", has_tresspasser)
 BLARG_EXPLOSION_INFOBOT = LocationData(32, "Blarg: Get the Infobot from the exploding ship")
-BLARG_GRINDBOOTS = LocationData(33, "Blarg: Buy the grind boots from the scientist", has_swingshot)
+BLARG_GRINDBOOTS = LocationData(33, "Blarg: Buy the grind boots from the scientist", can_swingshot)
 BLARG_VENDOR_TAUNTER = LocationData(34, "Blarg: Buy the taunter from the vendor")
 BLARG_OUTSIDE_GOLD_BOLT = LocationData(35, "Blarg: Get the gold bolt outside as Ratchet", blarg_outside_gold_bolt_rule)
-BLARG_SWARMER_GOLD_BOLT = LocationData(36, "Blarg: Get the gold bolt from the swarmer nest", has_swingshot)
+BLARG_SWARMER_GOLD_BOLT = LocationData(36, "Blarg: Get the gold bolt from the swarmer nest", can_swingshot)
 
 # Umbris
 UMBRIS_SNAGGLEBEAST_INFOBOT = LocationData(37, "Umbris: Defeat the Snagglebeast and claim the infobot", umbris_snagglebeast_rule)

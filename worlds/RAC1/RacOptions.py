@@ -1,14 +1,6 @@
-
-from Options import (
-    DeathLink,
-    StartInventoryPool,
-    PerGameCommonOptions,
-    Choice,
-    DefaultOnToggle,
-    Toggle,
-    Range,
-)
 from dataclasses import dataclass
+
+from Options import (Choice, PerGameCommonOptions, StartInventoryPool, Toggle)
 
 
 class StartingWeapons(Choice):

@@ -35,8 +35,8 @@ Some of the changes include:
   - If you turn on cheat mode in the lobby, you can enable ghost ratchet for 1 second by pressing R1 while paused. (ghost ratchet means you can walk through walls, among other things speedrunners use)
   - You can also play in coop in the same world as your friend. One person sets up a lobby and fills in the archipelago details, the others can join for jolly cooperation.
 
-## Are there any other things i should know?
-- It has come to my attention some people have been using save/load to get back to their ship if they get stuck. This is not a scenario i had anticipated and as such is untested. For now avoid using it, instead use the quit game option and create a new lobby (or reconnect if another player is still in)
+## Are there any other things I should know?
+- It has come to my attention some people have been using save/load to get back to their ship if they get stuck. This is not a scenario I had anticipated and as such is untested. For now avoid using it, instead use the quit game option and create a new lobby (or reconnect if another player is still in)
 - Any location that costs more than 7500 bolts has the metal detector listed as a requirement
 
 # Credit

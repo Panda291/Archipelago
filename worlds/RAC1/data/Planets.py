@@ -1,9 +1,13 @@
+from typing import Sequence
+
 from .Locations import *
+
 
 class PlanetData(NamedTuple):
     name: str
     number: int
     locations: Sequence[LocationData] = []
+
 
 NOVALIS = PlanetData("Novalis", 1, [
     NOVALIS_PLUMBER,
@@ -16,9 +20,9 @@ NOVALIS = PlanetData("Novalis", 1, [
 
 ARIDIA = PlanetData("Aridia", 2, [
     ARIDIA_HOVERBOARD,
-    ARIDIA_TRESSPASSER,
+    ARIDIA_TRESPASSER,
     ARIDIA_SONIC_SUMMONER,
-    ARIDIA_TRESSPASSER_GOLD_BOLT,
+    ARIDIA_TRESPASSER_GOLD_BOLT,
     ARIDIA_ISLAND_GOLD_BOLT,
     ARIDIA_MAGNEBOOTS_GOLD_BOLT,
     ARIDIA_SANDSHARK_GOLD_BOLT,
@@ -66,12 +70,12 @@ UMBRIS = PlanetData("Umbris", 7, [
 ])
 
 BATALIA = PlanetData("Batalia", 8, [
-    BATALIA_VENDOR_DEVESTATOR,
+    BATALIA_VENDOR_DEVASTATOR,
     BATALIA_GRINDRAIL_INFOBOT,
     BATALIA_COMMANDER_INFOBOT,
     BATALIA_METAL_DETECTOR,
     BATALIA_CLIFFSIDE_GOLD_BOLT,
-    BATALIA_TRESSPASSER_GOLD_BOLT,
+    BATALIA_TRESPASSER_GOLD_BOLT,
 ])
 
 GASPAR = PlanetData("Gaspar", 9, [

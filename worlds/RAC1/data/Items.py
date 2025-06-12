@@ -1,12 +1,13 @@
 from BaseClasses import Item
-from abc import ABC
 from dataclasses import dataclass
-from typing import Callable, TYPE_CHECKING, Sequence, Optional, Dict, Set
+from typing import Sequence, Dict, Set
+
 
 @dataclass
-class ItemData(ABC):
+class ItemData(Item):
     item_id: int
     name: str
+
 
 HELI_PACK = ItemData(2, "Heli Pack")
 THRUSTER_PACK = ItemData(3, "Thruster Pack")
@@ -21,7 +22,7 @@ SWINGSHOT = ItemData(12, "Swingshot")
 VISIBOMB = ItemData(13, "Visibomb")
 TAUNTER = ItemData(14, "Taunter")
 BLASTER = ItemData(15, "Blaster")
-PYROCITER = ItemData(16, "Pyrociter")
+PYROCITOR = ItemData(16, "Pyrocitor")
 MINE_GLOVE = ItemData(17, "Mine_glove")
 WALLOPER = ItemData(18, "Walloper")
 TESLA_CLAW = ItemData(19, "Tesla_claw")
@@ -31,7 +32,7 @@ HYDRODISPLACER = ItemData(22, "Hydrodisplacer")
 RYNO = ItemData(23, "RYNO")
 DRONE_DEVICE = ItemData(24, "Drone_device")
 DECOY_GLOVE = ItemData(25, "Decoy_glove")
-TRESSPASSER = ItemData(26, "Trespasser")
+TRESPASSER = ItemData(26, "Trespasser")
 METAL_DETECTOR = ItemData(27, "Metal Detector")
 MAGNEBOOTS = ItemData(28, "Magneboots")
 GRINDBOOTS = ItemData(29, "Grindboots")
@@ -67,6 +68,7 @@ KALEBO_INFOBOT = ItemData(116, "Kalebo III")
 FLEET_INFOBOT = ItemData(117, "Drek's Fleet")
 VELDIN_INFOBOT = ItemData(118, "Veldin")
 
+
 @dataclass
 class CollectableData(ItemData):
     max_capacity: int = 0x7F
@@ -84,7 +86,7 @@ EQUIPMENT: Sequence[ItemData] = [
     PILOTS_HELMET,
     TAUNTER,
     HYDRODISPLACER,
-    TRESSPASSER,
+    TRESPASSER,
     METAL_DETECTOR,
     MAGNEBOOTS,
     GRINDBOOTS,
@@ -109,7 +111,7 @@ WEAPONS: Sequence[ItemData] = [
     DEVASTATOR,
     VISIBOMB,
     BLASTER,
-    PYROCITER,
+    PYROCITOR,
     MINE_GLOVE,
     WALLOPER,
     TESLA_CLAW,
@@ -146,7 +148,8 @@ COLLECTABLES: Sequence[CollectableData] = [
 
 EQUIPMENT_AND_WEAPONS: Sequence[ItemData] = [*EQUIPMENT, *WEAPONS]
 
-ALL: Sequence[ItemData] = [*EQUIPMENT, *WEAPONS, *PLANETS, *COLLECTABLES,]
+ALL: Sequence[ItemData] = [*EQUIPMENT, *WEAPONS, *PLANETS, *COLLECTABLES, ]
+
 
 def from_id(item_id: int) -> ItemData:
     matching = [item for item in ALL if item.item_id == item_id]
@@ -162,6 +165,7 @@ def from_name(item_name: str) -> ItemData:
         raise ValueError(f"No item data for '{item_name}'")
     assert len(matching) < 2, f"Multiple item data with name '{item_name}'. Please report."
     return matching[0]
+
 
 def get_item_groups() -> Dict[str, Set[str]]:
     groups: Dict[str, Set[str]] = {

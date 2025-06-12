@@ -57,7 +57,7 @@ To install the Ratchet & Clank Multiplayer Mod, it would be best to follow its [
 A short TL;DR:
 - Have NPEA00385 installed to either your emulator or PS3
 - Get the latest release of the [mod](https://github.com/bordplate/rac1-multiplayer/releases)
-- Install the mod to your emulator or PS3 (this requires a modded PS3, i will not be going into the details here. Look up PS3 HEN if you don't know where to start)
+- Install the mod to your emulator or PS3 (this requires a modded PS3, I will not be going into the details here. Look up PS3 HEN if you don't know where to start)
 
 ## Connecting to a Room
 

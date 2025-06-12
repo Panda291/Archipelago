@@ -2,7 +2,7 @@ from typing import Dict, Optional
 
 from BaseClasses import Item, ItemClassification, Tutorial
 from worlds.AutoWorld import WebWorld, World
-from worlds.LauncherComponents import Component, components, launch_subprocess, SuffixIdentifier, Type
+from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
 from .data import Items, Locations, Planets
 from .data.Items import CollectableData, ItemData
@@ -12,14 +12,10 @@ from .Regions import create_regions
 
 
 def run_client(_url: Optional[str] = None):
-    from .RacClient import launch
-    launch_subprocess(launch, name="RacClient")
-
-
-components.append(
-        Component("Ratchet & Clank Client", func=run_client, component_type=Type.CLIENT,
-                  file_identifier=SuffixIdentifier(".aprac"))
-)
+    # from .RacClient import launch
+    # launch_subprocess(launch, name="RacClient")
+    components.append(Component("Ratchet & Clank Client", func=run_client, component_type=Type.CLIENT,
+                                file_identifier=SuffixIdentifier(".aprac")))
 
 
 # class RacSettings(settings.Group):

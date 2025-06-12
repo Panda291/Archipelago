@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
-from BaseClasses import ItemClassification, Item
-from .data import Items, Locations
-from .data.Items import ItemData, CollectableData
-from .RacOptions import StartingWeapons
+from BaseClasses import Item, ItemClassification
+from .data import Items
+from .data.Items import ItemData
 
 if TYPE_CHECKING:
     from . import RacWorld
@@ -23,7 +22,7 @@ def get_classification(item: ItemData) -> ItemClassification:
         Items.TAUNTER,
         Items.O2_MASK,
         Items.PILOTS_HELMET,
-        Items.TRESSPASSER,
+        Items.TRESPASSER,
         Items.HOLOGUISE,
         Items.CODEBOT,
         Items.RARITANIUM,
@@ -46,12 +45,13 @@ def get_classification(item: ItemData) -> ItemClassification:
         return ItemClassification.useful
 
     return ItemClassification.filler
-    
+
 
 def create_planets(world: "RacWorld") -> list["Item"]:
     starting_planet = Items.NOVALIS_INFOBOT
     world.multiworld.push_precollected(world.create_item(starting_planet.name))
-    planets_to_add = [planet for planet in Items.PLANETS if planet not in [starting_planet]] # add randomization later, just hardcode to get it working
+    planets_to_add = [planet for planet in Items.PLANETS if planet not in [starting_planet]]
+    # add randomization later, just hardcode to get it working
     return [world.create_item(planet.name) for planet in planets_to_add]
 
 
@@ -59,7 +59,8 @@ def create_equipment(world: "RacWorld") -> list["Item"]:
     equipment_to_add: list[ItemData] = list(Items.EQUIPMENT_AND_WEAPONS)
 
     # Starting Weapons
-    weapons: list[EquipmentData] = list(Items.WEAPONS)
+    # weapons: list[ItemData] = list(Items.WEAPONS)
+
     # weapons: list[EquipmentData] = []
     # if world.options.starting_weapons == StartingWeapons.option_balanced:
     #     weapons = [weapon for weapon in Items.LV1_WEAPONS if weapon.power <= 5]
@@ -102,7 +103,8 @@ def create_equipment(world: "RacWorld") -> list["Item"]:
     #         location.place_locked_item(world.create_item(Items.ZODIAC.name))
     #         equipment_to_add.remove(Items.ZODIAC)
 
-    #equipment_to_add = [equipment for equipment in equipment_to_add if equipment.item_id not in [starting_weapons[0].item_id]]
+    # equipment_to_add = [equipment for equipment in equipment_to_add if equipment.item_id not in [starting_weapons[
+    # 0].item_id]]
     precollected_ids: list[int] = [item.code for item in world.multiworld.precollected_items[world.player]]
     equipment_to_add = [equipment for equipment in equipment_to_add if equipment.item_id not in precollected_ids]
 

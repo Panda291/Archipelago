@@ -34,10 +34,6 @@ def has_magneboots(state: CollectionState, player: int) -> bool:
     return state.has(Items.MAGNEBOOTS.name, player)
 
 
-def can_trespass(state: CollectionState, player: int) -> bool:
-    return state.has(Items.TRESPASSER.name, player)
-
-
 def can_taunt(state: CollectionState, player: int) -> bool:
     return state.has(Items.TAUNTER.name, player)
 
@@ -114,7 +110,7 @@ def eudora_suck_cannon_rule(state: CollectionState, player: int) -> bool:
 
 def eudora_henchman_rule(state: CollectionState, player: int) -> bool:
     return (can_swingshot(state, player)
-            and can_trespass(state, player)
+            and has_trespasser(state, player)
             and can_improved_jump(state, player))
 
 

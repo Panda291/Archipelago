@@ -151,7 +151,7 @@ FLEET_ROBOT_GOLD_BOLT = LocationData(91, "Drek's Fleet: Get the gold bolt along 
                                      fleet_second_bolt_rule)
 
 # Veldin
-VELDIN_TAUNTER_GOLD_BOLT = LocationData(92, "Veldin: Get the gold bolt using the taunted to lure the horny toad",
+VELDIN_TAUNTER_GOLD_BOLT = LocationData(92, "Veldin: Get the gold bolt using the taunter to lure the horny toad",
                                         veldin_taunter_bolt_rule)
 VELDIN_HALFWAY_GOLD_BOLT = LocationData(93, "Veldin: Get the gold bolt on the platforms", veldin_halfway_bolt_rule)
 VELDIN_GRIND_GOLD_BOLT = LocationData(94, "Veldin: Get the gold bolt after a short grindrail", veldin_grind_bolt_rule)

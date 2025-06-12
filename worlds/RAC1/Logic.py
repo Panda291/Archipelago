@@ -203,6 +203,11 @@ def pokitaru_persuader_rule(state: CollectionState, player: int) -> bool:
             and has_hydrodisplacer(state, player))
 
 
+def pokitaru_gold_bolt_rule(state: CollectionState, player: int) -> bool:
+    return (can_swingshot(state, player)
+            and can_ground_pound(state, player))
+
+
 # Hoven
 def hoven_infobot_rule(state: CollectionState, player: int) -> bool:
     return (has_long_range_weapon(state, player)

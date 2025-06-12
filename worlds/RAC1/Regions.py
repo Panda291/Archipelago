@@ -1,11 +1,9 @@
 import typing
 
-from BaseClasses import CollectionState, Region, Location
-from .Logic import can_swingshot
+from BaseClasses import CollectionState, Location, Region
 from .data import Planets
-from .data import Items
-from .data.Planets import PlanetData
 from .data.Locations import LocationData
+from .data.Planets import PlanetData
 
 if typing.TYPE_CHECKING:
     from . import RacWorld
@@ -45,7 +43,7 @@ def create_regions(world: 'RacWorld'):
             world.multiworld.regions.append(region)
             menu.connect(region, None, generate_planet_access_rule(planet_data))
 
-            options_dict = world.get_options_as_dict()
+            # options_dict = world.get_options_as_dict()
             for location_data in planet_data.locations:
                 # Don't create the location if there is an "enable_if" clause and it returned False
                 # if location_data.enable_if is not None and not location_data.enable_if(options_dict):

@@ -1,5 +1,6 @@
+from typing import Callable, NamedTuple, Optional
+
 from ..Logic import *
-from typing import Optional, NamedTuple, Dict, Callable, TYPE_CHECKING, Any, Sequence
 
 
 class LocationData(NamedTuple):
@@ -10,28 +11,30 @@ class LocationData(NamedTuple):
 
 # Novalis
 NOVALIS_PLUMBER = LocationData(1, "Novalis: Plumber - Infobot")
-NOVALIS_MAYOR   = LocationData(2, "Novalis: Mayor - Infobot")
+NOVALIS_MAYOR = LocationData(2, "Novalis: Mayor - Infobot")
 NOVALIS_VENDOR_PYROCITOR = LocationData(3, "Novalis: Vendor - Pyrocitor")
 NOVALIS_SEWER_GOLD_BOLT = LocationData(4, "Novalis: Sewer - Gold Bolt")
 NOVALIS_CAVES_GOLD_BOLT = LocationData(5, "Novalis: Caves - Gold Bolt", has_explosive_weapon)
-NOVALIS_UNDERWATER_CAVES_GOLD_BOLT = LocationData(6, "Novalis: Underwater Caves - Gold Bolt", novalis_underwater_caves_rule)
+NOVALIS_UNDERWATER_CAVES_GOLD_BOLT = LocationData(6, "Novalis: Underwater Caves - Gold Bolt",
+                                                  novalis_underwater_caves_rule)
 
 # Aridia
 ARIDIA_HOVERBOARD = LocationData(7, "Aridia: Save Skid Mc Marks")
-ARIDIA_TRESSPASSER = LocationData(8, "Aridia: Find the tresspasser", can_swingshot)
+ARIDIA_TRESPASSER = LocationData(8, "Aridia: Find the trespasser", can_swingshot)
 ARIDIA_SONIC_SUMMONER = LocationData(9, "Aridia: Trade the platinum zoomerator for the sonic summoner", has_zoomerator)
-ARIDIA_TRESSPASSER_GOLD_BOLT = LocationData(10, "Aridia: Gold Bolt below tresspasser", can_swingshot)
+ARIDIA_TRESPASSER_GOLD_BOLT = LocationData(10, "Aridia: Gold Bolt below trespasser", can_swingshot)
 ARIDIA_ISLAND_GOLD_BOLT = LocationData(11, "Aridia: Gold bolt on island", can_improved_jump)
 ARIDIA_MAGNEBOOTS_GOLD_BOLT = LocationData(12, "Aridia: Gold bolt near mortar turret", has_magneboots)
 ARIDIA_SANDSHARK_GOLD_BOLT = LocationData(13, "Aridia: Gold bolt hidden in sandshark area", has_explosive_weapon)
 
 # Kerwan
 KERWAN_SWINGSHOT = LocationData(14, "Kerwan: Buy the swingshot from Helga")
-KERWAN_HELIPACK  = LocationData(15, "Kerwan: Buy the helipack from Al")
+KERWAN_HELIPACK = LocationData(15, "Kerwan: Buy the helipack from Al")
 KERWAN_TRAIN_INFOBOT = LocationData(16, "Kerwan: Get the infobot after the train section", can_improved_jump)
 KERWAN_VENDOR_BLASTER = LocationData(17, "Kerwan: Buy the blaster from the vendor")
 KERWAN_BELOW_SHIP_GOLD_BOLT = LocationData(18, "Kerwan: Get the gold bolt below your ship", can_glide)
-KERWAN_TRAIN_STATION_GOLD_BOLT = LocationData(19, "Kerwan: Get the gold bolt just before the flying train section", can_improved_jump)
+KERWAN_TRAIN_STATION_GOLD_BOLT = LocationData(19, "Kerwan: Get the gold bolt just before the flying train section",
+                                              can_improved_jump)
 KERWAN_LONE_TOWER_GOLD_BOLT = LocationData(20, "Kerwan: Get the gold bolt on the lone tower", can_glide)
 
 # Eudora
@@ -46,10 +49,11 @@ RILGAR_PLATINUM_ZOOMERATOR = LocationData(26, "Rilgar: Win the hoverboard race",
 RILGAR_MINE_GLOVE = LocationData(27, "Rilgar: buy the mine glove from the vendor", has_metal_detector)
 RILGAR_RYNO = LocationData(28, "Rilgar: Buy the RYNO", rilgar_ryno_rule)
 RILGAR_MAZE_GOLD_BOLT = LocationData(29, "Rilgar: Get the gold bolt in the maze", can_improved_jump)
-RILGAR_WATERWORKS_GOLD_BOLT = LocationData(30, "Rilgar: Get the gold bolt in the flooded area", rilgar_underwater_bolt_rule)
+RILGAR_WATERWORKS_GOLD_BOLT = LocationData(30, "Rilgar: Get the gold bolt in the flooded area",
+                                           rilgar_underwater_bolt_rule)
 
 # Blarg
-BLARG_HYDRODISPLACER = LocationData(31, "Blarg: Get the hydrodisplacer as Clank", has_tresspasser)
+BLARG_HYDRODISPLACER = LocationData(31, "Blarg: Get the hydrodisplacer as Clank", has_trespasser)
 BLARG_EXPLOSION_INFOBOT = LocationData(32, "Blarg: Get the Infobot from the exploding ship")
 BLARG_GRINDBOOTS = LocationData(33, "Blarg: Buy the grind boots from the scientist", can_swingshot)
 BLARG_VENDOR_TAUNTER = LocationData(34, "Blarg: Buy the taunter from the vendor")
@@ -57,23 +61,27 @@ BLARG_OUTSIDE_GOLD_BOLT = LocationData(35, "Blarg: Get the gold bolt outside as 
 BLARG_SWARMER_GOLD_BOLT = LocationData(36, "Blarg: Get the gold bolt from the swarmer nest", can_swingshot)
 
 # Umbris
-UMBRIS_SNAGGLEBEAST_INFOBOT = LocationData(37, "Umbris: Defeat the Snagglebeast and claim the infobot", umbris_snagglebeast_rule)
-UMBRIS_PRESSURE_PUZZLE_GOLD_BOLT = LocationData(38, "Umbris: Get the gold bolt from solving the pressure plate puzzle", umbris_pressure_bolt_rule)
-UMBRIS_JUMP_DOWN_GOLD_BOLT = LocationData(39, "Umbris: Get the gold bolt from jumping down onto it", umbris_jump_bolt_rule)
+UMBRIS_SNAGGLEBEAST_INFOBOT = LocationData(37, "Umbris: Defeat the Snagglebeast and claim the infobot",
+                                           umbris_snagglebeast_rule)
+UMBRIS_PRESSURE_PUZZLE_GOLD_BOLT = LocationData(38, "Umbris: Get the gold bolt from solving the pressure plate puzzle",
+                                                umbris_pressure_bolt_rule)
+UMBRIS_JUMP_DOWN_GOLD_BOLT = LocationData(39, "Umbris: Get the gold bolt from jumping down onto it",
+                                          umbris_jump_bolt_rule)
 
 # Batalia
-BATALIA_VENDOR_DEVESTATOR = LocationData(40, "Batalia: Buy the devastator from the vendor", has_metal_detector)
+BATALIA_VENDOR_DEVASTATOR = LocationData(40, "Batalia: Buy the devastator from the vendor", has_metal_detector)
 BATALIA_GRINDRAIL_INFOBOT = LocationData(41, "Batalia: Buy the infobot at the end of the grindrail", can_grind)
 BATALIA_COMMANDER_INFOBOT = LocationData(42, "Batalia: Get the infobot from the commander")
 BATALIA_METAL_DETECTOR = LocationData(43, "Batalia: Get the metal detector from the plumber", has_magneboots)
 BATALIA_CLIFFSIDE_GOLD_BOLT = LocationData(44, "Batalia: Get the gold bolt at the cliffside", can_improved_jump)
-BATALIA_TRESSPASSER_GOLD_BOLT = LocationData(45, "Batalia: Get the gold bolt above the tresspasser lock")
+BATALIA_TRESPASSER_GOLD_BOLT = LocationData(45, "Batalia: Get the gold bolt above the trespasser lock")
 
 # Gaspar
 GASPAR_VENDOR_WALLOPER = LocationData(46, "Gaspar: Buy the walloper from the vendor", has_metal_detector)
 GASPAR_PILOT_HELMET = LocationData(47, "Gaspar: Get the pilot helmet")
 GASPAR_SWINGSHOT_GOLD_BOLT = LocationData(48, "Gaspar: Get the gold bolt from the swingshot sidepath", can_swingshot)
-GASPAR_VOLCANO_GOLD_BOLT = LocationData(49, "Gaspar: Get the gold bolt after a path through the volcano", can_improved_jump)
+GASPAR_VOLCANO_GOLD_BOLT = LocationData(49, "Gaspar: Get the gold bolt after a path through the volcano",
+                                        can_improved_jump)
 
 # Orxon
 ORXON_VENDOR_VISIBOMB = LocationData(50, "Orxon: Buy the visibomb gun from the vendor", orxon_visibomb_rule)
@@ -90,7 +98,7 @@ POKITARU_VENDOR_DECOY_GLOVE = LocationData(58, "Pokitaru: Buy the decoy glove fr
 POKITARU_O2_MASK = LocationData(59, "Pokitaru: Destroy all ships using the pilot's helmet", pokitaru_ship_rule)
 POKITARU_SEWER_PERSUADER = LocationData(60, "Pokitaru: Trade raritanium for the persuader", pokitaru_persuader_rule)
 POKITARU_THRUSTER_PACK = LocationData(61, "Pokitaru: Buy the thruster pack")
-POKITARU_GOLD_BOLT = LocationData(62, "Pokitaru: Get the gold bolt on the waterfalls", can_ground_pound)
+POKITARU_GOLD_BOLT = LocationData(62, "Pokitaru: Get the gold bolt on the waterfalls", pokitaru_gold_bolt_rule)
 
 # Hoven
 HOVEN_VENDOR_DRONE_DEVICE = LocationData(63, "Hoven: Buy the drone device from the vendor", has_metal_detector)
@@ -102,21 +110,28 @@ HOVEN_WALLJUMP_GOLD_BOLT = LocationData(68, "Hoven: Get the gold bolt at the top
 
 # Gemlik
 GEMLIK_QUARK_FIGHT = LocationData(69, "Gemlik: Defeat Captain Quark", gemlik_quark_rule)
-GEMLIK_GOLD_BOLT = LocationData(70, "Gemlik: Get the gold bolt after shooting its tower with the visibomb", gemlik_bolt_rule)
+GEMLIK_GOLD_BOLT = LocationData(70, "Gemlik: Get the gold bolt after shooting its tower with the visibomb",
+                                gemlik_bolt_rule)
 
 # Oltanis
 OLTANIS_VENDOR_TESLA_CLAW = LocationData(71, "Oltanis: Buy the tesla claw from the vendor", has_metal_detector)
 OLTANIS_INFOBOT = LocationData(72, "Oltanis: Buy the infobot after traversing the grindrail", can_grind)
 OLTANIS_PDA = LocationData(73, "Oltanis: Buy the PDA from Steve", has_magneboots)
 OLTANIS_MORPH_O_RAY = LocationData(74, "Oltanis: Get the Morph-o-Ray", can_swingshot)
-OLTANIS_MAIN_GOLD_BOLT = LocationData(75, "Oltanis: Get the gold bolt from swingshotting along the main path", oltanis_main_bolt_rule)
-OLTANIS_MAGNET_GOLD_BOLT_1 = LocationData(76, "Oltanis: Get the gold bolt by dropping down the ice on the magneboot path", has_magneboots)
-OLTANIS_MAGNET_GOLD_BOLT_2 = LocationData(77, "Oltanis: Get the gold bolt by ledge hanging on the magneboot path", has_magneboots)
-OLTANIS_FINAL_GOLD_BOLT = LocationData(78, "Oltanis: Get the gold bolt after completing all objectives", oltanis_final_bolt_rule)
+OLTANIS_MAIN_GOLD_BOLT = LocationData(75, "Oltanis: Get the gold bolt from swingshotting along the main path",
+                                      oltanis_main_bolt_rule)
+OLTANIS_MAGNET_GOLD_BOLT_1 = LocationData(76,
+                                          "Oltanis: Get the gold bolt by dropping down the ice on the magneboot path",
+                                          has_magneboots)
+OLTANIS_MAGNET_GOLD_BOLT_2 = LocationData(77, "Oltanis: Get the gold bolt by ledge hanging on the magneboot path",
+                                          has_magneboots)
+OLTANIS_FINAL_GOLD_BOLT = LocationData(78, "Oltanis: Get the gold bolt after completing all objectives",
+                                       oltanis_final_bolt_rule)
 
 # Quartu
 QUARTU_GIANT_CLANK_INFOBOT = LocationData(79, "Quartu: Get the infobot after the giant clank fight", can_swingshot)
-QUARTU_BOLT_GRABBER = LocationData(80, "Quartu: Get the bolt grabber after the underwater section", quartu_bolt_grabber_rule)
+QUARTU_BOLT_GRABBER = LocationData(80, "Quartu: Get the bolt grabber after the underwater section",
+                                   quartu_bolt_grabber_rule)
 QUARTU_INFILTRATE_INFOBOT = LocationData(81, "Quartu: Get the infobot from clank's mother", quartu_infiltrate_rule)
 QUARTU_MOM_GOLD_BOLT = LocationData(82, "Quartu: Get the gold bolt behind clank's mother", quartu_infiltrate_rule)
 QUARTU_CODEBOT_GOLD_BOLT = LocationData(83, "Quartu: Get the gold bolt behind the codebot door", quartu_codebot_rule)
@@ -130,11 +145,14 @@ KALEBO_BREAK_ROOM_GOLD_BOLT = LocationData(87, "Kalebo III: Get the gold bolt in
 # Drek's Fleet
 FLEET_INFOBOT = LocationData(88, "Drek's Fleet: Get the infobot from the main ship", fleet_infobot_rule)
 FLEET_CODEBOT = LocationData(89, "Drek's Fleet: Get the codebot after the water section", fleet_water_rule)
-FLEET_WATER_GOLD_BOLT = LocationData(90, "Drek's Fleet: Get the gold bolt hidden in the water section", fleet_water_rule)
-FLEET_ROBOT_GOLD_BOLT = LocationData(91, "Drek's Fleet: Get the gold bolt along the sidepath with robot guards", fleet_second_bolt_rule)
+FLEET_WATER_GOLD_BOLT = LocationData(90, "Drek's Fleet: Get the gold bolt hidden in the water section",
+                                     fleet_water_rule)
+FLEET_ROBOT_GOLD_BOLT = LocationData(91, "Drek's Fleet: Get the gold bolt along the sidepath with robot guards",
+                                     fleet_second_bolt_rule)
 
 # Veldin
-VELDIN_TAUNTER_GOLD_BOLT = LocationData(92, "Veldin: Get the gold bolt using the taunted to lure the horny toad", veldin_taunter_bolt_rule)
+VELDIN_TAUNTER_GOLD_BOLT = LocationData(92, "Veldin: Get the gold bolt using the taunter to lure the horny toad",
+                                        veldin_taunter_bolt_rule)
 VELDIN_HALFWAY_GOLD_BOLT = LocationData(93, "Veldin: Get the gold bolt on the platforms", veldin_halfway_bolt_rule)
 VELDIN_GRIND_GOLD_BOLT = LocationData(94, "Veldin: Get the gold bolt after a short grindrail", veldin_grind_bolt_rule)
 VELDIN_DREK = LocationData(None, "Veldin: Defeat Chairman Drek", veldin_defeat_drek_rule)

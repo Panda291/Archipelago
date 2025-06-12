@@ -1,43 +1,34 @@
-from typing import Dict, Optional, Mapping, Any
-import typing
-import os
+from typing import Dict, Optional
 
-from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess
-import settings
-from worlds.AutoWorld import World, WebWorld
-from BaseClasses import Item, Tutorial, ItemClassification
-
+from BaseClasses import Item, ItemClassification, Tutorial
+from worlds.AutoWorld import WebWorld, World
+from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
 from .data import Items, Locations, Planets
-from .data.Items import ItemData, CollectableData
+from .data.Items import CollectableData, ItemData
 from .data.Planets import PlanetData
-from .Regions import create_regions
 from .RacOptions import RacOptions
+from .Regions import create_regions
 
 
 def run_client(_url: Optional[str] = None):
-    from .RacClient import launch
-    launch_subprocess(launch, name="RacClient")
+    # from .RacClient import launch
+    # launch_subprocess(launch, name="RacClient")
+    components.append(Component("Ratchet & Clank Client", func=run_client, component_type=Type.CLIENT,
+                                file_identifier=SuffixIdentifier(".aprac")))
 
 
-components.append(
-    Component("Ratchet & Clank Client", func=run_client, component_type=Type.CLIENT,
-              file_identifier=SuffixIdentifier(".aprac"))
-)
-
-
-#class RacSettings(settings.Group):
-    
+# class RacSettings(settings.Group):
 
 
 class RacWeb(WebWorld):
     tutorials = [Tutorial(
-        "Multiworld Setup Guide",
-        "A guide to setting up Ratchet & Clank for Archipelago",
-        "English",
-        "setup.md",
-        "setup/en",
-        ["evilwb"]
+            "Multiworld Setup Guide",
+            "A guide to setting up Ratchet & Clank for Archipelago",
+            "English",
+            "setup.md",
+            "setup/en",
+            ["Panad"]
     )]
 
 
@@ -49,7 +40,8 @@ class RacWorld(World):
     """
     Ratchet & Clank is a third-person shooter platform video game developed by Insomniac Games
     and published by Sony Computer Entertainment for the PlayStation 2 in 2002. It is the first
-    game in the Ratchet & Clank series and the first game developed by Insomniac to not be owned by Universal Interactive.
+    game in the Ratchet & Clank series and the first game developed by Insomniac to not be owned by Universal
+    Interactive.
     """
     game = "Ratchet & Clank"
     web = RacWeb()
@@ -57,10 +49,11 @@ class RacWorld(World):
     options: RacOptions
     topology_present = True
     item_name_to_id = {item.name: item.item_id for item in Items.ALL}
-    location_name_to_id = {location.name: location.location_id for location in Planets.ALL_LOCATIONS if location.location_id}
-    #item_name_groups = Items.get_item_groups()
-    #location_name_groups = Planets.get_location_groups()
-    #settings: RacSettings
+    location_name_to_id = {location.name: location.location_id for location in Planets.ALL_LOCATIONS if
+                           location.location_id}
+    # item_name_groups = Items.get_item_groups()
+    # location_name_groups = Planets.get_location_groups()
+    # settings: RacSettings
     starting_planet: Optional[PlanetData] = None
     starting_weapons: list[ItemData] = []
     prefilled_item_map: Dict[str, str] = {}  # Dict of location name to item name
@@ -108,21 +101,25 @@ class RacWorld(World):
         boss_location = self.multiworld.get_location(Locations.VELDIN_DREK.name, self.player)
         boss_location.place_locked_item(self.create_event("Victory"))
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Victory", self.player)
-
-    # def generate_output(self, output_directory: str) -> None:
-    #     aprac2 = Rac2ProcedurePatch(player=self.player, player_name=self.multiworld.get_player_name(self.player))
-    #     generate_patch(self, aprac2)
-    #     rom_path = os.path.join(output_directory,
-    #                             f"{self.multiworld.get_out_file_name_base(self.player)}{aprac2.patch_file_ending}")
+        # def generate_output(self, output_directory: str) -> None:
+        #     aprac2 = Rac2ProcedurePatch(player=self.player, player_name=self.multiworld.get_player_name(self.player))
+        #     generate_patch(self, aprac2)
+        #     rom_path = os.path.join(output_directory,
+        #                             f"{self.multiworld.get_out_file_name_base(self.player)}{
+        #                             aprac2.patch_file_ending}")
         # aprac2.write(rom_path)
 
-    def get_options_as_dict(self) -> Dict[str, Any]:
-        return self.options.as_dict(
-            # "death_link",
-            # "starting_weapons",
-        )
+        # def get_options_as_dict(self) -> Dict[str, Any]:
+        #    return self.options.as_dict(
+        #             "death_link",
+        #             "starting_weapons",
+        #    )
+        #
+        # def fill_slot_data(self) -> Mapping[str, Any]:
+        #    return self.get_options_as_dict()
 
-    def fill_slot_data(self) -> Mapping[str, Any]:
-        return self.get_options_as_dict()
-
-    
+    # def post_fill(self) -> None:
+    #    from Utils import visualize_regions
+    #    visualize_regions(self.multiworld.get_region("Menu", self.player), f"{self.player_name}_world.puml",
+    #                      regions_to_highlight=self.multiworld.get_all_state(False).reachable_regions[
+    #                          self.player])

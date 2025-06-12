@@ -98,7 +98,7 @@ POKITARU_VENDOR_DECOY_GLOVE = LocationData(58, "Pokitaru: Buy the decoy glove fr
 POKITARU_O2_MASK = LocationData(59, "Pokitaru: Destroy all ships using the pilot's helmet", pokitaru_ship_rule)
 POKITARU_SEWER_PERSUADER = LocationData(60, "Pokitaru: Trade raritanium for the persuader", pokitaru_persuader_rule)
 POKITARU_THRUSTER_PACK = LocationData(61, "Pokitaru: Buy the thruster pack")
-POKITARU_GOLD_BOLT = LocationData(62, "Pokitaru: Get the gold bolt on the waterfalls", can_ground_pound)
+POKITARU_GOLD_BOLT = LocationData(62, "Pokitaru: Get the gold bolt on the waterfalls", pokitaru_gold_bolt_rule)
 
 # Hoven
 HOVEN_VENDOR_DRONE_DEVICE = LocationData(63, "Hoven: Buy the drone device from the vendor", has_metal_detector)

@@ -105,19 +105,25 @@ class RacWorld(World):
         boss_location = self.multiworld.get_location(Locations.VELDIN_DREK.name, self.player)
         boss_location.place_locked_item(self.create_event("Victory"))
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Victory", self.player)
+        # def generate_output(self, output_directory: str) -> None:
+        #     aprac2 = Rac2ProcedurePatch(player=self.player, player_name=self.multiworld.get_player_name(self.player))
+        #     generate_patch(self, aprac2)
+        #     rom_path = os.path.join(output_directory,
+        #                             f"{self.multiworld.get_out_file_name_base(self.player)}{
+        #                             aprac2.patch_file_ending}")
+        # aprac2.write(rom_path)
 
-    # def generate_output(self, output_directory: str) -> None:
-    #     aprac2 = Rac2ProcedurePatch(player=self.player, player_name=self.multiworld.get_player_name(self.player))
-    #     generate_patch(self, aprac2)
-    #     rom_path = os.path.join(output_directory,
-    #                             f"{self.multiworld.get_out_file_name_base(self.player)}{aprac2.patch_file_ending}")
-    # aprac2.write(rom_path)
+        # def get_options_as_dict(self) -> Dict[str, Any]:
+        #    return self.options.as_dict(
+        #             "death_link",
+        #             "starting_weapons",
+        #    )
+        #
+        # def fill_slot_data(self) -> Mapping[str, Any]:
+        #    return self.get_options_as_dict()
 
-    #def get_options_as_dict(self) -> Dict[str, Any]:
-    #    return self.options.as_dict(
-    #             "death_link",
-    #             "starting_weapons",
-    #    )
-    #
-    #def fill_slot_data(self) -> Mapping[str, Any]:
-    #    return self.get_options_as_dict()
+    # def post_fill(self) -> None:
+    #    from Utils import visualize_regions
+    #    visualize_regions(self.multiworld.get_region("Menu", self.player), f"{self.player_name}_world.puml",
+    #                      regions_to_highlight=self.multiworld.get_all_state(False).reachable_regions[
+    #                          self.player])

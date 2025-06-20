@@ -87,7 +87,9 @@ def has_metal_detector(state: CollectionState, player: int) -> bool:
 
 
 def has_explosive_weapon(state: CollectionState, player: int) -> bool:
-    return state.has_any([Items.BOMB_GLOVE.name, Items.DEVASTATOR.name], player)
+    return (state.has_any(
+        [Items.BOMB_GLOVE.name, Items.MINE_GLOVE.name, Items.DEVASTATOR.name, Items.VISIBOMB.name, Items.RYNO.name],
+        player))
 
 
 def has_long_range_weapon(state: CollectionState, player: int) -> bool:

@@ -32,7 +32,7 @@ KERWAN_SWINGSHOT = LocationData(14, "Kerwan: Buy the swingshot from Helga")
 KERWAN_HELIPACK = LocationData(15, "Kerwan: Buy the helipack from Al")
 KERWAN_TRAIN_INFOBOT = LocationData(16, "Kerwan: Get the infobot after the train section", can_improved_jump)
 KERWAN_VENDOR_BLASTER = LocationData(17, "Kerwan: Buy the blaster from the vendor")
-KERWAN_BELOW_SHIP_GOLD_BOLT = LocationData(18, "Kerwan: Get the gold bolt below your ship", can_glide)
+KERWAN_BELOW_SHIP_GOLD_BOLT = LocationData(18, "Kerwan: Get the gold bolt below your ship")
 KERWAN_TRAIN_STATION_GOLD_BOLT = LocationData(19, "Kerwan: Get the gold bolt just before the flying train section",
                                               can_improved_jump)
 KERWAN_LONE_TOWER_GOLD_BOLT = LocationData(20, "Kerwan: Get the gold bolt on the lone tower", can_glide)

@@ -23,7 +23,7 @@ ARIDIA_HOVERBOARD = LocationData(7, "Aridia: Save Skid Mc Marks")
 ARIDIA_TRESPASSER = LocationData(8, "Aridia: Find the trespasser", can_swingshot)
 ARIDIA_SONIC_SUMMONER = LocationData(9, "Aridia: Trade the platinum zoomerator for the sonic summoner", has_zoomerator)
 ARIDIA_TRESPASSER_GOLD_BOLT = LocationData(10, "Aridia: Gold Bolt below trespasser", can_swingshot)
-ARIDIA_ISLAND_GOLD_BOLT = LocationData(11, "Aridia: Gold bolt on island", can_improved_jump)
+ARIDIA_ISLAND_GOLD_BOLT = LocationData(11, "Aridia: Gold bolt on island")
 ARIDIA_MAGNEBOOTS_GOLD_BOLT = LocationData(12, "Aridia: Gold bolt near mortar turret", has_magneboots)
 ARIDIA_SANDSHARK_GOLD_BOLT = LocationData(13, "Aridia: Gold bolt hidden in sandshark area", has_explosive_weapon)
 

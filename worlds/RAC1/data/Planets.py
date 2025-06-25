@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import NamedTuple, Sequence
 
 from .Locations import *
 
@@ -176,7 +176,7 @@ LOGIC_PLANETS: Sequence[PlanetData] = [
     QUARTU,
     KALEBO,
     FLEET,
-    VELDIN
+    VELDIN,
 ]
 
 ALL_LOCATIONS: Sequence[LocationData] = [

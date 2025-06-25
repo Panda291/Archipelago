@@ -23,11 +23,11 @@ class EnableBoltMultiplier(Toggle):
     display_name = "Enable Bolt Multiplier"
 
 
-class ExtendWeaponProgression(Toggle):
-    """If enabled, make all weapon tiers obtainable through weapon experience. This means LV2 (orange) weapons can
-    upgrade into LV3 (yellow) weapons, which can then upgrade into LV4 (blue) weapons.
-    This effectively makes all weapons that are usually restricted to NG+ available with enough grinding."""
-    display_name = "Extended Weapon Progression"
+class GoldenWeaponProgression(Toggle):
+    """If enabled, make golden weapons and their standard variants progressive items.
+    This means that there are two copies of the regular item in the pool, when you collect one for the first time
+    then it is the standard version, but collecting the second one will give you the golden version."""
+    display_name = "Golden Weapon Progression"
 
 
 @dataclass
@@ -36,4 +36,4 @@ class RacOptions(PerGameCommonOptions):
     # death_link: DeathLink
     # starting_item: StartingItem
     # enable_bolt_multiplier: EnableBoltMultiplier
-    # extend_weapon_progression: ExtendWeaponProgression
+    # extend_weapon_progression: GoldenWeaponProgression

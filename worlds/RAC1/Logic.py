@@ -99,9 +99,21 @@ def has_long_range_weapon(state: CollectionState, player: int) -> bool:
                            Items.RYNO.name], player))
 
 
+def has_40_gold_bolts(state: CollectionState, player: int) -> bool:
+    return state.has(Items.GOLD_BOLT.name, player, 40)
+
+
 # Novalis
 def novalis_underwater_caves_rule(state: CollectionState, player: int) -> bool:
     return has_hydro_pack(state, player)
+
+
+def novalis_gold_weapon_rule(state: CollectionState, player: int) -> bool:
+    return has_40_gold_bolts(state, player) and has_metal_detector(state, player)
+
+
+def novalis_skillpoint_rule(state: CollectionState, player: int) -> bool:
+    return has_long_range_weapon(state, player)
 
 
 # Eudora
@@ -234,6 +246,16 @@ def gemlik_bolt_rule(state: CollectionState, player: int) -> bool:
     return (has_visibomb(state, player)
             and can_improved_jump(state, player)
             and has_trespasser(state, player))
+
+
+def gemlik_gold_weapon_rule(state: CollectionState, player: int) -> bool:
+    return (has_magneboots(state, player)
+            and can_improved_jump(state, player)
+            and has_long_range_weapon(state, player)
+            and has_trespasser(state, player)
+            and can_swingshot(state, player)
+            and has_40_gold_bolts(state, player)
+            and has_metal_detector(state, player))
 
 
 # Oltanis

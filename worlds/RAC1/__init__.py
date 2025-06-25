@@ -55,7 +55,7 @@ class RacWorld(World):
     # location_name_groups = Planets.get_location_groups()
     # settings: RacSettings
     starting_planet: Optional[PlanetData] = None
-    starting_weapons: list[ItemData] = []
+    starting_item: list[ItemData] = []
     prefilled_item_map: Dict[str, str] = {}  # Dict of location name to item name
 
     # def get_filler_item_name(self) -> str:
@@ -112,7 +112,7 @@ class RacWorld(World):
         # def get_options_as_dict(self) -> Dict[str, Any]:
         #    return self.options.as_dict(
         #             "death_link",
-        #             "starting_weapons",
+        #             "starting_item",
         #    )
         #
         # def fill_slot_data(self) -> Mapping[str, Any]:

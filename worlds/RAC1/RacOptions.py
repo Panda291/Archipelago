@@ -3,17 +3,17 @@ from dataclasses import dataclass
 from Options import (Choice, PerGameCommonOptions, StartInventoryPool, Toggle)
 
 
-class StartingWeapons(Choice):
-    """Randomize what two weapons you start the game with.
-    Vanilla: Start with the Lancer and Gravity Bomb.
-    Balanced: Start with two random weapons that are relatively balanced.
-    Non-Broken: Start with two random weapons besides RYNO II and Zodiac.
-    Unrestricted: Start with any two non-upgraded weapons.
+class StartingItem(Choice):
+    """Randomize what weapon you start the game with.
+    Vanilla: Start with the Bomb Glove.
+    Random_Weapon: Start with a random weapon.
+    Random_Item: Start with any random weapon, gadget, pack, helmet, boots, item, or infobot.
+    Unrestricted: Start with anything (including Gold Bolts).
     """
-    display_name = "Starting Weapons"
+    display_name = "Starting Weapon"
     option_vanilla = 0
-    option_balanced = 1
-    option_non_broken = 2
+    option_random_weapon = 1
+    option_random_item = 2
     option_unrestricted = 3
     default = 0
 
@@ -34,6 +34,6 @@ class ExtendWeaponProgression(Toggle):
 class RacOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     # death_link: DeathLink
-    # starting_weapons: StartingWeapons
+    # starting_item: StartingItem
     # enable_bolt_multiplier: EnableBoltMultiplier
     # extend_weapon_progression: ExtendWeaponProgression

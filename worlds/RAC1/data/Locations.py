@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Callable, NamedTuple, Optional
+from typing import Callable, Optional
 
 from ..Logic import *
 
@@ -14,7 +14,7 @@ POOL_SKILLPOINT = "skillpoint"
 
 # noinspection PyCompatibility
 @dataclass
-class LocationData(NamedTuple):
+class LocationData:
     location_id: Optional[int]
     planet: str
     name: str

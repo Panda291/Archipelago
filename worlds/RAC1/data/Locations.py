@@ -17,6 +17,8 @@ NOVALIS_SEWER_GOLD_BOLT = LocationData(4, "Novalis: Sewer - Gold Bolt")
 NOVALIS_CAVES_GOLD_BOLT = LocationData(5, "Novalis: Caves - Gold Bolt", has_explosive_weapon)
 NOVALIS_UNDERWATER_CAVES_GOLD_BOLT = LocationData(6, "Novalis: Underwater Caves - Gold Bolt",
                                                   novalis_underwater_caves_rule)
+# Add Skill Point Locations
+# NOVALIS_SKILLPOINT = LocationData(95, "Novalis: Take Aim - Skillpoint", novalis_skillpoint_rule)
 
 # Aridia
 ARIDIA_HOVERBOARD = LocationData(7, "Aridia: Save Skid Mc Marks")

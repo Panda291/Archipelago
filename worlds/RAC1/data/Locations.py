@@ -11,6 +11,8 @@ POOL_GOLD_BOLT = "gold bolt"
 POOL_GOLDEN_WEAPON = "golden weapon"
 POOL_SKILLPOINT = "skillpoint"
 
+DEFAULT_SET = frozenset({POOL_WEAPON, POOL_GADGET, POOL_INFOBOT})
+
 
 # noinspection PyCompatibility
 @dataclass
@@ -119,7 +121,8 @@ BLARG_SWARMER_GOLD_BOLT = LocationData(
 
 # Umbris
 UMBRIS_SNAGGLEBEAST_INFOBOT = LocationData(
-    37, "Umbris", "Umbris: Defeat the Snagglebeast", Items.GOLD_BOLT.name, {POOL_GOLD_BOLT}, umbris_snagglebeast_rule)
+    37, "Umbris", "Umbris: Defeat the Snagglebeast", Items.BATALIA_INFOBOT.name, {POOL_INFOBOT},
+    umbris_snagglebeast_rule)
 UMBRIS_PRESSURE_PUZZLE_GOLD_BOLT = LocationData(38, "Umbris", "Umbris: Gold Bolt: Lighthouse puzzle",
                                                 Items.GOLD_BOLT.name, {POOL_GOLD_BOLT}, umbris_pressure_bolt_rule)
 UMBRIS_JUMP_DOWN_GOLD_BOLT = LocationData(
@@ -127,9 +130,9 @@ UMBRIS_JUMP_DOWN_GOLD_BOLT = LocationData(
 
 # Batalia
 BATALIA_VENDOR_DEVASTATOR = LocationData(
-    40, "Batalia", "Batalia: Vendor - 10,000", Items.GOLD_BOLT.name, {POOL_GOLD_BOLT}, has_metal_detector)
+    40, "Batalia", "Batalia: Vendor - 10,000", Items.DEVASTATOR.name, {POOL_GADGET}, has_metal_detector)
 BATALIA_GRINDRAIL_INFOBOT = LocationData(
-    41, "Batalia", "Batalia: Ride the grindrail", Items.GOLD_BOLT.name, {POOL_GOLD_BOLT}, can_grind)
+    41, "Batalia", "Batalia: Ride the grindrail", Items.GASPAR_INFOBOT.name, {POOL_INFOBOT}, can_grind)
 BATALIA_COMMANDER_INFOBOT = LocationData(42, "Batalia", "Batalia: Commando", Items.ORXON_INFOBOT.name, {POOL_INFOBOT})
 BATALIA_METAL_DETECTOR = LocationData(
     43, "Batalia", "Batalia: Shoot down the Bombers", Items.METAL_DETECTOR.name, {POOL_GADGET}, has_magneboots)

@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Any, Dict, Mapping, Optional
 
 from BaseClasses import Item, ItemClassification, Tutorial
 from worlds.AutoWorld import WebWorld, World
@@ -6,7 +6,8 @@ from worlds.LauncherComponents import Component, components, SuffixIdentifier, T
 from . import ItemPool
 from .data import Items, Locations, Planets
 from .data.Items import CollectableData, ItemData
-from .data.Planets import PlanetData
+from .data.Locations import DEFAULT_SET, POOL_GOLD_BOLT
+from .data.Planets import ALL_LOCATIONS, location_groups, PlanetData
 from .RacOptions import RacOptions
 from .Regions import create_regions
 
@@ -18,17 +19,14 @@ def run_client(_url: Optional[str] = None):
                                 file_identifier=SuffixIdentifier(".aprac")))
 
 
-# class RacSettings(settings.Group):
-
-
 class RacWeb(WebWorld):
     tutorials = [Tutorial(
-            "Multiworld Setup Guide",
-            "A guide to setting up Ratchet & Clank for Archipelago",
-            "English",
-            "setup.md",
-            "setup/en",
-            ["Panad"]
+        "Multiworld Setup Guide",
+        "A guide to setting up Ratchet & Clank for Archipelago",
+        "English",
+        "setup.md",
+        "setup/en",
+        ["Panad"],
     )]
 
 
@@ -51,15 +49,22 @@ class RacWorld(World):
     item_name_to_id = {item.name: item.item_id for item in Items.ALL}
     location_name_to_id = {location.name: location.location_id for location in Planets.ALL_LOCATIONS if
                            location.location_id}
-    # item_name_groups = Items.get_item_groups()
-    # location_name_groups = Planets.get_location_groups()
-    # settings: RacSettings
+    item_name_groups = Items.get_item_groups()
+    location_name_groups = location_groups
     starting_planet: Optional[PlanetData] = None
     starting_item: list[ItemData] = []
     prefilled_item_map: Dict[str, str] = {}  # Dict of location name to item name
+    disabled_locations: set[str]
 
     # def get_filler_item_name(self) -> str:
     #     return Items.BOLT_PACK.name
+
+    def generate_early(self) -> None:
+        enabled_pools = set(DEFAULT_SET)
+        if self.options.shuffle_gold_bolts.value:
+            enabled_pools.add(POOL_GOLD_BOLT)
+
+        self.disabled_locations = set(loc.name for loc in ALL_LOCATIONS if not loc.pools.issubset(enabled_pools))
 
     def create_regions(self) -> None:
         create_regions(self)
@@ -83,9 +88,11 @@ class RacWorld(World):
         items_to_add: list["Item"] = []
         items_to_add += ItemPool.create_planets(self)
         items_to_add += ItemPool.create_equipment(self)
-        items_to_add += ItemPool.create_collectables(self)
 
-        # add platinum bolts in whatever slots we have left
+        if self.options.shuffle_gold_bolts.value:
+            items_to_add += ItemPool.create_collectables(self)
+
+        # add gold bolts in whatever slots we have left
         # unfilled = [i for i in self.multiworld.get_unfilled_locations(self.player) if not i.is_event]
         # print(self.multiworld.get_filled_locations(self.player))
         # print(f"{len(items_to_add)} {len(unfilled)}")
@@ -109,14 +116,15 @@ class RacWorld(World):
         #                             aprac2.patch_file_ending}")
         # aprac2.write(rom_path)
 
-        # def get_options_as_dict(self) -> Dict[str, Any]:
-        #    return self.options.as_dict(
-        #             "death_link",
-        #             "starting_item",
-        #    )
-        #
-        # def fill_slot_data(self) -> Mapping[str, Any]:
-        #    return self.get_options_as_dict()
+    def get_options_as_dict(self) -> Dict[str, Any]:
+        return self.options.as_dict(
+            "death_link",
+            "starting_item",
+            "shuffle_gold_bolts",
+        )
+
+    def fill_slot_data(self) -> Mapping[str, Any]:
+        return self.get_options_as_dict()
 
     # def post_fill(self) -> None:
     #    from Utils import visualize_regions

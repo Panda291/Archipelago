@@ -8,8 +8,10 @@ from .data.Planets import PlanetData
 if typing.TYPE_CHECKING:
     from . import RacWorld
 
+
 class RacLocation(Location):
     game: str = "Ratchet & Clank"
+
 
 def create_regions(world: 'RacWorld'):
     # create all regions and populate with locations
@@ -36,24 +38,25 @@ def create_regions(world: 'RacWorld'):
                     #     )
                     # Connect with general case access rule
                     # else:
-                        return state.has(planet.name, world.player)
+                    return state.has(planet.name, world.player)
+
                 return planet_access_rule
 
             region = Region(planet_data.name, world.player, world.multiworld)
             world.multiworld.regions.append(region)
             menu.connect(region, None, generate_planet_access_rule(planet_data))
 
-            # options_dict = world.get_options_as_dict()
             for location_data in planet_data.locations:
-                # Don't create the location if there is an "enable_if" clause and it returned False
-                # if location_data.enable_if is not None and not location_data.enable_if(options_dict):
-                #     continue
+                # Don't create the location if there is a "pool" it is in that is not enabled
+                if location_data.name in world.disabled_locations:
+                    continue
 
                 def generate_access_rule(loc: LocationData) -> typing.Callable[[CollectionState], bool]:
                     def access_rule(state: CollectionState):
                         if loc.access_rule:
                             return loc.access_rule(state, world.player)
                         return True
+
                     return access_rule
 
                 region.add_locations({location_data.name: location_data.location_id}, RacLocation)

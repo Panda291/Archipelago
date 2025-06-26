@@ -43,6 +43,8 @@ def get_classification(item: ItemData) -> ItemClassification:
         return ItemClassification.useful
     if item in Items.WEAPONS:
         return ItemClassification.useful
+    if item in Items.GOLDEN_WEAPONS:
+        return ItemClassification.useful
 
     return ItemClassification.filler
 

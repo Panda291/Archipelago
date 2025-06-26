@@ -262,5 +262,8 @@ def get_item_groups() -> Dict[str, Set[str]]:
         "Weapons": {w.name for w in WEAPONS},
         "Infobots": {c.name for c in PLANETS},
         "Equipment": {e.name for e in EQUIPMENT},
+        "Gold Bolts": {b.name for b in COLLECTABLES},
+        "Gold Weapons": {g.name for g in GOLDEN_WEAPONS},
+        "Skillpoints": {s.name for s in SKILLPOINTS},
     }
     return groups

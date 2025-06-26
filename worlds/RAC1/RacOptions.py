@@ -18,6 +18,12 @@ class StartingItem(Choice):
     default = 0
 
 
+class ShuffleGoldBolts(Toggle):
+    """Randomize Gold Bolt locations"""
+    display_name = "Shuffle Gold Bolts"
+    default = 1
+
+
 class EnableBoltMultiplier(Toggle):
     """Enables the bolt multiplier feature without being in New Game+."""
     display_name = "Enable Bolt Multiplier"
@@ -33,6 +39,7 @@ class GoldenWeaponProgression(Toggle):
 @dataclass
 class RacOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
+    shuffle_gold_bolts: ShuffleGoldBolts
     # death_link: DeathLink
     # starting_item: StartingItem
     # enable_bolt_multiplier: EnableBoltMultiplier

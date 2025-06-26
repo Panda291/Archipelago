@@ -184,3 +184,34 @@ ALL_LOCATIONS: Sequence[LocationData] = [
     for locations in [planet.locations for planet in LOGIC_PLANETS]
     for location in locations
 ]
+
+location_table_by_name: dict[str, LocationData] = {location.name: location for location in ALL_LOCATIONS}
+location_groups: dict[str, set[str]] = {
+    "Novalis": set(loc.name for loc in ALL_LOCATIONS if loc.planet in NOVALIS),
+    "Aridia": set(loc.name for loc in ALL_LOCATIONS if loc.planet in ARIDIA),
+    "Kerwan": set(loc.name for loc in ALL_LOCATIONS if loc.planet in KERWAN),
+    "Eudora": set(loc.name for loc in ALL_LOCATIONS if loc.planet in EUDORA),
+    "Rilgar": set(loc.name for loc in ALL_LOCATIONS if loc.planet in RILGAR),
+    "Blarg": set(loc.name for loc in ALL_LOCATIONS if loc.planet in BLARG),
+    "Umbris": set(loc.name for loc in ALL_LOCATIONS if loc.planet in UMBRIS),
+    "Batalia": set(loc.name for loc in ALL_LOCATIONS if loc.planet in BATALIA),
+    "Gaspar": set(loc.name for loc in ALL_LOCATIONS if loc.planet in GASPAR),
+    "Orxon": set(loc.name for loc in ALL_LOCATIONS if loc.planet in ORXON),
+    "Pokitaru": set(loc.name for loc in ALL_LOCATIONS if loc.planet in POKITARU),
+    "Hoven": set(loc.name for loc in ALL_LOCATIONS if loc.planet in HOVEN),
+    "Gemlik": set(loc.name for loc in ALL_LOCATIONS if loc.planet in GEMLIK),
+    "Oltanis": set(loc.name for loc in ALL_LOCATIONS if loc.planet in OLTANIS),
+    "Quartu": set(loc.name for loc in ALL_LOCATIONS if loc.planet in QUARTU),
+    "Kalebo": set(loc.name for loc in ALL_LOCATIONS if loc.planet in KALEBO),
+    "Fleet": set(loc.name for loc in ALL_LOCATIONS if loc.planet in FLEET),
+    "Veldin": set(loc.name for loc in ALL_LOCATIONS if loc.planet in VELDIN),
+    "Infobots": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_INFOBOT) and len(loc.pools)),
+    "Gadget": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GADGET) and len(loc.pools)),
+    "Weapon": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_WEAPON) and len(loc.pools)),
+    "Gold Bolt": set(
+        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GOLD_BOLT) and len(loc.pools)),
+    "Golden Weapon": set(
+        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GOLDEN_WEAPON) and len(loc.pools)),
+    "Skillpoint": set(
+        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_SKILLPOINT) and len(loc.pools)),
+}

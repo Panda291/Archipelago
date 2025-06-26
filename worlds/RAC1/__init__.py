@@ -1,15 +1,20 @@
+import logging
 from typing import Any, Dict, Mapping, Optional
 
-from BaseClasses import Item, ItemClassification, Tutorial
+from BaseClasses import CollectionState, Item, ItemClassification, Tutorial
+from Fill import fill_restrictive
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
 from .data import Items, Locations, Planets
 from .data.Items import CollectableData, ItemData
-from .data.Locations import DEFAULT_SET, POOL_GOLD_BOLT
+from .data.Locations import DEFAULT_LIST, LocationData, POOL_GOLD_BOLT
 from .data.Planets import ALL_LOCATIONS, location_groups, PlanetData
 from .RacOptions import RacOptions
 from .Regions import create_regions
+
+rac_logger = logging.getLogger("Ratchet & Clank")
+rac_logger.setLevel(logging.DEBUG)
 
 
 def run_client(_url: Optional[str] = None):
@@ -45,7 +50,7 @@ class RacWorld(World):
     web = RacWeb()
     options_dataclass = RacOptions
     options: RacOptions
-    topology_present = True
+    topology_present = False
     item_name_to_id = {item.name: item.item_id for item in Items.ALL}
     location_name_to_id = {location.name: location.location_id for location in Planets.ALL_LOCATIONS if
                            location.location_id}
@@ -53,18 +58,36 @@ class RacWorld(World):
     location_name_groups = location_groups
     starting_planet: Optional[PlanetData] = None
     starting_item: list[ItemData] = []
-    prefilled_item_map: Dict[str, str] = {}  # Dict of location name to item name
-    disabled_locations: set[str]
+    disabled_pools: list[str] = []
+    enabled_pools: list[str] = []
 
     # def get_filler_item_name(self) -> str:
     #     return Items.BOLT_PACK.name
 
     def generate_early(self) -> None:
-        enabled_pools = set(DEFAULT_SET)
-        if self.options.shuffle_gold_bolts.value:
-            enabled_pools.add(POOL_GOLD_BOLT)
+        rac_logger.warning(
+            "INCOMPLETE WORLD! Slot '%s' is using an unfinished alpha world that is not stable yet!",
+            self.player_name)
+        rac_logger.warning("INCOMPLETE WORLD! Slot '%s' may require send_location/send_item for completion!",
+                           self.player_name)
 
-        self.disabled_locations = set(loc.name for loc in ALL_LOCATIONS if not loc.pools.issubset(enabled_pools))
+        self.enabled_pools += DEFAULT_LIST
+
+        if self.options.shuffle_gold_bolts.value:
+            self.enabled_pools += [POOL_GOLD_BOLT]
+        else:
+            self.disabled_pools += [POOL_GOLD_BOLT]
+
+        rac_logger.debug(f"Enabled Pools: {self.enabled_pools}")
+
+        # self.disabled_location_data = set(loc for loc in ALL_LOCATIONS if not loc.pools.issubset(enabled_pools))
+
+        # for location in ALL_LOCATIONS:
+        #     if not location.pools.issubset(enabled_pools):
+        #         logging.debug(f"disable: {location.name}")
+        #         self.disabled_location_data.append(location)
+        # output: list[str] = list(loc.name for loc in self.disabled_location_data)
+        # logging.debug(f"disabled location data: {output}")
 
     def create_regions(self) -> None:
         create_regions(self)
@@ -78,19 +101,40 @@ class RacWorld(World):
     def create_event(self, name: str) -> "Item":
         return RacItem(name, ItemClassification.progression, None, self.player)
 
+    # def get_pre_fill_items(self) -> List["Item"]:
+    #     return list(self.create_item(location.vanilla_item) for location in ALL_LOCATIONS)
+
     def pre_fill(self) -> None:
-        for location_name, item_name in self.prefilled_item_map.items():
-            location = self.get_location(location_name)
-            item = self.create_item(item_name, ItemClassification.progression)
-            location.place_locked_item(item)
+        rac_logger.debug(f"Disabled Pools: {self.disabled_pools}")
+        if self.disabled_pools:
+            multiworld = self.multiworld
+            base_state = CollectionState(multiworld)
+            for item in multiworld.itempool:
+                base_state.collect(item)
+            base_state.sweep_for_advancements(multiworld.get_locations(self.player))
+            locations: list = []
+            items: list = []
+            for pool in self.disabled_pools:
+                rac_logger.debug(f"Pool: {pool}")
+                for loc in ALL_LOCATIONS:
+                    if pool in loc.pools and loc.vanilla_item is not None:
+                        rac_logger.debug(f"vanilla: {loc.name}, item: {loc.vanilla_item}")
+                        locations += [self.get_location(loc.name)]
+                        items += [self.create_item(loc.vanilla_item)]
+
+            fill_restrictive(multiworld, base_state, locations, items, single_player_placement=True, lock=True,
+                             allow_excluded=True, name="RAC1 Vanilla Item Fill")
 
     def create_items(self) -> None:
         items_to_add: list["Item"] = []
         items_to_add += ItemPool.create_planets(self)
         items_to_add += ItemPool.create_equipment(self)
 
-        if self.options.shuffle_gold_bolts.value:
+        if POOL_GOLD_BOLT in self.enabled_pools:
+            rac_logger.debug(f"Gold Bolts added to pool")
             items_to_add += ItemPool.create_collectables(self)
+        else:
+            rac_logger.debug(f"Gold Bolts removed from pool")
 
         # add gold bolts in whatever slots we have left
         # unfilled = [i for i in self.multiworld.get_unfilled_locations(self.player) if not i.is_event]
@@ -118,8 +162,8 @@ class RacWorld(World):
 
     def get_options_as_dict(self) -> Dict[str, Any]:
         return self.options.as_dict(
-            "death_link",
-            "starting_item",
+            # "death_link",
+            # "starting_item",
             "shuffle_gold_bolts",
         )
 

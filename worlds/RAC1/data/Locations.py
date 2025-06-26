@@ -11,7 +11,7 @@ POOL_GOLD_BOLT = "gold bolt"
 POOL_GOLDEN_WEAPON = "golden weapon"
 POOL_SKILLPOINT = "skillpoint"
 
-DEFAULT_SET = frozenset({POOL_WEAPON, POOL_GADGET, POOL_INFOBOT})
+DEFAULT_LIST = list([POOL_WEAPON, POOL_GADGET, POOL_INFOBOT])
 
 
 # noinspection PyCompatibility

@@ -205,13 +205,17 @@ location_groups: dict[str, set[str]] = {
     "Kalebo": set(loc.name for loc in ALL_LOCATIONS if loc.planet in KALEBO),
     "Fleet": set(loc.name for loc in ALL_LOCATIONS if loc.planet in FLEET),
     "Veldin": set(loc.name for loc in ALL_LOCATIONS if loc.planet in VELDIN),
-    "Infobots": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_INFOBOT) and len(loc.pools)),
-    "Gadget": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GADGET) and len(loc.pools)),
-    "Weapon": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_WEAPON) and len(loc.pools)),
-    "Gold Bolt": set(
-        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GOLD_BOLT) and len(loc.pools)),
-    "Golden Weapon": set(
+    "Weapons": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_WEAPON) and len(loc.pools)),
+    "GoldenWeapons": set(
         loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GOLDEN_WEAPON) and len(loc.pools)),
+    "Gadgets": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GADGET) and len(loc.pools)),
+    "Packs": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_PACK) and len(loc.pools)),
+    "Helmets": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_HELMET) and len(loc.pools)),
+    "Boots": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_BOOT) and len(loc.pools)),
+    "ExtraItems": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_EXTRA_ITEM) and len(loc.pools)),
+    "GoldBolt": set(
+        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GOLD_BOLT) and len(loc.pools)),
+    "Infobots": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_INFOBOT) and len(loc.pools)),
     "Skillpoint": set(
         loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_SKILLPOINT) and len(loc.pools)),
 }

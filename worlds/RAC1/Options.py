@@ -125,6 +125,7 @@ class ShuffleInfobots(ItemOptions):
         vanilla: Infobots are unshuffled.
         random_same: Infobots are shuffled to other Infobot locations.
         random_item: Infobots are shuffled anywhere, useful items are found at Infobot locations.
+        WARNING! Using random_same, or random_item with no other pool selected, is likely to fail on solo worlds.
         unrestricted: Infobots are shuffled anywhere, anything can be found at Infobot locations.
     """
     display_name = "Shuffle Infobots"
@@ -147,7 +148,7 @@ class GoldenWeaponProgression(Toggle):
 @dataclass
 class RacOptions(PerGameCommonOptions):
     # death_link: DeathLink
-    starting_item: StartingItem
+    # starting_item: StartingItem
     shuffle_weapons: ShuffleWeapons
     shuffle_gadgets: ShuffleGadgets
     shuffle_packs: ShufflePacks
@@ -164,7 +165,7 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
     return {
         # "death_link",
         "start_inventory_from_pool": dict(),
-        "starting_item": options.starting_item.option_vanilla,
+        # "starting_item": options.starting_item.option_vanilla,
         "shuffle_weapons": options.shuffle_weapons.value,
         "shuffle_gadgets": options.shuffle_gadgets.value,
         "shuffle_packs": options.shuffle_packs.value,

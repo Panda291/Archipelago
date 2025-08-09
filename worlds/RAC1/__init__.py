@@ -123,21 +123,21 @@ class RacWorld(World):
         create_regions(self)
 
         # TODO: Item Pools: get_pre_fill_items()
-        if (self.options.shuffle_weapons == ShuffleWeapons.option_vanilla or
-                self.options.starting_item == StartingItem.option_vanilla):
-            starting_item = self.create_item(Items.BOMB_GLOVE.name)
-        else:
-            starting_item = []
-            match self.options.starting_item:
-                case StartingItem.option_random_same:
-                    starting_item = list(Items.WEAPONS)
-                case StartingItem.option_random_item:
-                    starting_item = [item for item in Items.ALL if item.name != "Gold Bolt"]
-                case StartingItem.option_unrestricted:
-                    starting_item = list(Items.ALL)
-            self.random.shuffle(starting_item)
-            self.multiworld.push_precollected(self.create_item(starting_item[0].name))
-            starting_item = self.create_item(starting_item[0].name)
+        # if (self.options.shuffle_weapons == ShuffleWeapons.option_vanilla or
+        #         self.options.starting_item == StartingItem.option_vanilla):
+        starting_item = self.create_item(Items.BOMB_GLOVE.name)
+        # else:
+        #     starting_item = []
+        #     match self.options.starting_item:
+        #         case StartingItem.option_random_same:
+        #             starting_item = list(Items.WEAPONS)
+        #         case StartingItem.option_random_item:
+        #             starting_item = [item for item in Items.ALL if item.name != "Gold Bolt"]
+        #         case StartingItem.option_unrestricted:
+        #             starting_item = list(Items.ALL)
+        #     self.random.shuffle(starting_item)
+        #     self.multiworld.push_precollected(self.create_item(starting_item[0].name))
+        #     starting_item = self.create_item(starting_item[0].name)
 
         starting_planet = self.create_item(Items.NOVALIS_INFOBOT.name)
         self.starting_items = [starting_item, starting_planet]

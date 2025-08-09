@@ -10,13 +10,16 @@ def get_classification(item: ItemData) -> ItemClassification:
         Items.HELI_PACK,
         Items.THRUSTER_PACK,
         Items.HYDRO_PACK,
+        Items.PROGRESSIVE_PACK,
         Items.SWINGSHOT,
         Items.MAGNEBOOTS,
         Items.GRINDBOOTS,
+        Items.PROGRESSIVE_BOOTS,
         Items.HYDRODISPLACER,
         Items.TAUNTER,
         Items.O2_MASK,
         Items.PILOTS_HELMET,
+        Items.PROGRESSIVE_HELMET,
         Items.TRESPASSER,
         Items.HOLOGUISE,
         Items.CODEBOT,
@@ -34,6 +37,9 @@ def get_classification(item: ItemData) -> ItemClassification:
         Items.PERSUADER,
         Items.PREMIUM_NANOTECH,
         Items.ULTRA_NANOTECH,
+        Items.PROGRESSIVE_HOVERBOARD,
+        Items.PROGRESSIVE_TRADE,
+        Items.PROGRESSIVE_NANOTECH,
     ]:
         return ItemClassification.useful
     if item in Items.WEAPONS:

@@ -84,6 +84,7 @@ class RacWorld(World):
             self.options.shuffle_boots,
             self.options.shuffle_weapons,
             self.options.shuffle_extra_items,
+            self.options.shuffle_golden_weapons,
         ]
         disabled_pools = []
         restricted_pools = []

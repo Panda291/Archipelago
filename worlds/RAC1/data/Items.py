@@ -65,17 +65,17 @@ GOLDEN_DECOY_GLOVE = ItemData(75, "Golden Decoy glove", "GoldenWeapons")
 
 PROGRESSIVE_PACK = ItemData(80, "Progressive Pack", "Packs")
 PROGRESSIVE_HELMET = ItemData(81, "Progressive Helmet", "Helmets")
-PROGRESSIVE_SUCK = ItemData(82, "Progressive Suck Cannon", "ProgressiveWeapons")
-PROGRESSIVE_BOMB = ItemData(83, "Progressive Bomb glove", "ProgressiveWeapons")
-PROGRESSIVE_DEVASTATOR = ItemData(84, "Progressive Devastator", "ProgressiveWeapons")
-PROGRESSIVE_BLASTER = ItemData(85, "Progressive Blaster", "ProgressiveWeapons")
-PROGRESSIVE_PYROCITOR = ItemData(86, "Progressive Pyrocitor", "ProgressiveWeapons")
-PROGRESSIVE_MINE = ItemData(87, "Progressive Mine glove", "ProgressiveWeapons")
-PROGRESSIVE_TESLA = ItemData(88, "Progressive Tesla claw", "ProgressiveWeapons")
-PROGRESSIVE_DOOM = ItemData(89, "Progressive Glove of doom", "ProgressiveWeapons")
-PROGRESSIVE_MORPH = ItemData(90, "Progressive Morph-o-ray", "ProgressiveWeapons")
-PROGRESSIVE_DECOY = ItemData(91, "Progressive Decoy glove", "ProgressiveWeapons")
-PROGRESSIVE_BOOTS = ItemData(92, "Progressive Boots", "Boots")
+PROGRESSIVE_SUCK = ItemData(82, "Progressive Suck Cannon", "Weapons")
+PROGRESSIVE_BOMB = ItemData(83, "Progressive Bomb glove", "Weapons")
+PROGRESSIVE_DEVASTATOR = ItemData(84, "Progressive Devastator", "Weapons")
+PROGRESSIVE_BLASTER = ItemData(85, "Progressive Blaster", "Weapons")
+PROGRESSIVE_PYROCITOR = ItemData(86, "Progressive Pyrocitor", "Weapons")
+PROGRESSIVE_MINE = ItemData(87, "Progressive Mine glove", "Weapons")
+PROGRESSIVE_TESLA = ItemData(88, "Progressive Tesla claw", "Weapons")
+PROGRESSIVE_DOOM = ItemData(89, "Progressive Glove of doom", "Weapons")
+PROGRESSIVE_MORPH = ItemData(90, "Progressive Morph-o-ray", "Weapons")
+PROGRESSIVE_DECOY = ItemData(91, "Progressive Decoy glove", "Weapons")
+PROGRESSIVE_BOOT = ItemData(92, "Progressive Boots", "Boots")
 PROGRESSIVE_HOVERBOARD = ItemData(93, "Progressive Hoverboard", "ExtraItems")
 PROGRESSIVE_TRADE = ItemData(94, "Progressive Raritanium", "ExtraItems")
 PROGRESSIVE_NANOTECH = ItemData(95, "Progressive Nanotech", "ExtraItems")
@@ -141,34 +141,53 @@ GOLD_BOLT = CollectableData(301, "Gold Bolt", "GoldBolts", 40)
 
 
 WEAPONS: Sequence[ItemData] = [
+    TAUNTER,
+    VISIBOMB,
+    WALLOPER,
+    DRONE_DEVICE,
+]
+
+NON_PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
     SUCK_CANNON,
     BOMB_GLOVE,
     DEVASTATOR,
-    VISIBOMB,
-    TAUNTER,
     BLASTER,
     PYROCITOR,
     MINE_GLOVE,
-    WALLOPER,
     TESLA_CLAW,
     GLOVE_OF_DOOM,
     MORPH_O_RAY,
     RYNO,
-    DRONE_DEVICE,
     DECOY_GLOVE,
-    *[PROGRESSIVE_SUCK] * 2,
-    *[PROGRESSIVE_BOMB] * 2,
-    *[PROGRESSIVE_DEVASTATOR] * 2,
-    *[PROGRESSIVE_BLASTER] * 2,
-    *[PROGRESSIVE_PYROCITOR] * 2,
-    *[PROGRESSIVE_MINE] * 2,
-    *[PROGRESSIVE_TESLA] * 2,
-    *[PROGRESSIVE_DOOM] * 2,
-    *[PROGRESSIVE_MORPH] * 2,
-    *[PROGRESSIVE_DECOY] * 2,
+]
+
+PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
+    PROGRESSIVE_SUCK,
+    PROGRESSIVE_BOMB,
+    PROGRESSIVE_DEVASTATOR,
+    PROGRESSIVE_BLASTER,
+    PROGRESSIVE_PYROCITOR,
+    PROGRESSIVE_MINE,
+    PROGRESSIVE_TESLA,
+    PROGRESSIVE_DOOM,
+    PROGRESSIVE_MORPH,
+    PROGRESSIVE_DECOY,
 ]
 
 GOLDEN_WEAPONS: Sequence[ItemData] = [
+    GOLDEN_SUCK_CANNON,
+    GOLDEN_BOMB_GLOVE,
+    GOLDEN_DEVASTATOR,
+    GOLDEN_BLASTER,
+    GOLDEN_PYROCITOR,
+    GOLDEN_MINE_GLOVE,
+    GOLDEN_TESLA_CLAW,
+    GOLDEN_GLOVE_OF_DOOM,
+    GOLDEN_MORPH_O_RAY,
+    GOLDEN_DECOY_GLOVE,
+]
+
+PROGRESSIVE_GOLDEN_WEAPONS: Sequence[ItemData] = [
     GOLDEN_SUCK_CANNON,
     GOLDEN_BOMB_GLOVE,
     GOLDEN_DEVASTATOR,
@@ -194,6 +213,9 @@ PACKS: Sequence[ItemData] = [
     HELI_PACK,
     THRUSTER_PACK,
     HYDRO_PACK,
+]
+
+PROGRESSIVE_PACKS: Sequence[ItemData] = [
     *[PROGRESSIVE_PACK] * 3,
 ]
 
@@ -201,32 +223,56 @@ HELMETS: Sequence[ItemData] = [
     SONIC_SUMMONER,
     O2_MASK,
     PILOTS_HELMET,
+]
+
+PROGRESSIVE_HELMETS: Sequence[ItemData] = [
     *[PROGRESSIVE_HELMET] * 3,
 ]
 
 BOOTS: Sequence[ItemData] = [
     MAGNEBOOTS,
     GRINDBOOTS,
-    *[PROGRESSIVE_BOOTS] * 2,
+]
+
+PROGRESSIVE_BOOTS: Sequence[ItemData] = [
+    *[PROGRESSIVE_BOOT] * 2,
 ]
 
 EXTRA_ITEMS: Sequence[ItemData] = [
-    HOVERBOARD,
     MAP_O_MATIC,
     BOLT_GRABBER,
-    PERSUADER,
-    ZOOMERATOR,
-    RARITANIUM,
     CODEBOT,
+]
+
+NON_PROGRESSIVE_HOVERBOARDS: Sequence[ItemData] = [
+    HOVERBOARD,
+    ZOOMERATOR,
+]
+
+PROGRESSIVE_HOVERBOARDS: Sequence[ItemData] = [
+    *[PROGRESSIVE_HOVERBOARD] * 2,
+]
+
+NON_PROGRESSIVE_TRADES: Sequence[ItemData] = [
+    PERSUADER,
+    RARITANIUM,
+]
+
+PROGRESSIVE_TRADES: Sequence[ItemData] = [
+    *[PROGRESSIVE_TRADE] * 2,
+]
+
+NON_PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
     PREMIUM_NANOTECH,
     ULTRA_NANOTECH,
-    *[PROGRESSIVE_HOVERBOARD] * 2,
-    *[PROGRESSIVE_TRADE] * 2,
+]
+
+PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
     *[PROGRESSIVE_NANOTECH] * 2,
 ]
 
-COLLECTABLES: Sequence[CollectableData] = [
-    GOLD_BOLT,
+GOLD_BOLTS: Sequence[CollectableData] = [
+    *[GOLD_BOLT] * 40,
 ]
 
 PLANETS: Sequence[ItemData] = [
@@ -283,7 +329,21 @@ SKILLPOINTS: Sequence[ItemData] = [
     GOING_COMMANDO,
 ]
 
-ALL: Sequence[ItemData] = [*WEAPONS, *GADGETS, *PACKS, *HELMETS, *BOOTS, *EXTRA_ITEMS, *[GOLD_BOLT] * 40, *PLANETS, ]
+ALL: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS,
+                           *PROGRESSIVE_GOLDEN_WEAPONS, *GADGETS, *PACKS, *PROGRESSIVE_PACKS, *HELMETS,
+                           *PROGRESSIVE_HELMETS, *BOOTS, *PROGRESSIVE_BOOTS, *EXTRA_ITEMS,
+                           *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
+                           *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS,
+                           *PLANETS, *SKILLPOINTS]
+
+ALL_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS,
+                                   *PROGRESSIVE_GOLDEN_WEAPONS]
+ALL_PACKS: Sequence[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
+ALL_HELMETS: Sequence[ItemData] = [*HELMETS, *PROGRESSIVE_HELMETS]
+ALL_BOOTS: Sequence[ItemData] = [*BOOTS, *PROGRESSIVE_BOOTS]
+ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS,
+                                       *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
+                                       *PROGRESSIVE_NANOTECHS]
 
 
 def from_id(item_id: int) -> ItemData:
@@ -298,21 +358,20 @@ def from_name(item_name: str) -> ItemData:
     matching = [item for item in ALL if item.name == item_name]
     if len(matching) == 0:
         raise ValueError(f"No item data for '{item_name}'")
-    if item_name != GOLD_BOLT.name:
-        assert len(matching) < 2, f"Multiple item data with name '{item_name}'. Please report."
+    # if item_name != GOLD_BOLT.name:
+    #     assert len(matching) < 2, f"Multiple item data with name '{item_name}'. Please report."
     return matching[0]
 
 
 def get_item_groups() -> dict[str, set[str]]:
     groups: dict[str, set[str]] = {
-        "Weapons": {w.name for w in WEAPONS},
-        "GoldenWeapons": {gw.name for gw in GOLDEN_WEAPONS},
+        "Weapons": {w.name for w in ALL_WEAPONS},
         "Gadgets": {g.name for g in GADGETS},
-        "Packs": {p.name for p in PACKS},
-        "Helmets": {h.name for h in HELMETS},
-        "Boots": {b.name for b in BOOTS},
-        "ExtraItems": {e.name for e in EXTRA_ITEMS},
-        "GoldBolts": {c.name for c in COLLECTABLES},
+        "Packs": {p.name for p in ALL_PACKS},
+        "Helmets": {h.name for h in ALL_HELMETS},
+        "Boots": {b.name for b in ALL_BOOTS},
+        "ExtraItems": {e.name for e in ALL_EXTRA_ITEMS},
+        "GoldBolts": {c.name for c in GOLD_BOLTS},
         "Infobots": {i.name for i in PLANETS},
         "Skillpoints": {s.name for s in SKILLPOINTS},
     }

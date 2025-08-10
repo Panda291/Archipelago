@@ -45,6 +45,18 @@ class ShuffleWeapons(ItemOptions):
     pool = "Weapons"
 
 
+class ShuffleGoldenWeapons(ItemOptions):
+    """Randomize Golden Weapon locations
+        vanilla: Golden Weapons are unshuffled.
+        random_same: Golden Weapons are shuffled to other Weapon locations.
+        random_item: Golden Weapons are shuffled anywhere, useful items are found at Golden Weapon locations.
+        unrestricted: Golden Weapons are shuffled anywhere, anything can be found at Golden Weapon locations.
+    """
+    display_name = "Shuffle Golden Weapons"
+    default = 3
+    pool = "Weapons"
+
+
 # TODO: Early Weapon option, off, shuffled amount (user states amount), list (user lists items)
 class EarlyWeapon(TextChoice):
     """
@@ -138,11 +150,137 @@ class EnableBoltMultiplier(Toggle):
     display_name = "Enable Bolt Multiplier"
 
 
-class GoldenWeaponProgression(Toggle):
-    """If enabled, make golden weapons and their standard variants progressive items.
-        This means that there are two copies of the regular item in the pool, when you collect one for the first time
-        then it is the standard version, but collecting the second one will give you the golden version."""
+class ProgressiveOptions(Choice):
+    """Template
+        vanilla: These items are not progressive, each item is independent of other items.
+        progressive: These items are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: These items are progressive, the order of upgrading is reversed.
+        progressive_random: These items are progressive, the order of upgrading is random.
+    """
+    value: int
+    option_vanilla = 0
+    option_progressive = 1
+    option_progressive_reversed = 2
+    option_progressive_random = 3
+    alias_true = 1
+    alias_false = 0
+
+
+class GoldenWeaponProgression(ProgressiveOptions):
+    """Progressive Weapons
+    If enabled, make golden weapons and their standard variants progressive items.
+        vanilla: Golden Weapons and Weapons are not progressive, Golden Weapons do nothing until their base item is
+        found.
+        normal: Golden Weapons and Weapons are not progressive, each item is independent of other items.
+        progressive: Golden Weapons and Weapons are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: Golden Weapons and Weapons are progressive, the order of upgrading is reversed.
+        progressive_random: Golden Weapons and Weapons are progressive, the order of upgrading is random."""
     display_name = "Golden Weapon Progression"
+    value: int
+    option_vanilla = 0
+    option_normal = 1
+    option_progressive = 2
+    option_progressive_reversed = 3
+    option_progressive_random = 4
+    alias_true = 0
+    alias_false = 1
+    default = 1
+
+
+class PackProgression(ProgressiveOptions):
+    """Progressive Packs
+        vanilla: Packs are not progressive, each item is independent of other items.
+        progressive: Packs are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: Packs are progressive, the order of upgrading is reversed.
+        progressive_random: Packs are progressive, the order of upgrading is random.
+    """
+    value: int
+    option_vanilla = 0
+    option_progressive = 1
+    option_progressive_reversed = 2
+    option_progressive_random = 3
+    alias_true = 1
+    alias_false = 0
+
+
+class HelmetProgression(ProgressiveOptions):
+    """Progressive Helmets
+        vanilla: Helmets are not progressive, each item is independent of other items.
+        progressive: Helmets are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: Helmets are progressive, the order of upgrading is reversed.
+        progressive_random: Helmets are progressive, the order of upgrading is random.
+    """
+    value: int
+    option_vanilla = 0
+    option_progressive = 1
+    option_progressive_reversed = 2
+    option_progressive_random = 3
+    alias_true = 1
+    alias_false = 0
+
+
+class BootsProgression(ProgressiveOptions):
+    """Progressive Boots
+        vanilla: Grind and Magneboots are not progressive, each item is independent of other items.
+        progressive: Grind and Magneboots are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: Grind and Magneboots are progressive, the order of upgrading is reversed.
+        progressive_random: Grind and Magneboots are progressive, the order of upgrading is random.
+    """
+    value: int
+    option_vanilla = 0
+    option_progressive = 1
+    option_progressive_reversed = 2
+    option_progressive_random = 3
+    alias_true = 1
+    alias_false = 0
+
+
+class HoverboardProgression(ProgressiveOptions):
+    """Progressive Hoverboard
+        vanilla: Hoverboard and Zoomerator are not progressive, each item is independent of other items.
+        progressive: Hoverboard and Zoomerator are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: Hoverboard and Zoomerator are progressive, the order of upgrading is reversed.
+        progressive_random: Hoverboard and Zoomerator are progressive, the order of upgrading is random.
+    """
+    value: int
+    option_vanilla = 0
+    option_progressive = 1
+    option_progressive_reversed = 2
+    option_progressive_random = 3
+    alias_true = 1
+    alias_false = 0
+
+
+class RaritaniumProgression(ProgressiveOptions):
+    """Progressive Raritanium
+        vanilla: Raritanium and Persuader are not progressive, each item is independent of other items.
+        progressive: Raritanium and Persuader are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: Raritanium and Persuader are progressive, the order of upgrading is reversed.
+        progressive_random: Raritanium and Persuader are progressive, the order of upgrading is random.
+    """
+    value: int
+    option_vanilla = 0
+    option_progressive = 1
+    option_progressive_reversed = 2
+    option_progressive_random = 3
+    alias_true = 1
+    alias_false = 0
+
+
+class NanotechProgression(ProgressiveOptions):
+    """Progressive Nanotech
+        vanilla: Nanotech is not progressive, each item is independent of other items.
+        progressive: Nanotech are progressive, collecting multiple of an item will upgrade it.
+        progressive_reversed: Nanotech are progressive, the order of upgrading is reversed.
+        progressive_random: Nanotech are progressive, the order of upgrading is random.
+    """
+    value: int
+    option_vanilla = 0
+    option_progressive = 1
+    option_progressive_reversed = 2
+    option_progressive_random = 3
+    alias_true = 1
+    alias_false = 0
 
 
 @dataclass
@@ -150,6 +288,7 @@ class RacOptions(PerGameCommonOptions):
     # death_link: DeathLink
     # starting_item: StartingItem
     shuffle_weapons: ShuffleWeapons
+    shuffle_golden_weapons: ShuffleGoldenWeapons
     shuffle_gadgets: ShuffleGadgets
     shuffle_packs: ShufflePacks
     shuffle_helmets: ShuffleHelmets
@@ -158,7 +297,13 @@ class RacOptions(PerGameCommonOptions):
     shuffle_gold_bolts: ShuffleGoldBolts
     shuffle_infobots: ShuffleInfobots
     # enable_bolt_multiplier: EnableBoltMultiplier
-    # extend_weapon_progression: GoldenWeaponProgression
+    progressive_weapons: GoldenWeaponProgression
+    progressive_packs: PackProgression
+    progressive_helmets: HelmetProgression
+    progressive_boots: BootsProgression
+    progressive_hoverboard: HoverboardProgression
+    progressive_raritanium: RaritaniumProgression
+    progressive_nanotech: NanotechProgression
 
 
 def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
@@ -174,4 +319,11 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         "shuffle_extra_items": options.shuffle_extra_items.value,
         "shuffle_gold_bolts": options.shuffle_gold_bolts.value,
         "shuffle_infobots": options.shuffle_infobots.value,
+        "progressive_weapons": options.progressive_weapons.value,
+        "progressive_packs": options.progressive_packs.value,
+        "progressive_helmets": options.progressive_helmets.value,
+        "progressive_boots": options.progressive_boots.value,
+        "progressive_hoverboard": options.progressive_hoverboard.value,
+        "progressive_raritanium": options.progressive_raritanium.value,
+        "progressive_nanotech": options.progressive_nanotech.value,
     }

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Sequence
 
 from BaseClasses import Item
+from worlds.RAC1 import Options
 
 
 @dataclass
@@ -376,3 +377,51 @@ def get_item_groups() -> dict[str, set[str]]:
         "Skillpoints": {s.name for s in SKILLPOINTS},
     }
     return groups
+
+def check_progressive_item(options, item) -> str:
+    new_item = item
+    match from_name(item).pool:
+        case SUCK_CANNON.pool | GOLDEN_SUCK_CANNON.pool:
+            if options.progressive_weapons.value > Options.GoldenWeaponProgression.option_normal:
+                match item:
+                    case SUCK_CANNON.name:
+                        new_item = PROGRESSIVE_SUCK.name
+                    case BOMB_GLOVE.name:
+                        new_item = PROGRESSIVE_BOMB.name
+                    case DEVASTATOR.name:
+                        new_item = PROGRESSIVE_DEVASTATOR.name
+                    case BLASTER.name:
+                        new_item = PROGRESSIVE_BLASTER.name
+                    case PYROCITOR.name:
+                        new_item = PROGRESSIVE_PYROCITOR.name
+                    case MINE_GLOVE.name:
+                        new_item = PROGRESSIVE_MINE.name
+                    case TESLA_CLAW.name:
+                        new_item = PROGRESSIVE_TESLA.name
+                    case GLOVE_OF_DOOM.name:
+                        new_item = PROGRESSIVE_DOOM.name
+                    case MORPH_O_RAY.name:
+                        new_item = PROGRESSIVE_MORPH.name
+                    case DECOY_GLOVE.name:
+                        new_item = PROGRESSIVE_DECOY.name
+        case HELI_PACK.pool:
+            if options.progressive_packs.value:
+                new_item = PROGRESSIVE_PACK.name
+        case O2_MASK.pool:
+            if options.progressive_helmets.value:
+                new_item = PROGRESSIVE_HELMET.name
+        case GRINDBOOTS.pool:
+            if options.progressive_boots.value:
+                new_item = PROGRESSIVE_BOOT.name
+        case HOVERBOARD.pool:
+            match item:
+                case HOVERBOARD.name | ZOOMERATOR.name:
+                    if options.progressive_hoverboard.value:
+                        new_item = PROGRESSIVE_HOVERBOARD.name
+                case RARITANIUM.name | PERSUADER.name:
+                    if options.progressive_raritanium.value:
+                        new_item = PROGRESSIVE_TRADE.name
+                case PREMIUM_NANOTECH.name | ULTRA_NANOTECH.name:
+                    if options.progressive_nanotech.value:
+                        new_item = PROGRESSIVE_NANOTECH.name
+    return new_item

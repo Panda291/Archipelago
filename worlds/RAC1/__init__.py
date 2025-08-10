@@ -267,10 +267,11 @@ class RacWorld(World):
         return placed_locations
 
     def create_item(self, name: str, override: Optional[ItemClassification] = None) -> "Item":
+        new_name = Items.check_progressive_item(self.options, name)
         if override:
-            return RacItem(name, override, self.item_name_to_id[name], self.player)
-        item_data = Items.from_name(name)
-        return RacItem(name, ItemPool.get_classification(item_data), self.item_name_to_id[name], self.player)
+            return RacItem(new_name, override, self.item_name_to_id[new_name], self.player)
+        item_data = Items.from_name(new_name)
+        return RacItem(new_name, ItemPool.get_classification(item_data), self.item_name_to_id[new_name], self.player)
 
     def create_event(self, name: str) -> "Item":
         return RacItem(name, ItemClassification.progression, None, self.player)

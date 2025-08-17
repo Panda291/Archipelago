@@ -11,7 +11,7 @@ from .data.Items import CollectableData, ItemData
 from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
                              POOL_GOLD_BOLT, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_WEAPON)
 from .data.Planets import ALL_LOCATIONS, location_groups, PlanetData
-from .Options import RacOptions, ShuffleInfobots, ShuffleWeapons, StartingItem
+from .Options import RacOptions, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation
 from .Regions import create_regions
 
 rac_logger = logging.getLogger("Ratchet & Clank")
@@ -142,10 +142,10 @@ class RacWorld(World):
         #     starting_item = self.create_item(starting_item[0].name)
 
         if (self.options.shuffle_infobots == ShuffleInfobots.option_vanilla or
-                self.options.starting_planet == StartingPlanet.option_vanilla):
+                self.options.starting_location == StartingLocation.option_false):
             starting_planet = self.create_item(Items.NOVALIS_INFOBOT.name)
         else:
-            starting_planet = list(Planets.LOGIC_PLANETS)
+            starting_planet = list(Planets.STARTING_PLANETS)
             self.random.shuffle(starting_planet)
             self.starting_planet = starting_planet[0].name
             starting_planet = self.create_item(starting_planet[0].name)

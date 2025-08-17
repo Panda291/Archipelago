@@ -18,7 +18,7 @@ def create_regions(world: 'RacWorld'):
     menu = Region("Menu", world.player, world.multiworld)
     world.multiworld.regions.append(menu)
 
-    for planet_data in Planets.LOGIC_PLANETS:
+    for planet_data in Planets.ALL_PLANETS:
         if planet_data.locations:
             def generate_planet_access_rule(planet: PlanetData) -> typing.Callable[[CollectionState], bool]:
                 def planet_access_rule(state: CollectionState):

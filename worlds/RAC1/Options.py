@@ -25,13 +25,16 @@ class StartingItem(ItemOptions):
     """Randomize what weapon you start the game with.
         vanilla: Start with the Bomb Glove.
         random_same: Start with a random weapon.
-        random_item: Start with any random weapon, gadget, pack, helmet, boots, item, or infobot.
-        unrestricted: Start with anything (including Gold Bolts and Skillpoints).
+        random_item: Start with any random equipable item, weapons or gadgets.
     """
-    display_name = "Starting Weapon"
+    display_name = "Starting Item"
     default = 0
     pool = "StartItem"
 
+class StartingLocation(Toggle):
+    """Randomize what Planet you start on"""
+    display_name = "Shuffle Starting Planet"
+    default = 1
 
 class ShuffleWeapons(ItemOptions):
     """Randomize Weapon locations
@@ -41,18 +44,6 @@ class ShuffleWeapons(ItemOptions):
         unrestricted: Weapons are shuffled anywhere, anything can be found at Weapon locations.
     """
     display_name = "Shuffle Weapons"
-    default = 3
-    pool = "Weapons"
-
-
-class ShuffleGoldenWeapons(ItemOptions):
-    """Randomize Golden Weapon locations
-        vanilla: Golden Weapons are unshuffled.
-        random_same: Golden Weapons are shuffled to other Weapon locations.
-        random_item: Golden Weapons are shuffled anywhere, useful items are found at Golden Weapon locations.
-        unrestricted: Golden Weapons are shuffled anywhere, anything can be found at Golden Weapon locations.
-    """
-    display_name = "Shuffle Golden Weapons"
     default = 3
     pool = "Weapons"
 
@@ -144,6 +135,17 @@ class ShuffleInfobots(ItemOptions):
     default = 3
     pool = "Infobots"
 
+
+class ShuffleGoldWeapons(ItemOptions):
+    """Randomize Gold Weapon locations
+        vanilla: Gold Weapons are unshuffled.
+        random_same: Gold Weapons are shuffled to other Gold Weapon locations.
+        random_item: Gold Weapons are shuffled anywhere, useful items are found at Gold Weapon locations.
+        unrestricted: Gold Weapons are shuffled anywhere, anything can be found at Gold Weapon locations.
+    """
+    display_name = "Shuffle Gold Weapons"
+    default = 3
+    pool = "GoldenWeapons"
 
 class EnableBoltMultiplier(Toggle):
     """Enables the bolt multiplier feature without being in New Game+."""
@@ -287,8 +289,8 @@ class NanotechProgression(ProgressiveOptions):
 class RacOptions(PerGameCommonOptions):
     # death_link: DeathLink
     # starting_item: StartingItem
+    starting_location: StartingLocation
     shuffle_weapons: ShuffleWeapons
-    shuffle_golden_weapons: ShuffleGoldenWeapons
     shuffle_gadgets: ShuffleGadgets
     shuffle_packs: ShufflePacks
     shuffle_helmets: ShuffleHelmets
@@ -296,6 +298,7 @@ class RacOptions(PerGameCommonOptions):
     shuffle_extra_items: ShuffleExtraItems
     shuffle_gold_bolts: ShuffleGoldBolts
     shuffle_infobots: ShuffleInfobots
+    shuffle_gold_weapons: ShuffleGoldWeapons
     # enable_bolt_multiplier: EnableBoltMultiplier
     progressive_weapons: GoldenWeaponProgression
     progressive_packs: PackProgression
@@ -311,6 +314,7 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         # "death_link",
         "start_inventory_from_pool": dict(),
         # "starting_item": options.starting_item.option_vanilla,
+        "starting_location": options.starting_location.value,
         "shuffle_weapons": options.shuffle_weapons.value,
         "shuffle_gadgets": options.shuffle_gadgets.value,
         "shuffle_packs": options.shuffle_packs.value,
@@ -319,6 +323,7 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         "shuffle_extra_items": options.shuffle_extra_items.value,
         "shuffle_gold_bolts": options.shuffle_gold_bolts.value,
         "shuffle_infobots": options.shuffle_infobots.value,
+        "shuffle_gold_weapons": options.shuffle_gold_weapons.value,
         "progressive_weapons": options.progressive_weapons.value,
         "progressive_packs": options.progressive_packs.value,
         "progressive_helmets": options.progressive_helmets.value,

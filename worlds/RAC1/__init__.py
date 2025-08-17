@@ -11,7 +11,7 @@ from .data.Items import CollectableData, ItemData
 from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
                              POOL_GOLD_BOLT, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_WEAPON)
 from .data.Planets import ALL_LOCATIONS, location_groups, PlanetData
-from .Options import RacOptions, ShuffleWeapons, StartingItem
+from .Options import RacOptions, ShuffleWeapons, StartingItem, ShuffleInfobots
 from .Regions import create_regions
 
 rac_logger = logging.getLogger("Ratchet & Clank")
@@ -57,6 +57,7 @@ class RacWorld(World):
                            location.location_id}
     item_name_groups = Items.get_item_groups()
     location_name_groups = location_groups
+    starting_planet = Items.NOVALIS_INFOBOT.name
     starting_items: list[Item] = []
     preplaced_locations: list[Location] = []
 
@@ -84,6 +85,7 @@ class RacWorld(World):
             self.options.shuffle_boots,
             self.options.shuffle_weapons,
             self.options.shuffle_extra_items,
+            self.options.shuffle_gold_weapons,
         ]
         disabled_pools = []
         restricted_pools = []
@@ -139,7 +141,16 @@ class RacWorld(World):
             self.multiworld.push_precollected(self.create_item(starting_item[0].name))
             starting_item = self.create_item(starting_item[0].name)
 
-        starting_planet = self.create_item(Items.NOVALIS_INFOBOT.name)
+        if (self.options.shuffle_infobots == ShuffleInfobots.option_vanilla or
+                self.options.starting_item == StartingItem.option_vanilla):
+            starting_planet = Items.KERWAN_INFOBOT.name
+        else:
+            starting_planet = list(Planets.LOGIC_PLANETS)
+            self.random.shuffle(starting_planet)
+            starting_planet = starting_planet[0].name
+
+        self.starting_planet = starting_planet
+        starting_planet = self.create_item(self.starting_planet)
         self.starting_items = [starting_item, starting_planet]
         self.multiworld.push_precollected(starting_item)
         self.multiworld.push_precollected(starting_planet)
@@ -323,6 +334,7 @@ class RacWorld(World):
     def fill_slot_data(self) -> Mapping[str, Any]:
         slot_data: dict[str, Any] = {}
         slot_data |= Options.get_options_as_dict(self.options)
+        slot_data["starting_planet"] = self.item_name_to_id[self.starting_planet]
         return slot_data
 
     # def post_fill(self) -> None:

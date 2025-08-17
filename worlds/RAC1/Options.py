@@ -132,6 +132,17 @@ class ShuffleInfobots(ItemOptions):
     pool = "Infobots"
 
 
+class ShuffleGoldWeapons(ItemOptions):
+    """Randomize Gold Weapon locations
+        vanilla: Gold Weapons are unshuffled.
+        random_same: Gold Weapons are shuffled to other Gold Weapon locations.
+        random_item: Gold Weapons are shuffled anywhere, useful items are found at Gold Weapon locations.
+        unrestricted: Gold Weapons are shuffled anywhere, anything can be found at Gold Weapon locations.
+    """
+    display_name = "Shuffle Gold Weapons"
+    default = 3
+    pool = "GoldenWeapons"
+
 class EnableBoltMultiplier(Toggle):
     """Enables the bolt multiplier feature without being in New Game+."""
     display_name = "Enable Bolt Multiplier"
@@ -156,6 +167,7 @@ class RacOptions(PerGameCommonOptions):
     shuffle_extra_items: ShuffleExtraItems
     shuffle_gold_bolts: ShuffleGoldBolts
     shuffle_infobots: ShuffleInfobots
+    shuffle_gold_weapons: ShuffleGoldWeapons
     # enable_bolt_multiplier: EnableBoltMultiplier
     # extend_weapon_progression: GoldenWeaponProgression
 
@@ -173,4 +185,5 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         "shuffle_extra_items": options.shuffle_extra_items.value,
         "shuffle_gold_bolts": options.shuffle_gold_bolts.value,
         "shuffle_infobots": options.shuffle_infobots.value,
+        "shuffle_gold_weapons": options.shuffle_gold_weapons.value,
     }

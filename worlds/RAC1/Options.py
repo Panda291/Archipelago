@@ -28,6 +28,7 @@ class StartingItem(ItemOptions):
         random_item: Start with any random equipable item, weapons or gadgets.
     """
     display_name = "Starting Item"
+    rich_text_doc = True
     default = 0
     pool = "StartItem"
 
@@ -44,6 +45,7 @@ class ShuffleWeapons(ItemOptions):
         unrestricted: Weapons are shuffled anywhere, anything can be found at Weapon locations.
     """
     display_name = "Shuffle Weapons"
+    rich_text_doc = True
     default = 3
     pool = "Weapons"
 
@@ -55,6 +57,7 @@ class EarlyWeapon(TextChoice):
         Set to off if 'Randomize Weapon locations' option is set to 'vanilla or random_same'.
     """
     display_name = "Early Weapon"
+    rich_text_doc = True
 
 
 class ShuffleGadgets(ItemOptions):
@@ -65,6 +68,7 @@ class ShuffleGadgets(ItemOptions):
         unrestricted: Gadgets are shuffled anywhere, anything can be found at Gadget locations.
     """
     display_name = "Shuffle Gadgets"
+    rich_text_doc = True
     default = 3
     pool = "Gadgets"
 
@@ -77,6 +81,7 @@ class ShufflePacks(ItemOptions):
         unrestricted: Packs are shuffled anywhere, anything can be found at Pack locations.
     """
     display_name = "Shuffle Packs"
+    rich_text_doc = True
     default = 3
     pool = "Packs"
 
@@ -89,6 +94,7 @@ class ShuffleHelmets(ItemOptions):
         unrestricted: Helmets are shuffled anywhere, anything can be found at Helmet locations.
     """
     display_name = "Shuffle Helmets"
+    rich_text_doc = True
     default = 3
     pool = "Helmets"
 
@@ -101,6 +107,7 @@ class ShuffleBoots(ItemOptions):
         unrestricted: Boots are shuffled anywhere, anything can be found at Boot locations.
     """
     display_name = "Shuffle Boots"
+    rich_text_doc = True
     default = 3
     pool = "Boots"
 
@@ -113,6 +120,7 @@ class ShuffleExtraItems(ItemOptions):
         unrestricted: Extra Items are shuffled anywhere, anything can be found at Extra Item locations.
     """
     display_name = "Shuffle Extra Items"
+    rich_text_doc = True
     default = 3
     pool = "ExtraItems"
 
@@ -131,7 +139,8 @@ class ShuffleInfobots(ItemOptions):
         WARNING! Using random_same, or random_item with no other pool selected, is likely to fail on solo worlds.
         unrestricted: Infobots are shuffled anywhere, anything can be found at Infobot locations.
     """
-    display_name = "Shuffle Infobots"
+    display_name = "Shuffle Infobots"#
+    rich_text_doc = True
     default = 3
     pool = "Infobots"
 
@@ -144,6 +153,7 @@ class ShuffleGoldWeapons(ItemOptions):
         unrestricted: Gold Weapons are shuffled anywhere, anything can be found at Gold Weapon locations.
     """
     display_name = "Shuffle Gold Weapons"
+    rich_text_doc = True
     default = 3
     pool = "GoldenWeapons"
 
@@ -169,7 +179,7 @@ class ProgressiveOptions(Choice):
 
 
 class GoldenWeaponProgression(ProgressiveOptions):
-    """Progressive Weapons
+    """
     If enabled, make golden weapons and their standard variants progressive items.
         vanilla: Golden Weapons and Weapons are not progressive, Golden Weapons do nothing until their base item is
         found.
@@ -177,7 +187,8 @@ class GoldenWeaponProgression(ProgressiveOptions):
         progressive: Golden Weapons and Weapons are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Golden Weapons and Weapons are progressive, the order of upgrading is reversed.
         progressive_random: Golden Weapons and Weapons are progressive, the order of upgrading is random."""
-    display_name = "Golden Weapon Progression"
+    display_name = "Progressive Weapons"
+    rich_text_doc = True
     value: int
     option_vanilla = 0
     option_normal = 1
@@ -190,12 +201,14 @@ class GoldenWeaponProgression(ProgressiveOptions):
 
 
 class PackProgression(ProgressiveOptions):
-    """Progressive Packs
+    """
         vanilla: Packs are not progressive, each item is independent of other items.
         progressive: Packs are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Packs are progressive, the order of upgrading is reversed.
         progressive_random: Packs are progressive, the order of upgrading is random.
     """
+    display_name = "Progressive Packs"
+    rich_text_doc = True
     value: int
     option_vanilla = 0
     option_progressive = 1
@@ -206,12 +219,14 @@ class PackProgression(ProgressiveOptions):
 
 
 class HelmetProgression(ProgressiveOptions):
-    """Progressive Helmets
+    """
         vanilla: Helmets are not progressive, each item is independent of other items.
         progressive: Helmets are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Helmets are progressive, the order of upgrading is reversed.
         progressive_random: Helmets are progressive, the order of upgrading is random.
     """
+    display_name = "Progressive Helmets"
+    rich_text_doc = True
     value: int
     option_vanilla = 0
     option_progressive = 1
@@ -222,12 +237,14 @@ class HelmetProgression(ProgressiveOptions):
 
 
 class BootsProgression(ProgressiveOptions):
-    """Progressive Boots
+    """
         vanilla: Grind and Magneboots are not progressive, each item is independent of other items.
         progressive: Grind and Magneboots are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Grind and Magneboots are progressive, the order of upgrading is reversed.
         progressive_random: Grind and Magneboots are progressive, the order of upgrading is random.
     """
+    display_name = "Progressive Boots"
+    rich_text_doc = True
     value: int
     option_vanilla = 0
     option_progressive = 1
@@ -238,12 +255,14 @@ class BootsProgression(ProgressiveOptions):
 
 
 class HoverboardProgression(ProgressiveOptions):
-    """Progressive Hoverboard
+    """
         vanilla: Hoverboard and Zoomerator are not progressive, each item is independent of other items.
         progressive: Hoverboard and Zoomerator are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Hoverboard and Zoomerator are progressive, the order of upgrading is reversed.
         progressive_random: Hoverboard and Zoomerator are progressive, the order of upgrading is random.
     """
+    display_name = "Progressive Hoverboard"
+    rich_text_doc = True
     value: int
     option_vanilla = 0
     option_progressive = 1
@@ -254,12 +273,14 @@ class HoverboardProgression(ProgressiveOptions):
 
 
 class RaritaniumProgression(ProgressiveOptions):
-    """Progressive Raritanium
+    """
         vanilla: Raritanium and Persuader are not progressive, each item is independent of other items.
         progressive: Raritanium and Persuader are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Raritanium and Persuader are progressive, the order of upgrading is reversed.
         progressive_random: Raritanium and Persuader are progressive, the order of upgrading is random.
     """
+    display_name = "Progressive Raritanium"
+    rich_text_doc = True
     value: int
     option_vanilla = 0
     option_progressive = 1
@@ -270,12 +291,14 @@ class RaritaniumProgression(ProgressiveOptions):
 
 
 class NanotechProgression(ProgressiveOptions):
-    """Progressive Nanotech
+    """
         vanilla: Nanotech is not progressive, each item is independent of other items.
         progressive: Nanotech are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Nanotech are progressive, the order of upgrading is reversed.
         progressive_random: Nanotech are progressive, the order of upgrading is random.
     """
+    display_name = "Progressive Nanotech"
+    rich_text_doc = True
     value: int
     option_vanilla = 0
     option_progressive = 1

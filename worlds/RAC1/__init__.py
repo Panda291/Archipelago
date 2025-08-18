@@ -156,11 +156,11 @@ class RacWorld(World):
         self.multiworld.push_precollected(starting_planet)
         rac_logger.debug(f"Starting items: {self.starting_items}")
 
-        rac_logger.debug(f"Disabled Items:")
+        rac_logger.debug(f"___Vanilla Locations___")
         self.preplaced_locations += self.fill_pool(disabled_pools, 0)
-        rac_logger.debug(f"Restricted Items:")
+        rac_logger.debug(f"___Internal Shuffled Pools___")
         self.preplaced_locations += self.fill_pool(restricted_pools, 1)
-        rac_logger.debug(f"Useful Items:")
+        rac_logger.debug(f"___Group Shuffled Pools___")
         self.preplaced_locations += self.fill_pool(useful_pools, 2)
         rac_logger.debug(f"Pre-placed Items placed: {[loc.item for loc in self.preplaced_locations]}")
         rac_logger.debug(f"Pre-filled Locations removed: {self.preplaced_locations}")
@@ -186,7 +186,7 @@ class RacWorld(World):
         match scope:
             case 0:
                 for pool in pools:
-                    rac_logger.debug(f"Disabled Pool: {pool}")
+                    rac_logger.debug(f"Disable Pool: {pool}")
                     for loc in ALL_LOCATIONS:
                         if pool in loc.pools and loc.vanilla_item is not None:
                             if self.get_location(loc.name).item is not None:
@@ -210,7 +210,7 @@ class RacWorld(World):
                             if pool == POOL_WEAPON and POOL_GOLDEN_WEAPON in pools and item.pool == POOL_GOLDEN_WEAPON:
                                 continue
                             item_sweep += [self.create_item(item.name)]
-                    rac_logger.debug(f"Item Sweep: {item_sweep}")
+                    rac_logger.debug(f"Assumed collected: {item_sweep}")
                     base_state = sweep_from_pool(base_state, item_sweep)
                     rac_logger.debug(f"Restricted Pool: {pool}")
                     loc_temp = []
@@ -249,7 +249,7 @@ class RacWorld(World):
                 item_sweep = []
                 base_state = CollectionState(multiworld)
                 for pool in pools:
-                    rac_logger.debug(f"Useful Pool: {pool}")
+                    rac_logger.debug(f"add Pool: {pool}")
                     for loc in ALL_LOCATIONS:
                         if pool in loc.pools and loc.vanilla_item is not None:
                             loc_temp += [self.get_location(loc.name)]

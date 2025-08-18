@@ -9,7 +9,8 @@ from . import ItemPool
 from .data import Items, Locations, Planets
 from .data.Items import CollectableData, ItemData
 from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
-                             POOL_GOLD_BOLT, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_WEAPON)
+                             POOL_GOLD_BOLT, POOL_GOLDEN_WEAPON, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_SKILLPOINT,
+                             POOL_WEAPON)
 from .data.Planets import ALL_LOCATIONS, location_groups, PlanetData
 from .Options import RacOptions, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation
 from .Regions import create_regions
@@ -197,6 +198,8 @@ class RacWorld(World):
                             placed_locations[len(placed_locations) - 1].place_locked_item(item)
             case 1:
                 for pool in pools:
+                    if pool == POOL_GOLDEN_WEAPON and POOL_WEAPON in pools:
+                        continue
                     base_state = CollectionState(multiworld)
                     item_sweep: Sequence[Item] = []
                     unplaced_items = [item for item in Items.ALL if item.name not in placed_items]
@@ -204,6 +207,8 @@ class RacWorld(World):
                         item_sweep += [self.create_item(item)]
                     for item in unplaced_items:
                         if item.pool != pool:
+                            if pool == POOL_WEAPON and POOL_GOLDEN_WEAPON in pools and item.pool == POOL_GOLDEN_WEAPON:
+                                continue
                             item_sweep += [self.create_item(item.name)]
                     rac_logger.debug(f"Item Sweep: {item_sweep}")
                     base_state = sweep_from_pool(base_state, item_sweep)
@@ -215,6 +220,11 @@ class RacWorld(World):
                             loc_temp += [self.get_location(loc.name)]
                             item_temp += [self.create_item(loc.vanilla_item)]
                             placed_items += [loc.vanilla_item]
+                        if pool == POOL_WEAPON and POOL_GOLDEN_WEAPON in pools:
+                            if POOL_GOLDEN_WEAPON in loc.pools and loc.vanilla_item is not None:
+                                loc_temp += [self.get_location(loc.name)]
+                                item_temp += [self.create_item(loc.vanilla_item)]
+                                placed_items += [loc.vanilla_item]
                     rac_logger.debug(f"Randomize Locations: {loc_temp}")
                     placed_locations += loc_temp
                     self.random.shuffle(item_temp)
@@ -277,6 +287,9 @@ class RacWorld(World):
 
     def create_item(self, name: str, override: Optional[ItemClassification] = None) -> "Item":
         new_name = Items.check_progressive_item(self.options, name)
+        if Items.from_name(name).pool == POOL_WEAPON or Items.from_name(name).pool == POOL_GOLDEN_WEAPON:
+            rac_logger.debug(f"Checking progressive weapon: {name}")
+            rac_logger.debug(f"Weapon is: {new_name}")
         if override:
             return RacItem(new_name, override, self.item_name_to_id[new_name], self.player)
         item_data = Items.from_name(new_name)

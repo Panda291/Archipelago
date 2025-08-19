@@ -7,7 +7,7 @@ from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
 from .data import Items, Locations, Planets
-from .data.Items import CollectableData, ItemData
+from .data.Items import ALL_WEAPONS, CollectableData, ItemData
 from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
                              POOL_GOLD_BOLT, POOL_GOLDEN_WEAPON, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_SKILLPOINT,
                              POOL_WEAPON)
@@ -221,24 +221,33 @@ class RacWorld(World):
                             if self.get_location(loc.name).item is not None:
                                 raise FillError(f"Slot {self.player_name} selected vanilla {pool}, but Location:"
                                                 f" {loc.name} was already filled")
-                            item = self.create_item(loc.vanilla_item)
-                            placed_locations += [self.get_location(loc.name)]
+                            if self.item_pool[loc.vanilla_item]:
+                                item = self.item_pool[loc.vanilla_item].pop(0)
+                            else:
+                                rac_logger.warning(f"vanilla item {loc.vanilla_item} can't be placed at {loc.name}, "
+                                                   f"filler bolt pack placed instead")
+                                item = self.create_item(Items.BOLT_PACK.name)
+                            self.get_location(loc.name).place_locked_item(item)
+                            add_items += [item]
                             rac_logger.debug(f"vanilla: {loc.name}, item: {item}")
-                            placed_locations[len(placed_locations) - 1].place_locked_item(item)
             case 1:
                 for pool in pools:
                     if pool == POOL_GOLDEN_WEAPON and POOL_WEAPON in pools:
                         continue
                     base_state = CollectionState(multiworld)
-                    item_sweep: Sequence[Item] = []
-                    unplaced_items = [item for item in Items.ALL if item.name not in placed_items]
-                    for item in starting_item_list:
-                        item_sweep += [self.create_item(item)]
+                    item_sweep = placed_items
+                    rac_logger.debug(f"unplaced items: {unplaced_items}")
                     for item in unplaced_items:
-                        if item.pool != pool:
-                            if pool == POOL_WEAPON and POOL_GOLDEN_WEAPON in pools and item.pool == POOL_GOLDEN_WEAPON:
-                                continue
-                            item_sweep += [self.create_item(item.name)]
+                        rac_logger.debug(f"check {pool} pool: {item}")
+                        item_pool = Items.from_name(item.name).pool
+                        if item_pool != pool:
+                            if pool == POOL_WEAPON and POOL_GOLDEN_WEAPON in pools and item_pool == POOL_GOLDEN_WEAPON:
+                                rac_logger.debug(f"Gold Weapon skipped: {item}")
+                            else:
+                                rac_logger.debug(f"add to assumed: {item}")
+                                item_sweep += [item]
+                        else:
+                            rac_logger.debug(f"{item} is in pool {pool}")
                     rac_logger.debug(f"Assumed collected: {item_sweep}")
                     base_state = sweep_from_pool(base_state, item_sweep)
                     rac_logger.debug(f"Restricted Pool: {pool}")
@@ -247,15 +256,25 @@ class RacWorld(World):
                     for loc in ALL_LOCATIONS:
                         if pool in loc.pools and loc.vanilla_item is not None:
                             loc_temp += [self.get_location(loc.name)]
-                            item_temp += [self.create_item(loc.vanilla_item)]
-                            placed_items += [loc.vanilla_item]
+                            if self.item_pool[loc.vanilla_item]:
+                                item_temp += [self.item_pool[loc.vanilla_item].pop(0)]
+                            else:
+                                rac_logger.warning(f"vanilla item {loc.vanilla_item} can't be shuffled into pool {pool}"
+                                                   f", filler bolt pack added instead")
+                                item_temp += [self.create_item(Items.BOLT_PACK.name)]
                         if pool == POOL_WEAPON and POOL_GOLDEN_WEAPON in pools:
                             if POOL_GOLDEN_WEAPON in loc.pools and loc.vanilla_item is not None:
                                 loc_temp += [self.get_location(loc.name)]
                                 item_temp += [self.create_item(loc.vanilla_item)]
                                 placed_items += [loc.vanilla_item]
+                                if self.item_pool[loc.vanilla_item]:
+                                    item_temp += [self.item_pool[loc.vanilla_item].pop(0)]
+                                else:
+                                    rac_logger.warning(f"vanilla item {loc.vanilla_item} can't be shuffled into pool"
+                                                       f" {pool}, filler bolt pack added instead")
+                                    item_temp += [self.create_item(Items.BOLT_PACK.name)]
                     rac_logger.debug(f"Randomize Locations: {loc_temp}")
-                    placed_locations += loc_temp
+                    add_items += item_temp
                     self.random.shuffle(item_temp)
                     rac_logger.debug(f"Shuffled items: {item_temp}")
                     rac_logger.debug(f"Reachability before Shuffle: {base_state.reachable_regions}")
@@ -264,9 +283,10 @@ class RacWorld(World):
                                  if loc in loc_temp]
                     rac_logger.debug(f"Reachable Locations: {reachable}")
                     fill_restrictive(multiworld, base_state, loc_temp, item_temp, single_player_placement=True,
-                                     swap=True, name=f"RAC1 Restricted Item Fill: {pool}")
-                    for loc in loc_temp:
-                        placed_locations.remove(loc)
+                                     lock=False, swap=True, allow_partial=False,
+                                     name=f"RAC1 Restricted Item Fill: {pool}")
+                    # for item in item_temp:
+                    #     add_items.remove(item)
                     # if item_temp:
                     #     for loc in placed_locations:
                     #         rac_logger.debug(f"same group: {loc.name}, item: {loc.item}")
@@ -275,7 +295,7 @@ class RacWorld(World):
             case 2:
                 loc_temp = []
                 item_temp = []
-                item_sweep = []
+                item_sweep = placed_items
                 base_state = CollectionState(multiworld)
                 for pool in pools:
                     rac_logger.debug(f"add Pool: {pool}")

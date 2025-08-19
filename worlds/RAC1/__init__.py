@@ -1,7 +1,7 @@
 import logging
-from typing import Any, Mapping, Optional, Sequence
+from typing import Any, Mapping, Optional
 
-from BaseClasses import CollectionState, Item, ItemClassification, Location, Tutorial
+from BaseClasses import CollectionState, Item, ItemClassification, Tutorial
 from Fill import fill_restrictive, FillError, sweep_from_pool
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
@@ -153,6 +153,7 @@ class RacWorld(World):
             # else:
             #     self.item_pool |= {item.name: [self.create_item(item.name)]}
 
+        rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
         if (self.options.shuffle_infobots == ShuffleInfobots.option_vanilla or
                 self.options.starting_location == StartingLocation.option_false):
             starting_planet = self.item_pool[Items.NOVALIS_INFOBOT.name].pop(0)
@@ -186,16 +187,26 @@ class RacWorld(World):
         self.starting_items = [starting_item, starting_planet]
         self.multiworld.push_precollected(starting_item)
         self.multiworld.push_precollected(starting_planet)
+        for name, count in self.options.start_inventory:
+            if count > len(self.item_pool[name]):
+                rac_logger.warning(f"Too many copies of {name} in yaml start inventory! Giving only "
+                                   f"{len(self.item_pool[name])} of {count} copies")
+            for i in range(count):
+                if self.item_pool[name]:
+                    self.starting_items += [self.item_pool[name].pop(0)]
+                else:
+                    break
+
         rac_logger.debug(f"Starting items: {self.starting_items}")
 
         rac_logger.debug(f"___Vanilla Locations___")
-        self.preplaced_locations += self.fill_pool(disabled_pools, 0)
+        self.preplaced_items += self.fill_pool(disabled_pools, 0)
         rac_logger.debug(f"___Internal Shuffled Pools___")
-        self.preplaced_locations += self.fill_pool(restricted_pools, 1)
+        self.preplaced_items += self.fill_pool(restricted_pools, 1)
         rac_logger.debug(f"___Group Shuffled Pools___")
-        self.preplaced_locations += self.fill_pool(useful_pools, 2)
-        rac_logger.debug(f"Pre-placed Items placed: {[loc.item for loc in self.preplaced_locations]}")
-        rac_logger.debug(f"Pre-filled Locations removed: {self.preplaced_locations}")
+        self.preplaced_items += self.fill_pool(useful_pools, 2)
+        rac_logger.debug(f"Pre-placed Items placed: {self.preplaced_items}")
+        rac_logger.debug(f"Pre-filled Locations removed: {[loc.name for loc in self.get_locations() if loc.item]}")
         rac_logger.debug(f"_________END EARLY GENERATION____________")
 
     def fill_pool(self, pools, scope) -> (list, list):
@@ -270,8 +281,6 @@ class RacWorld(World):
                         if pool == POOL_WEAPON and POOL_GOLDEN_WEAPON in pools:
                             if POOL_GOLDEN_WEAPON in loc.pools and loc.vanilla_item is not None:
                                 loc_temp += [self.get_location(loc.name)]
-                                item_temp += [self.create_item(loc.vanilla_item)]
-                                placed_items += [loc.vanilla_item]
                                 if self.item_pool[loc.vanilla_item]:
                                     item_temp += [self.item_pool[loc.vanilla_item].pop(0)]
                                 else:
@@ -308,26 +317,25 @@ class RacWorld(World):
                         if pool in loc.pools and loc.vanilla_item is not None:
                             loc_temp += [self.get_location(loc.name)]
                 if loc_temp:
-                    for item in starting_item_list:
-                        item_sweep += [self.create_item(item)]
-                    for item in unplaced_items:
-                        if item.name != Items.GOLD_BOLT.name:
-                            item_temp += [self.create_item(item.name)]
                     base_state = sweep_from_pool(base_state, item_sweep)
                     rac_logger.debug(f"Randomizing Useful Locations: {loc_temp}")
-                    placed_locations += loc_temp
-                    self.random.shuffle(item_temp)
+                    self.random.shuffle(unplaced_items)
+                    for i in range(len(loc_temp)):
+                        item_temp += [self.item_pool[unplaced_items[i].name].pop(0)]
                     rac_logger.debug(f"Shuffled items: {item_temp}")
+                    add_items += item_temp
                     rac_logger.debug(f"Reachability before Shuffle: {base_state.reachable_regions}")
                     reachable = [loc for loc in multiworld.get_reachable_locations(base_state, self.player)
                                  if loc in loc_temp]
                     rac_logger.debug(f"Reachable Locations: {reachable}")
                     # TODO: Try using remaining_fill() to prevent deadend seeds
                     fill_restrictive(multiworld, base_state, loc_temp, item_temp, single_player_placement=True,
-                                     swap=True, allow_partial=True, allow_excluded=True,
-                                     name="RAC1 Useful Item Fill")
-                    for loc in loc_temp:
-                        placed_locations.remove(loc)
+                                     lock=False, swap=True, allow_partial=True, name="RAC1 Useful Item Fill")
+                    for item in item_temp:
+                        add_items.remove(item)
+                        item_list = self.item_pool.get(item.name) or []
+                        item_list.append(self.create_item(item.name))
+                        self.item_pool[item.name] = item_list
                     # if loc_temp:
                     #     for loc in placed_locations:
                     #         rac_logger.debug(f"any item: {loc.name}, item: {loc.item}")
@@ -337,7 +345,7 @@ class RacWorld(World):
                     #     else:
                     #         raise FillError(f"Slot {self.player_name} has locations requiring useful items that are "
                     #                     f"unfilled, No items left to get placed at Locations: {loc_temp}")
-        return placed_locations
+        return add_items
 
     def create_item(self, name: str, override: Optional[ItemClassification] = None) -> "Item":
         new_name = Items.check_progressive_item(self.options, name)
@@ -360,7 +368,10 @@ class RacWorld(World):
 
     def create_items(self) -> None:
         rac_logger.debug(f"_________START ITEM CREATION__________")
-        items_to_add: list[Item] = [self.create_item(item.name) for item in Items.ALL]
+        rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
+        items_to_add: list[Item] = []
+        for items in self.item_pool.values():
+            items_to_add.extend(items)
 
         # add bolt packs in whatever slots we have left
         unfilled = [i for i in self.multiworld.get_unfilled_locations(self.player) if not i.is_event]

@@ -67,6 +67,11 @@ class TestVanillaGoldBolts(RACTestBase):
     options = {"shuffle_gold_bolts": ShuffleGoldBolts.option_false}
 
 
+class TestRandomGoldBolts(RACTestBase):
+    """Test Gold Bolts with a random pack size"""
+    options = {"pack_size_gold_bolts": GoldBoltPackSize.weighted_range("random-low")}
+
+
 class TestVanillaInfobots(RACTestBase):
     """Test Infobots unshuffled to verify beatable"""
     options = {"shuffle_infobots": ShuffleInfobots.option_vanilla}
@@ -81,6 +86,7 @@ class TestUsefuls(RACTestBase):
     """Test Useful items local shuffle to verify beatable"""
     options = {
         "shuffle_weapons": ShuffleWeapons.option_random_item,
+        "shuffle_gold_weapons": ShuffleGoldWeapons.option_random_item,
         "shuffle_gadgets": ShuffleGadgets.option_random_item,
         "shuffle_packs": ShufflePacks.option_random_item,
         "shuffle_helmets": ShuffleHelmets.option_random_item,

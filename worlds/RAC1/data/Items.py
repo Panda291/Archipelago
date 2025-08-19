@@ -138,8 +138,8 @@ class CollectableData(ItemData):
 
 
 # Collectables
-GOLD_BOLT = CollectableData(301, "Gold Bolt", "GoldBolts", 40)
-
+GOLD_BOLT = ItemData(301, "Gold Bolt Pack", "GoldBolts")
+BOLT_PACK = ItemData(302, "Bolt Pack", "Filler")
 
 WEAPONS: Sequence[ItemData] = [
     TAUNTER,
@@ -343,8 +343,11 @@ ALL: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAP
                            *PROGRESSIVE_HELMETS, *BOOTS, *PROGRESSIVE_BOOTS, *EXTRA_ITEMS,
                            *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
                            *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS,
-                           *PLANETS, *SKILLPOINTS]
+                           *PLANETS, *SKILLPOINTS, BOLT_PACK]
 
+ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *NON_PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS, *GADGETS, *PACKS,
+                                 *HELMETS, *BOOTS, *EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
+                                 *NON_PROGRESSIVE_NANOTECHS]  # *SKILLPOINTS
 ALL_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS,
                                    *PROGRESSIVE_GOLDEN_WEAPONS]
 ALL_PACKS: Sequence[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
@@ -353,6 +356,21 @@ ALL_BOOTS: Sequence[ItemData] = [*BOOTS, *PROGRESSIVE_BOOTS]
 ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS,
                                        *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
                                        *PROGRESSIVE_NANOTECHS]
+ALL_STARTING: Sequence[ItemData] = [*ALL_WEAPONS, *GADGETS]
+
+
+def get_pool(options) -> Sequence[ItemData]:
+    pool = []
+    for item in ITEM_POOL:
+        pool += [item]
+    gb_count = 0
+    if pool.count(GOLD_BOLT) > 0:
+        raise AssertionError("Gold Bolts should not be in the pool before getting added")
+    while gb_count < 40:
+        pool += [GOLD_BOLT]
+        gb_count += options.pack_size_gold_bolts
+    return pool
+
 
 def get_starting_planets(options) -> Sequence[ItemData]:
     planets: Sequence[ItemData] = []

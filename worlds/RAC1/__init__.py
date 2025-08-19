@@ -58,12 +58,13 @@ class RacWorld(World):
                            location.location_id}
     item_name_groups = Items.get_item_groups()
     location_name_groups = location_groups
+    item_pool: dict[str, list[Item]] = {}
     starting_planet = Items.NOVALIS_INFOBOT.name
     starting_items: list[Item] = []
-    preplaced_locations: list[Location] = []
+    preplaced_items: list[Item] = []
 
-    # def get_filler_item_name(self) -> str:
-    #     return Items.BOLT_PACK.name
+    def get_filler_item_name(self) -> str:
+        return Items.BOLT_PACK.name
 
     def generate_early(self) -> None:
         rac_logger.debug(f"_________START EARLY GENERATION____________")
@@ -72,9 +73,12 @@ class RacWorld(World):
             self.player_name)
         rac_logger.warning("INCOMPLETE WORLD! Slot '%s' may require send_location/send_item for completion!",
                            self.player_name)
+        self.item_pool: dict[str, list[Item]] = {}
+        self.starting_planet = Items.NOVALIS_INFOBOT.name
         self.starting_items = []
-        self.preplaced_locations = []
-        rac_logger.debug(f"Pre-placed Item List: {[loc.item for loc in self.preplaced_locations]}")
+        self.preplaced_items = []
+        rac_logger.debug(f"Pre-placed Item List: {self.preplaced_items}")
+        rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
 
         # TODO: Item Pools
 
@@ -97,6 +101,10 @@ class RacWorld(World):
             enabled_pools += [POOL_GOLD_BOLT]
         else:
             disabled_pools += [POOL_GOLD_BOLT]
+        # if self.options.shuffle_skill_points.value:
+        #     enabled_pools += [POOL_SKILLPOINT]
+        # else:
+        #     disabled_pools += [POOL_SKILLPOINT]
         rac_logger.debug(f"Iterating through Options:")
         for pool_option in shuffle_pools:
             rac_logger.debug(f"Option: {pool_option}")
@@ -141,6 +149,25 @@ class RacWorld(World):
         #     self.random.shuffle(starting_item)
         #     self.multiworld.push_precollected(self.create_item(starting_item[0].name))
         #     starting_item = self.create_item(starting_item[0].name)
+        if self.options.shuffle_gold_bolts.value:
+            pass
+        else:
+            self.options.pack_size_gold_bolts.value = 1
+
+        rac_logger.debug(f"Gold Bolt Pack Size: {self.options.pack_size_gold_bolts.value}")
+        rac_logger.debug(f"___Generate Item Pool___")
+        option_list = Items.get_pool(self.options)
+        rac_logger.debug(f"length of option_list: {len(option_list)}")
+        rac_logger.debug(f"gold bolts in list: {option_list.count(Items.GOLD_BOLT)}")
+        for item in option_list:
+            rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
+            item_list = self.item_pool.get(item.name) or []
+            item_list.append(self.create_item(item.name))
+            self.item_pool[item.name] = item_list
+            # if item.name in self.item_pool.keys():
+            #     self.item_pool[item.name].append(self.create_item(item.name))
+            # else:
+            #     self.item_pool |= {item.name: [self.create_item(item.name)]}
 
         if (self.options.shuffle_infobots == ShuffleInfobots.option_vanilla or
                 self.options.starting_location == StartingLocation.option_false):
@@ -166,23 +193,25 @@ class RacWorld(World):
         rac_logger.debug(f"Pre-filled Locations removed: {self.preplaced_locations}")
         rac_logger.debug(f"_________END EARLY GENERATION____________")
 
-        # self.disabled_location_data = set(loc for loc in ALL_LOCATIONS if not loc.pools.issubset(enabled_pools))
-
-        # for location in ALL_LOCATIONS:
-        #     if not location.pools.issubset(enabled_pools):
-        #         logging.debug(f"disable: {location.name}")
-        #         self.disabled_location_data.append(location)
-        # output: list[str] = list(loc.name for loc in self.disabled_location_data)
-        # logging.debug(f"disabled location data: {output}")
-
     def fill_pool(self, pools, scope) -> (list, list):
         multiworld = self.multiworld
-        placed_items = [loc.item.name for loc in self.preplaced_locations]
-        starting_item_list = [item.name for item in self.starting_items]
-        placed_items += starting_item_list
-        placed_items += [*[Items.GOLD_BOLT.name] * 40]
-        unplaced_items: list[ItemData] = [item for item in Items.ALL if item.name not in placed_items]
-        placed_locations: list[Location] = []
+        placed_items = self.preplaced_items
+        placed_items += self.starting_items
+        placed_items += self.item_pool[Items.GOLD_BOLT.name]
+        # for name in self.item_pool:
+        #     if Items.from_name(name).pool == POOL_SKILLPOINT:
+        #         placed_items += self.item_pool[name]
+        rac_logger.debug(f"placed_items: {placed_items}")
+        unplaced_items: list[Item] = []
+        for name, items in self.item_pool.items():
+            rac_logger.debug(f"Checking if {name} is unplaced")
+            if items:
+                if name == Items.GOLD_BOLT.name or items[0].name.endswith("Skill Point"):
+                    continue
+                else:
+                    rac_logger.debug(f"Add to unplaced: {name}")
+                    unplaced_items += items
+        add_items: list[Item] = []
         match scope:
             case 0:
                 for pool in pools:
@@ -306,31 +335,24 @@ class RacWorld(World):
         rac_logger.debug(f"_________START ITEM CREATION__________")
         items_to_add: list[Item] = [self.create_item(item.name) for item in Items.ALL]
 
-        # add gold bolts in whatever slots we have left
-        # unfilled = [i for i in self.multiworld.get_unfilled_locations(self.player) if not i.is_event]
-        # rac_logger.debug(self.multiworld.get_filled_locations(self.player))
-        # rac_logger.debug(f"{len(items_to_add)} {len(unfilled)}")
-        # remain = len(unfilled) - len(items_to_add)
-        # assert remain >= 0, "There are more items than locations. This is not supported."
-        # rac_logger.debug(f"Not enough items to fill all locations. Adding {remain} filler items to the item pool")
-        # for _ in range(remain):
-        #     items_to_add.append(self.create_item(Items.GOLD_BOLT.name, ItemClassification.filler))
-
-        items_to_remove: list[Item] = [loc.item for loc in self.preplaced_locations]
-        items_to_remove += self.starting_items
-        rac_logger.debug(f"Preplaced item list before removal: {items_to_remove}")
-        for item in items_to_remove:
-            items_to_add.remove(item)
-            rac_logger.debug(f"{item} removed")
-        if len(items_to_add) == len(self.multiworld.get_unfilled_locations(self.player)) - 1:
-            rac_logger.debug(f"Add item pool to multiworld: {items_to_add}")
-            self.multiworld.itempool.extend(items_to_add)
-            rac_logger.debug(f"_________END ITEM CREATION__________")
-        else:
+        # add bolt packs in whatever slots we have left
+        unfilled = [i for i in self.multiworld.get_unfilled_locations(self.player) if not i.is_event]
+        rac_logger.debug(f"Items:{len(items_to_add)}, Locations:{len(unfilled)}")
+        remain = len(unfilled) - len(items_to_add)
+        if remain < 0:
             rac_logger.debug(f"Items unplaced: {items_to_add}")
             rac_logger.debug(f"Locations unfilled: {self.multiworld.get_unfilled_locations(self.player)}")
-            raise FillError(f"Item Count: {len(items_to_add)} does not match Location count: "
+            raise FillError(f"Item Count: {len(items_to_add)} exceeds Location count: "
                             f"{len(self.multiworld.get_unfilled_locations(self.player))}")
+        elif remain == 0:
+            pass
+        else:
+            rac_logger.debug(f"Not enough items to fill all locations. Adding {remain} filler items to the item pool")
+            for _ in range(remain):
+                items_to_add.append(self.create_item(Items.BOLT_PACK.name))
+        rac_logger.debug(f"Add item pool to multiworld: {items_to_add}")
+        self.multiworld.itempool.extend(items_to_add)
+        rac_logger.debug(f"_________END ITEM CREATION__________")
 
     def set_rules(self) -> None:
         boss_location = self.multiworld.get_location(Locations.VELDIN_DREK.name, self.player)

@@ -1,5 +1,10 @@
+import logging
+
 from BaseClasses import CollectionState
 from .data import Items
+
+rac_logger = logging.getLogger("Ratchet & Clank")
+rac_logger.setLevel(logging.DEBUG)
 
 
 def can_swingshot(state: CollectionState, player: int) -> bool:
@@ -100,7 +105,15 @@ def has_long_range_weapon(state: CollectionState, player: int) -> bool:
 
 
 def has_40_gold_bolts(state: CollectionState, player: int) -> bool:
-    return state.has(Items.GOLD_BOLT.name, player, 40)
+    factor = state.multiworld.worlds[player].options.pack_size_gold_bolts.value
+    count, mod = divmod(20, factor)
+    if mod != 0:
+        count = count // 1
+    if state.count(Items.GOLD_BOLT.name, player) < count:
+        rac_logger.debug(f"Missing gold bolt packs from world, expected {count} but only had"
+                         f" {state.count(Items.GOLD_BOLT.name, player)}. Can reach "
+                         f"{state.prog_items}")
+    return state.has(Items.GOLD_BOLT.name, player, count)
 
 
 # Novalis

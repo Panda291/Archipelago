@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any
 
-from Options import (Choice, PerGameCommonOptions, TextChoice, Toggle)
+from Options import (Choice, PerGameCommonOptions, Range, TextChoice, Toggle)
 
 
 class ItemOptions(Choice):
@@ -139,6 +139,24 @@ class ShuffleGoldBolts(Toggle):
     default = 1
 
 
+class GoldBoltPackSize(Range):
+    """
+    Number of Gold Bolts received each time you collect a pack of Gold Bolts (Gold Bolts Shuffle Off forces this to 1)
+    """
+    display_name = "Gold Bolt Pack Size"
+    default = 8
+    range_start = 1
+    range_end = 40
+
+
+class BoltPackSize(Range):
+    """Number of Bolts received each time you collect a pack of Bolts."""
+    display_name = "Bolt Pack Size"
+    default = 15000
+    range_start = 0
+    range_end = 1000000
+
+
 class ShuffleInfobots(ItemOptions):
     """Randomize Infobot locations
         vanilla: Infobots are unshuffled.
@@ -147,7 +165,7 @@ class ShuffleInfobots(ItemOptions):
         WARNING! Using random_same, or random_item with no other pool selected, is likely to fail on solo worlds.
         unrestricted: Infobots are shuffled anywhere, anything can be found at Infobot locations.
     """
-    display_name = "Shuffle Infobots"#
+    display_name = "Shuffle Infobots"  #
     rich_text_doc = True
     default = 3
     pool = "Infobots"
@@ -164,6 +182,13 @@ class ShuffleGoldWeapons(ItemOptions):
     rich_text_doc = True
     default = 3
     pool = "GoldenWeapons"
+
+
+class ShuffleSkillPoints(Toggle):
+    """Randomize Skillpoint locations"""
+    display_name = "Shuffle Skillpoints"
+    default = 1
+
 
 class EnableBoltMultiplier(Toggle):
     """Enables the bolt multiplier feature without being in New Game+."""
@@ -330,6 +355,9 @@ class RacOptions(PerGameCommonOptions):
     shuffle_gold_bolts: ShuffleGoldBolts
     shuffle_infobots: ShuffleInfobots
     shuffle_gold_weapons: ShuffleGoldWeapons
+    shuffle_skill_points: ShuffleSkillPoints
+    pack_size_gold_bolts: GoldBoltPackSize
+    pack_size_bolts: BoltPackSize
     # enable_bolt_multiplier: EnableBoltMultiplier
     progressive_weapons: GoldenWeaponProgression
     progressive_packs: PackProgression
@@ -343,7 +371,6 @@ class RacOptions(PerGameCommonOptions):
 def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
     return {
         # "death_link",
-        # "starting_item": options.starting_item.option_vanilla,
         "starting_item": options.starting_item.value,
         "starting_location": options.starting_location.value,
         "shuffle_weapons": options.shuffle_weapons.value,
@@ -355,6 +382,9 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         "shuffle_gold_bolts": options.shuffle_gold_bolts.value,
         "shuffle_infobots": options.shuffle_infobots.value,
         "shuffle_gold_weapons": options.shuffle_gold_weapons.value,
+        "shuffle_skill_points": options.shuffle_skill_points,
+        "pack_size_gold_bolts": options.pack_size_gold_bolts.value,
+        "pack_size_bolts": options.pack_size_bolts.value,
         "progressive_weapons": options.progressive_weapons.value,
         "progressive_packs": options.progressive_packs.value,
         "progressive_helmets": options.progressive_helmets.value,

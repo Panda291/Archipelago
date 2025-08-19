@@ -168,7 +168,7 @@ VELDIN = PlanetData("Veldin", 18, [
     VELDIN_DREK,
 ])
 
-ALL_PLANETS: Sequence[PlanetData] = [
+LOGIC_PLANETS: Sequence[PlanetData] = [
     NOVALIS,
     ARIDIA,
     KERWAN,
@@ -189,20 +189,9 @@ ALL_PLANETS: Sequence[PlanetData] = [
     VELDIN,
 ]
 
-STARTING_PLANETS: Sequence[PlanetData] = [
-    NOVALIS,
-    ARIDIA,
-    KERWAN,
-    BLARG,
-    BATALIA,
-    GASPAR,
-    ORXON,
-    HOVEN,
-]
-
 ALL_LOCATIONS: Sequence[LocationData] = [
     location
-    for locations in [planet.locations for planet in ALL_PLANETS]
+    for locations in [planet.locations for planet in LOGIC_PLANETS]
     for location in locations
 ]
 

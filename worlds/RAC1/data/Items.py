@@ -297,6 +297,14 @@ PLANETS: Sequence[ItemData] = [
     VELDIN_INFOBOT,
 ]
 
+STARTING_PLANETS: Sequence[ItemData] = [
+    NOVALIS_INFOBOT,
+    KERWAN_INFOBOT,
+    BLARG_INFOBOT,
+    BATALIA_INFOBOT,
+    ORXON_INFOBOT,
+]
+
 SKILLPOINTS: Sequence[ItemData] = [
     TAKE_AIM,
     SWING_IT,
@@ -346,6 +354,18 @@ ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARD
                                        *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
                                        *PROGRESSIVE_NANOTECHS]
 
+def get_starting_planets(options) -> Sequence[ItemData]:
+    planets: Sequence[ItemData] = []
+    for item in STARTING_PLANETS:
+        planets += [item]
+    if options.shuffle_infobots.value >= Options.ShuffleInfobots.option_unrestricted:
+        planets += [ARIDIA_INFOBOT]
+        if options.shuffle_helmets.value >= Options.ShuffleInfobots.option_unrestricted:
+            planets += [GASPAR_INFOBOT]
+        if options.shuffle_gold_bolts.value:
+            planets += [HOVEN_INFOBOT]
+    return planets
+
 
 def from_id(item_id: int) -> ItemData:
     matching = [item for item in ALL if item.item_id == item_id]
@@ -377,6 +397,7 @@ def get_item_groups() -> dict[str, set[str]]:
         "Skillpoints": {s.name for s in SKILLPOINTS},
     }
     return groups
+
 
 def check_progressive_item(options, item) -> str:
     new_item = item

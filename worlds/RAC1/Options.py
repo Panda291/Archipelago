@@ -21,7 +21,7 @@ class ItemOptions(Choice):
     alias_false = 0
 
 
-class StartingItem(ItemOptions):
+class StartingItem(Choice):
     """Randomize what weapon you start the game with.
         vanilla: Start with the Bomb Glove.
         random_same: Start with a random weapon.
@@ -29,13 +29,21 @@ class StartingItem(ItemOptions):
     """
     display_name = "Starting Item"
     rich_text_doc = True
+    value: int
+    option_vanilla = 0
+    option_random_same = 1
+    option_random_item = 2
     default = 0
+    alias_true = 2
+    alias_false = 0
     pool = "StartItem"
+
 
 class StartingLocation(Toggle):
     """Randomize what Planet you start on"""
     display_name = "Shuffle Starting Planet"
     default = 1
+
 
 class ShuffleWeapons(ItemOptions):
     """Randomize Weapon locations
@@ -311,7 +319,7 @@ class NanotechProgression(ProgressiveOptions):
 @dataclass
 class RacOptions(PerGameCommonOptions):
     # death_link: DeathLink
-    # starting_item: StartingItem
+    starting_item: StartingItem
     starting_location: StartingLocation
     shuffle_weapons: ShuffleWeapons
     shuffle_gadgets: ShuffleGadgets
@@ -335,8 +343,8 @@ class RacOptions(PerGameCommonOptions):
 def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
     return {
         # "death_link",
-        "start_inventory_from_pool": dict(),
         # "starting_item": options.starting_item.option_vanilla,
+        "starting_item": options.starting_item.value,
         "starting_location": options.starting_location.value,
         "shuffle_weapons": options.shuffle_weapons.value,
         "shuffle_gadgets": options.shuffle_gadgets.value,

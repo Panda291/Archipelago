@@ -18,7 +18,7 @@ def create_regions(world: 'RacWorld'):
     menu = Region("Menu", world.player, world.multiworld)
     world.multiworld.regions.append(menu)
 
-    for planet_data in Planets.ALL_PLANETS:
+    for planet_data in Planets.LOGIC_PLANETS:
         if planet_data.locations:
             def generate_planet_access_rule(planet: PlanetData) -> typing.Callable[[CollectionState], bool]:
                 def planet_access_rule(state: CollectionState):
@@ -47,10 +47,6 @@ def create_regions(world: 'RacWorld'):
             menu.connect(region, None, generate_planet_access_rule(planet_data))
 
             for location_data in planet_data.locations:
-                # Don't create the location if there is a "pool" it is in that is not enabled
-                # if location_data.name in world.disabled_pools:
-                #     continue
-
                 def generate_access_rule(loc: LocationData) -> typing.Callable[[CollectionState], bool]:
                     def access_rule(state: CollectionState):
                         if loc.access_rule:

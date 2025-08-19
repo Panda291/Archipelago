@@ -133,22 +133,6 @@ class RacWorld(World):
         rac_logger.debug(f"Creating Regions")
         create_regions(self)
 
-        # TODO: Item Pools: get_pre_fill_items()
-        # if (self.options.shuffle_weapons == ShuffleWeapons.option_vanilla or
-        #         self.options.starting_item == StartingItem.option_vanilla):
-        starting_item = self.create_item(Items.BOMB_GLOVE.name)
-        # else:
-        #     starting_item = []
-        #     match self.options.starting_item:
-        #         case StartingItem.option_random_same:
-        #             starting_item = list(Items.WEAPONS)
-        #         case StartingItem.option_random_item:
-        #             starting_item = [item for item in Items.ALL if item.name != "Gold Bolt"]
-        #         case StartingItem.option_unrestricted:
-        #             starting_item = list(Items.ALL)
-        #     self.random.shuffle(starting_item)
-        #     self.multiworld.push_precollected(self.create_item(starting_item[0].name))
-        #     starting_item = self.create_item(starting_item[0].name)
         if self.options.shuffle_gold_bolts.value:
             pass
         else:
@@ -171,12 +155,33 @@ class RacWorld(World):
 
         if (self.options.shuffle_infobots == ShuffleInfobots.option_vanilla or
                 self.options.starting_location == StartingLocation.option_false):
-            starting_planet = self.create_item(Items.NOVALIS_INFOBOT.name)
+            starting_planet = self.item_pool[Items.NOVALIS_INFOBOT.name].pop(0)
         else:
-            starting_planet = list(Planets.STARTING_PLANETS)
+            starting_planet = [planet for planet in Items.get_starting_planets(self.options)]
             self.random.shuffle(starting_planet)
             self.starting_planet = starting_planet[0].name
-            starting_planet = self.create_item(starting_planet[0].name)
+            starting_planet = self.item_pool[starting_planet[0].name].pop(0)
+        rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
+
+        if (self.options.shuffle_weapons == ShuffleWeapons.option_vanilla or
+                self.options.starting_item == StartingItem.option_vanilla):
+            starting_item = self.item_pool[Items.BOMB_GLOVE.name].pop(0)
+        elif self.options.starting_item == StartingItem.option_random_same:
+            starting_item = []
+            weapon_list = [item.name for item in Items.ALL_WEAPONS]
+            for name, item in self.item_pool.items():
+                if name in weapon_list:
+                    starting_item.extend(item)
+            self.random.shuffle(starting_item)
+            starting_item = self.item_pool[starting_item[0].name].pop(0)
+        else:
+            starting_item = []
+            equip_list = [item.name for item in Items.ALL_STARTING]
+            for name, item in self.item_pool.items():
+                if name in equip_list:
+                    starting_item.extend(item)
+            self.random.shuffle(starting_item)
+            starting_item = self.item_pool[starting_item[0].name].pop(0)
 
         self.starting_items = [starting_item, starting_planet]
         self.multiworld.push_precollected(starting_item)
@@ -349,7 +354,9 @@ class RacWorld(World):
 
     def get_pre_fill_items(self) -> list["Item"]:
         rac_logger.debug(f"fetching preplaced_items")
-        return [loc.item for loc in self.preplaced_locations]
+        items = self.starting_items
+        items += self.preplaced_items
+        return items
 
     def create_items(self) -> None:
         rac_logger.debug(f"_________START ITEM CREATION__________")

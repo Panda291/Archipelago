@@ -355,7 +355,7 @@ class RacOptions(PerGameCommonOptions):
     shuffle_gold_bolts: ShuffleGoldBolts
     shuffle_infobots: ShuffleInfobots
     shuffle_gold_weapons: ShuffleGoldWeapons
-    shuffle_skill_points: ShuffleSkillPoints
+    # shuffle_skill_points: ShuffleSkillPoints
     pack_size_gold_bolts: GoldBoltPackSize
     pack_size_bolts: BoltPackSize
     # enable_bolt_multiplier: EnableBoltMultiplier
@@ -382,7 +382,7 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         "shuffle_gold_bolts": options.shuffle_gold_bolts.value,
         "shuffle_infobots": options.shuffle_infobots.value,
         "shuffle_gold_weapons": options.shuffle_gold_weapons.value,
-        "shuffle_skill_points": options.shuffle_skill_points,
+        # "shuffle_skill_points": options.shuffle_skill_points.value,
         "pack_size_gold_bolts": options.pack_size_gold_bolts.value,
         "pack_size_bolts": options.pack_size_bolts.value,
         "progressive_weapons": options.progressive_weapons.value,

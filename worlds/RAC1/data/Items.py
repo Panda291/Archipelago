@@ -379,7 +379,7 @@ def get_starting_planets(options) -> Sequence[ItemData]:
         planets += [item]
     if options.shuffle_infobots.value >= Options.ShuffleInfobots.option_unrestricted:
         planets += [ARIDIA_INFOBOT]
-        if options.shuffle_helmets.value >= Options.ShuffleInfobots.option_unrestricted:
+        if options.shuffle_helmets.value >= Options.ShuffleHelmets.option_unrestricted:
             planets += [GASPAR_INFOBOT]
         if options.shuffle_gold_bolts.value:
             planets += [HOVEN_INFOBOT]

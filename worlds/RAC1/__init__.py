@@ -279,6 +279,9 @@ class RacWorld(World):
                             loc_temp += [self.get_location(loc.name)]
                             if self.item_pool[loc.vanilla_item]:
                                 item_temp += [self.item_pool[loc.vanilla_item].pop(0)]
+                            elif (self.starting_planet != Items.NOVALIS_INFOBOT.name and pool in
+                                  Items.NOVALIS_INFOBOT.pool):
+                                item_temp += [self.item_pool[Items.NOVALIS_INFOBOT.name].pop(0)]
                             else:
                                 rac_logger.warning(f"vanilla item {loc.vanilla_item} can't be shuffled into pool {pool}"
                                                    f", filler bolt pack added instead")

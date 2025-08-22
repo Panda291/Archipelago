@@ -190,9 +190,20 @@ class ShuffleSkillPoints(Toggle):
     default = 1
 
 
-class EnableBoltMultiplier(Toggle):
+class EnableBoltMultiplier(Range):
     """Enables the bolt multiplier feature without being in New Game+."""
-    display_name = "Enable Bolt Multiplier"
+    display_name = "Bolt Multiplier"
+    default = 5
+    range_start = 1
+    range_end = 20
+
+
+class MDBoltMultiplier(Range):
+    """Bolt Multiplier when using the metal detector"""
+    display_name = "Metal Detector Bolt Multiplier"
+    default = 35
+    range_start = 1
+    range_end = 100
 
 
 class ProgressiveOptions(Choice):
@@ -358,7 +369,8 @@ class RacOptions(PerGameCommonOptions):
     # shuffle_skill_points: ShuffleSkillPoints
     pack_size_gold_bolts: GoldBoltPackSize
     pack_size_bolts: BoltPackSize
-    # enable_bolt_multiplier: EnableBoltMultiplier
+    metal_bolt_multiplier: MDBoltMultiplier
+    enable_bolt_multiplier: EnableBoltMultiplier
     progressive_weapons: GoldenWeaponProgression
     progressive_packs: PackProgression
     progressive_helmets: HelmetProgression
@@ -385,6 +397,8 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         # "shuffle_skill_points": options.shuffle_skill_points.value,
         "pack_size_gold_bolts": options.pack_size_gold_bolts.value,
         "pack_size_bolts": options.pack_size_bolts.value,
+        "metal_bolt_multiplier": options.metal_bolt_multiplier.value,
+        "enable_bolt_multiplier": options.enable_bolt_multiplier.value,
         "progressive_weapons": options.progressive_weapons.value,
         "progressive_packs": options.progressive_packs.value,
         "progressive_helmets": options.progressive_helmets.value,

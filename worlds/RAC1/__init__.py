@@ -7,7 +7,7 @@ from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
 from .data import Items, Locations, Planets
-from .data.Items import ALL_WEAPONS, CollectableData, ItemData
+from .data.Items import ALL_WEAPONS, CollectableData, ItemData, progression_rules, set_quantity
 from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
                              POOL_GOLD_BOLT, POOL_GOLDEN_WEAPON, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_SKILLPOINT,
                              POOL_WEAPON)
@@ -137,6 +137,11 @@ class RacWorld(World):
             pass
         else:
             self.options.pack_size_gold_bolts.value = 1
+        set_quantity(Items.GOLD_BOLT, self.options.pack_size_gold_bolts.value)
+        set_quantity(Items.BOLT_PACK, self.options.pack_size_bolts.value)
+        rac_logger.debug(
+            f"Gold Bolt Pack Size: {self.options.pack_size_gold_bolts.value}, Bolt pack size: "
+            f"{self.options.pack_size_bolts.value}")
 
         rac_logger.debug(f"Gold Bolt Pack Size: {self.options.pack_size_gold_bolts.value}")
         rac_logger.debug(f"___Generate Item Pool___")

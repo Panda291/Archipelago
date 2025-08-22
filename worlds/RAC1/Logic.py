@@ -105,10 +105,11 @@ def has_long_range_weapon(state: CollectionState, player: int) -> bool:
 
 
 def has_40_gold_bolts(state: CollectionState, player: int) -> bool:
-    factor = state.multiworld.worlds[player].options.pack_size_gold_bolts.value
-    count, mod = divmod(20, factor)
+    count, mod = divmod(20, Items.GOLD_BOLT.quantity)
     if mod != 0:
         count = count // 1
+    if count < 1:
+        count = 1
     if state.count(Items.GOLD_BOLT.name, player) < count:
         rac_logger.debug(f"Missing gold bolt packs from world, expected {count} but only had"
                          f" {state.count(Items.GOLD_BOLT.name, player)}. Can reach "

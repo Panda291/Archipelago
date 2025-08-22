@@ -10,6 +10,7 @@ class ItemData(Item):
     item_id: int
     name: str
     pool: str
+    quantity: int = 1
 
 
 HELI_PACK = ItemData(2, "Heli Pack", "Packs")
@@ -139,7 +140,7 @@ class CollectableData(ItemData):
 
 # Collectables
 GOLD_BOLT = ItemData(301, "Gold Bolt Pack", "GoldBolts")
-BOLT_PACK = ItemData(302, "Bolt Pack", "Filler")
+BOLT_PACK = ItemData(302, "Bolt Pack", "Filler", 15000)
 
 WEAPONS: Sequence[ItemData] = [
     TAUNTER,
@@ -464,3 +465,18 @@ def check_progressive_item(options, item) -> str:
                     if options.progressive_nanotech.value:
                         new_item = PROGRESSIVE_NANOTECH.name
     return new_item
+
+
+def set_quantity(item, count):
+    item.quantity = count
+    if count == 1:
+        item.name = f"{item.quantity} - {item.name}"
+    elif 1000 <= count < 1000000:
+        temp0 = count // 1000
+        temp1 = count - (temp0 * 1000)
+        item.name = f"{temp0},{temp1} - {item.name}s"
+    elif count == 1000000:
+        item.name = f"1 MILLION - {item.name}s"
+    else:
+        item.name = f"{item.quantity} - {item.name}s"
+    return

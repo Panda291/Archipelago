@@ -12,7 +12,7 @@ POOL_PACK: str = "Packs"
 POOL_HELMET: str = "Helmets"
 POOL_BOOT: str = "Boots"
 POOL_EXTRA_ITEM: str = "ExtraItems"
-POOL_GOLD_BOLT: str = "GoldBolt"
+POOL_GOLD_BOLT: str = "GoldBolts"
 POOL_INFOBOT: str = "Infobots"
 POOL_SKILLPOINT: str = "Skillpoint"
 

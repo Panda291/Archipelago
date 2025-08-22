@@ -108,7 +108,7 @@ class RacWorld(World):
         rac_logger.debug(f"Iterating through Options:")
         for pool_option in shuffle_pools:
             rac_logger.debug(f"Option: {pool_option}")
-            match pool_option.value:  # TODO: starting item and planet
+            match pool_option.value:
                 case Options.ItemOptions.option_vanilla:
                     disabled_pools += [pool_option.pool]
                 case Options.ItemOptions.option_random_same:
@@ -137,8 +137,11 @@ class RacWorld(World):
             pass
         else:
             self.options.pack_size_gold_bolts.value = 1
-        set_quantity(Items.GOLD_BOLT, self.options.pack_size_gold_bolts.value)
-        set_quantity(Items.BOLT_PACK, self.options.pack_size_bolts.value)
+
+        self.item_name_to_id[set_quantity(Items.GOLD_BOLT, self.options.pack_size_gold_bolts.value)] = (
+            Items.GOLD_BOLT.item_id)
+        self.item_name_to_id[set_quantity(Items.BOLT_PACK, self.options.pack_size_bolts.value)] = (
+            Items.BOLT_PACK.item_id)
         rac_logger.debug(
             f"Gold Bolt Pack Size: {self.options.pack_size_gold_bolts.value}, Bolt pack size: "
             f"{self.options.pack_size_bolts.value}")
@@ -242,7 +245,9 @@ class RacWorld(World):
                             if self.get_location(loc.name).item is not None:
                                 raise FillError(f"Slot {self.player_name} selected vanilla {pool}, but Location:"
                                                 f" {loc.name} was already filled")
-                            if self.item_pool[loc.vanilla_item]:
+                            elif pool == Items.GOLD_BOLT.pool:
+                                item = self.item_pool[Items.GOLD_BOLT.name].pop(0)
+                            elif self.item_pool[loc.vanilla_item]:
                                 item = self.item_pool[loc.vanilla_item].pop(0)
                             else:
                                 rac_logger.warning(f"vanilla item {loc.vanilla_item} can't be placed at {loc.name}, "

@@ -343,7 +343,7 @@ ALL: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAP
                            *PROGRESSIVE_GOLDEN_WEAPONS, *GADGETS, *PACKS, *PROGRESSIVE_PACKS, *HELMETS,
                            *PROGRESSIVE_HELMETS, *BOOTS, *PROGRESSIVE_BOOTS, *EXTRA_ITEMS,
                            *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
-                           *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS,
+                           *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS, GOLD_BOLT,
                            *PLANETS, *SKILLPOINTS, BOLT_PACK]
 
 ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *NON_PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS, *GADGETS, *PACKS,
@@ -390,7 +390,7 @@ def from_id(item_id: int) -> ItemData:
     matching = [item for item in ALL if item.item_id == item_id]
     if len(matching) == 0:
         raise ValueError(f"No item data for item id '{item_id}'")
-    assert len(matching) < 2, f"Multiple item data with id '{item_id}'. Please report."
+    assert len(matching) < 2, f"{len(matching)} item data found with id '{item_id}'. Items are: {matching}"
     return matching[0]
 
 
@@ -467,16 +467,29 @@ def check_progressive_item(options, item) -> str:
     return new_item
 
 
-def set_quantity(item, count):
+def set_quantity(item, count) -> str:
     item.quantity = count
-    if count == 1:
-        item.name = f"{item.quantity} - {item.name}"
-    elif 1000 <= count < 1000000:
-        temp0 = count // 1000
-        temp1 = count - (temp0 * 1000)
-        item.name = f"{temp0},{temp1} - {item.name}s"
-    elif count == 1000000:
-        item.name = f"1 MILLION - {item.name}s"
-    else:
-        item.name = f"{item.quantity} - {item.name}s"
-    return
+    match item.item_id:
+        case BOLT_PACK.item_id:
+            if count == 1:
+                item.name = f"A Single Bolt"
+            elif count == 0:
+                item.name = f"Nothing"
+            elif 1000 <= count < 1000000:
+                temp0 = count // 1000
+                temp1 = count - (temp0 * 1000)
+                item.name = f"{temp0},{temp1} Bolts"
+            elif count == 1000000:
+                item.name = f"1 MILLION BOLTS!!!"
+            else:
+                item.name = f"{item.quantity} Bolts"
+            BOLT_PACK.name = item.name
+        case GOLD_BOLT.item_id:
+            if count == 1:
+                item.name = f"A Gold Bolt"
+            else:
+                item.name = f"{item.quantity} Gold Bolts"
+            GOLD_BOLT.name = item.name
+        case _:
+            raise Exception(f"Awww heck! {item.name} was tried to be turned into a pack!")
+    return item.name

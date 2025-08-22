@@ -58,7 +58,6 @@ class ShuffleWeapons(ItemOptions):
     pool = "Weapons"
 
 
-# TODO: Early Weapon option, off, shuffled amount (user states amount), list (user lists items)
 class EarlyWeapon(TextChoice):
     """
         Force a weapon to be in your sphere 1.

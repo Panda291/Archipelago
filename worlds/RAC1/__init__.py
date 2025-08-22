@@ -7,7 +7,7 @@ from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
 from .data import Items, Locations, Planets
-from .data.Items import ALL_WEAPONS, CollectableData, progression_rules, set_quantity
+from .data.Items import ALL_WEAPONS, check_progressive_item, CollectableData, progression_rules, set_quantity
 from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
                              POOL_GOLD_BOLT, POOL_GOLDEN_WEAPON, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_SKILLPOINT,
                              POOL_WEAPON)
@@ -78,8 +78,6 @@ class RacWorld(World):
         self.preplaced_items = []
         rac_logger.debug(f"Pre-placed Item List: {self.preplaced_items}")
         rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
-
-        # TODO: Item Pools
 
         shuffle_pools: list = [
             self.options.shuffle_infobots,
@@ -155,7 +153,8 @@ class RacWorld(World):
             "progressive_morph_o_ray_order": [Items.MORPH_O_RAY.item_id, Items.GOLDEN_MORPH_O_RAY.item_id],
             "progressive_decoy_glove_order": [Items.DECOY_GLOVE.item_id, Items.GOLDEN_DECOY_GLOVE.item_id],
             "progressive_packs_order": [Items.HELI_PACK.item_id, Items.THRUSTER_PACK.item_id, Items.HYDRO_PACK.item_id],
-            "progressive_helmets_order": [Items.O2_MASK.item_id, Items.SONIC_SUMMONER.item_id, Items.PILOTS_HELMET.item_id],
+            "progressive_helmets_order": [Items.O2_MASK.item_id, Items.SONIC_SUMMONER.item_id,
+                                          Items.PILOTS_HELMET.item_id],
             "progressive_boots_order": [Items.GRINDBOOTS.item_id, Items.MAGNEBOOTS.item_id],
             "progressive_hoverboard_order": [Items.HOVERBOARD.item_id, Items.ZOOMERATOR.item_id],
             "progressive_raritanium_order": [Items.RARITANIUM.item_id, Items.PERSUADER.item_id],
@@ -194,7 +193,7 @@ class RacWorld(World):
 
         if (self.options.shuffle_weapons == ShuffleWeapons.option_vanilla or
                 self.options.starting_item == StartingItem.option_vanilla):
-            starting_item = self.item_pool[Items.BOMB_GLOVE.name].pop(0)
+            starting_item = self.item_pool[check_progressive_item(self.options, Items.BOMB_GLOVE.name)].pop(0)
         elif self.options.starting_item == StartingItem.option_random_same:
             starting_item = []
             weapon_list = [item.name for item in Items.ALL_WEAPONS]
@@ -360,7 +359,7 @@ class RacWorld(World):
                     reachable = [loc for loc in multiworld.get_reachable_locations(base_state, self.player)
                                  if loc in loc_temp]
                     rac_logger.debug(f"Reachable Locations: {reachable}")
-                    # TODO: Try using remaining_fill() to prevent deadend seeds
+
                     fill_restrictive(multiworld, base_state, loc_temp, item_temp, single_player_placement=True,
                                      lock=False, swap=True, allow_partial=True, name="RAC1 Useful Item Fill")
                     for item in item_temp:

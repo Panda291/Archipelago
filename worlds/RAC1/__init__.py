@@ -7,7 +7,7 @@ from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
 from .data import Items, Locations, Planets
-from .data.Items import ALL_WEAPONS, CollectableData, ItemData, progression_rules, set_quantity
+from .data.Items import ALL_WEAPONS, CollectableData, progression_rules, set_quantity
 from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
                              POOL_GOLD_BOLT, POOL_GOLDEN_WEAPON, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_SKILLPOINT,
                              POOL_WEAPON)
@@ -60,8 +60,8 @@ class RacWorld(World):
     location_name_groups = location_groups
     item_pool: dict[str, list[Item]] = {}
     starting_planet = Items.NOVALIS_INFOBOT.name
-    starting_items: list[Item] = []
     preplaced_items: list[Item] = []
+    orders: dict[str, list[int]] = {}
 
     def get_filler_item_name(self) -> str:
         return Items.BOLT_PACK.name
@@ -75,7 +75,6 @@ class RacWorld(World):
                            self.player_name)
         self.item_pool: dict[str, list[Item]] = {}
         self.starting_planet = Items.NOVALIS_INFOBOT.name
-        self.starting_items = []
         self.preplaced_items = []
         rac_logger.debug(f"Pre-placed Item List: {self.preplaced_items}")
         rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
@@ -130,9 +129,6 @@ class RacWorld(World):
         rac_logger.debug(f"Useful Pools: {useful_pools}")
         rac_logger.debug(f"Enabled Pools: {enabled_pools}")
 
-        rac_logger.debug(f"Creating Regions")
-        create_regions(self)
-
         if self.options.shuffle_gold_bolts.value:
             pass
         else:
@@ -146,16 +142,40 @@ class RacWorld(World):
             f"Gold Bolt Pack Size: {self.options.pack_size_gold_bolts.value}, Bolt pack size: "
             f"{self.options.pack_size_bolts.value}")
 
-        rac_logger.debug(f"Gold Bolt Pack Size: {self.options.pack_size_gold_bolts.value}")
+        rac_logger.debug(f"Choose Progression Order")
+        self.orders = {
+            "progressive_suck_cannon_order": [Items.SUCK_CANNON.item_id, Items.GOLDEN_SUCK_CANNON.item_id],
+            "progressive_bomb_glove_order": [Items.BOMB_GLOVE.item_id, Items.GOLDEN_BOMB_GLOVE.item_id],
+            "progressive_devastator_order": [Items.DEVASTATOR.item_id, Items.GOLDEN_DEVASTATOR.item_id],
+            "progressive_blaster_order": [Items.BLASTER.item_id, Items.GOLDEN_BLASTER.item_id],
+            "progressive_pyrocitor_order": [Items.PYROCITOR.item_id, Items.GOLDEN_PYROCITOR.item_id],
+            "progressive_mine_glove_order": [Items.MINE_GLOVE.item_id, Items.GOLDEN_MINE_GLOVE.item_id],
+            "progressive_tesla_claw_order": [Items.TESLA_CLAW.item_id, Items.GOLDEN_TESLA_CLAW.item_id],
+            "progressive_glove_of_doom_order": [Items.GLOVE_OF_DOOM.item_id, Items.GOLDEN_GLOVE_OF_DOOM.item_id],
+            "progressive_morph_o_ray_order": [Items.MORPH_O_RAY.item_id, Items.GOLDEN_MORPH_O_RAY.item_id],
+            "progressive_decoy_glove_order": [Items.DECOY_GLOVE.item_id, Items.GOLDEN_DECOY_GLOVE.item_id],
+            "progressive_packs_order": [Items.HELI_PACK.item_id, Items.THRUSTER_PACK.item_id, Items.HYDRO_PACK.item_id],
+            "progressive_helmets_order": [Items.O2_MASK.item_id, Items.SONIC_SUMMONER.item_id, Items.PILOTS_HELMET.item_id],
+            "progressive_boots_order": [Items.GRINDBOOTS.item_id, Items.MAGNEBOOTS.item_id],
+            "progressive_hoverboard_order": [Items.HOVERBOARD.item_id, Items.ZOOMERATOR.item_id],
+            "progressive_raritanium_order": [Items.RARITANIUM.item_id, Items.PERSUADER.item_id],
+            "progressive_nanotech_order": [Items.PREMIUM_NANOTECH.item_id, Items.ULTRA_NANOTECH.item_id],
+        }
+        progression_rules(self)
+        rac_logger.debug(f"Progression Order: {self.orders}")
+        rac_logger.debug(f"Creating Regions")
+        create_regions(self)
+
         rac_logger.debug(f"___Generate Item Pool___")
         option_list = Items.get_pool(self.options)
         rac_logger.debug(f"length of option_list: {len(option_list)}")
         rac_logger.debug(f"gold bolts in list: {option_list.count(Items.GOLD_BOLT)}")
         for item in option_list:
             rac_logger.debug(f"item_pool size: {len(self.item_pool.values())}")
-            item_list = self.item_pool.get(item.name) or []
-            item_list.append(self.create_item(item.name))
-            self.item_pool[item.name] = item_list
+            item_temp = self.create_item(item.name)
+            item_list = self.item_pool.get(item_temp.name) or []
+            item_list.append(self.create_item(item_temp.name))
+            self.item_pool[item_temp.name] = item_list
             # if item.name in self.item_pool.keys():
             #     self.item_pool[item.name].append(self.create_item(item.name))
             # else:
@@ -192,7 +212,7 @@ class RacWorld(World):
             self.random.shuffle(starting_item)
             starting_item = self.item_pool[starting_item[0].name].pop(0)
 
-        self.starting_items = [starting_item, starting_planet]
+        self.preplaced_items = [starting_item, starting_planet]
         self.multiworld.push_precollected(starting_item)
         self.multiworld.push_precollected(starting_planet)
         for name, count in self.options.start_inventory:
@@ -201,11 +221,11 @@ class RacWorld(World):
                                    f"{len(self.item_pool[name])} of {count} copies")
             for i in range(count):
                 if self.item_pool[name]:
-                    self.starting_items += [self.item_pool[name].pop(0)]
+                    self.preplaced_items += [self.item_pool[name].pop(0)]
                 else:
                     break
 
-        rac_logger.debug(f"Starting items: {self.starting_items}")
+        rac_logger.debug(f"Starting items: {self.preplaced_items}")
 
         rac_logger.debug(f"___Vanilla Locations___")
         self.preplaced_items += self.fill_pool(disabled_pools, 0)
@@ -220,7 +240,6 @@ class RacWorld(World):
     def fill_pool(self, pools, scope) -> (list, list):
         multiworld = self.multiworld
         placed_items = self.preplaced_items
-        placed_items += self.starting_items
         placed_items += self.item_pool[Items.GOLD_BOLT.name]
         # for name in self.item_pool:
         #     if Items.from_name(name).pool == POOL_SKILLPOINT:
@@ -375,8 +394,7 @@ class RacWorld(World):
 
     def get_pre_fill_items(self) -> list["Item"]:
         rac_logger.debug(f"fetching preplaced_items")
-        items = self.starting_items
-        items += self.preplaced_items
+        items = self.preplaced_items
         return items
 
     def create_items(self) -> None:
@@ -421,6 +439,8 @@ class RacWorld(World):
         slot_data: dict[str, Any] = {}
         slot_data |= Options.get_options_as_dict(self.options)
         slot_data["starting_planet"] = self.item_name_to_id[self.starting_planet]
+        for item, value in self.orders.items():
+            slot_data[item] = value
         return slot_data
 
     # def post_fill(self) -> None:

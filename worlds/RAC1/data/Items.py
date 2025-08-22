@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Sequence
+from typing import Mapping, Sequence
 
 from BaseClasses import Item
 from worlds.RAC1 import Options
@@ -340,11 +340,10 @@ SKILLPOINTS: Sequence[ItemData] = [
 ]
 
 ALL: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS,
-                           *PROGRESSIVE_GOLDEN_WEAPONS, *GADGETS, *PACKS, *PROGRESSIVE_PACKS, *HELMETS,
-                           *PROGRESSIVE_HELMETS, *BOOTS, *PROGRESSIVE_BOOTS, *EXTRA_ITEMS,
-                           *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
-                           *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS, GOLD_BOLT,
-                           *PLANETS, *SKILLPOINTS, BOLT_PACK]
+                           *GADGETS, *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *PROGRESSIVE_HELMETS, *BOOTS,
+                           *PROGRESSIVE_BOOTS, *EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS,
+                           *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
+                           *PROGRESSIVE_NANOTECHS, GOLD_BOLT, *PLANETS, *SKILLPOINTS, BOLT_PACK]
 
 ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *NON_PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS, *GADGETS, *PACKS,
                                  *HELMETS, *BOOTS, *EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
@@ -357,7 +356,289 @@ ALL_BOOTS: Sequence[ItemData] = [*BOOTS, *PROGRESSIVE_BOOTS]
 ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS,
                                        *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
                                        *PROGRESSIVE_NANOTECHS]
+ALL_HOVERBOARD: Sequence[ItemData] = [*NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS]
+ALL_TRADE: Sequence[ItemData] = [*NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES]
+ALL_NANOTECH: Sequence[ItemData] = [*NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS]
 ALL_STARTING: Sequence[ItemData] = [*ALL_WEAPONS, *GADGETS]
+
+SUCK_GROUP: Sequence[ItemData] = [SUCK_CANNON, GOLDEN_SUCK_CANNON, PROGRESSIVE_SUCK]
+BOMB_GROUP: Sequence[ItemData] = [BOMB_GLOVE, GOLDEN_BOMB_GLOVE, PROGRESSIVE_BOMB]
+DEVASTATOR_GROUP: Sequence[ItemData] = [DEVASTATOR, GOLDEN_DEVASTATOR, PROGRESSIVE_DEVASTATOR]
+BLASTER_GROUP: Sequence[ItemData] = [BLASTER, GOLDEN_BLASTER, PROGRESSIVE_BLASTER]
+PYROCITOR_GROUP: Sequence[ItemData] = [PYROCITOR, GOLDEN_PYROCITOR, PROGRESSIVE_PYROCITOR]
+MINE_GROUP: Sequence[ItemData] = [MINE_GLOVE, GOLDEN_MINE_GLOVE, PROGRESSIVE_MINE]
+TESLA_GROUP: Sequence[ItemData] = [TESLA_CLAW, GOLDEN_TESLA_CLAW, PROGRESSIVE_TESLA]
+DOOM_GROUP: Sequence[ItemData] = [GLOVE_OF_DOOM, GOLDEN_GLOVE_OF_DOOM, PROGRESSIVE_DOOM]
+MORPH_GROUP: Sequence[ItemData] = [MORPH_O_RAY, GOLDEN_MORPH_O_RAY, PROGRESSIVE_MORPH]
+DECOY_GROUP: Sequence[ItemData] = [DECOY_GLOVE, GOLDEN_DECOY_GLOVE, PROGRESSIVE_DECOY]
+
+PROG: dict[str, Mapping[str, int]] = {
+    HELI_PACK.name: {HELI_PACK.name: 1},
+    THRUSTER_PACK.name: {THRUSTER_PACK.name: 1},
+    HYDRO_PACK.name: {HYDRO_PACK.name: 1},
+    SONIC_SUMMONER.name: {SONIC_SUMMONER.name: 1, PROGRESSIVE_HELMET.name: 2},
+    O2_MASK.name: {O2_MASK.name: 1, PROGRESSIVE_HELMET.name: 1},
+    PILOTS_HELMET.name: {PILOTS_HELMET.name: 1, PROGRESSIVE_HELMET.name: 3},
+    SUCK_CANNON.name: {SUCK_CANNON.name: 1},
+    GOLDEN_SUCK_CANNON.name: {SUCK_CANNON.name: 1, GOLDEN_SUCK_CANNON.name: 1},
+    BOMB_GLOVE.name: {BOMB_GLOVE.name: 1},
+    GOLDEN_BOMB_GLOVE.name: {BOMB_GLOVE.name: 1, GOLDEN_BOMB_GLOVE.name: 1},
+    DEVASTATOR.name: {DEVASTATOR.name: 1},
+    GOLDEN_DEVASTATOR.name: {DEVASTATOR.name: 1, GOLDEN_DEVASTATOR.name: 1},
+    BLASTER.name: {BLASTER.name: 1},
+    GOLDEN_BLASTER.name: {BLASTER.name: 1, GOLDEN_BLASTER.name: 1},
+    PYROCITOR.name: {PYROCITOR.name: 1},
+    GOLDEN_PYROCITOR.name: {PYROCITOR.name: 1, GOLDEN_PYROCITOR.name: 1},
+    MINE_GLOVE.name: {MINE_GLOVE.name: 1},
+    GOLDEN_MINE_GLOVE.name: {MINE_GLOVE.name: 1, GOLDEN_MINE_GLOVE.name: 1},
+    TESLA_CLAW.name: {TESLA_CLAW.name: 1},
+    GOLDEN_TESLA_CLAW.name: {TESLA_CLAW.name: 1, GOLDEN_TESLA_CLAW.name: 1},
+    GLOVE_OF_DOOM.name: {GLOVE_OF_DOOM.name: 1},
+    GOLDEN_GLOVE_OF_DOOM.name: {GLOVE_OF_DOOM.name: 1, GOLDEN_GLOVE_OF_DOOM.name: 1},
+    MORPH_O_RAY.name: {MORPH_O_RAY.name: 1},
+    GOLDEN_MORPH_O_RAY.name: {MORPH_O_RAY.name: 1, GOLDEN_MORPH_O_RAY.name: 1},
+    DECOY_GLOVE.name: {DECOY_GLOVE.name: 1},
+    GOLDEN_DECOY_GLOVE.name: {DECOY_GLOVE.name: 1, GOLDEN_DECOY_GLOVE.name: 1},
+    MAGNEBOOTS.name: {MAGNEBOOTS.name: 1, PROGRESSIVE_BOOT.name: 2},
+    GRINDBOOTS.name: {GRINDBOOTS.name: 1, PROGRESSIVE_BOOT.name: 1},
+    HOVERBOARD.name: {HOVERBOARD.name: 1, PROGRESSIVE_HOVERBOARD.name: 1},
+    ZOOMERATOR.name: {ZOOMERATOR.name: 1, PROGRESSIVE_HOVERBOARD.name: 2},
+    PERSUADER.name: {PERSUADER.name: 1, PROGRESSIVE_TRADE.name: 1},
+    RARITANIUM.name: {RARITANIUM.name: 1, PROGRESSIVE_TRADE.name: 2},
+    PREMIUM_NANOTECH.name: {PREMIUM_NANOTECH.name: 1, PROGRESSIVE_NANOTECH.name: 1},
+    ULTRA_NANOTECH.name: {ULTRA_NANOTECH.name: 1, PROGRESSIVE_NANOTECH.name: 2},
+}
+
+
+def progression_rules(world):
+    match world.options.progressive_weapons.value:
+        case Options.GoldenWeaponProgression.option_normal:
+            PROG[SUCK_CANNON.name] = {SUCK_CANNON.name: 1, GOLDEN_SUCK_CANNON.name: 1}
+            PROG[GOLDEN_SUCK_CANNON.name] = {GOLDEN_SUCK_CANNON.name: 1}
+            PROG[BOMB_GLOVE.name] = {BOMB_GLOVE.name: 1, GOLDEN_BOMB_GLOVE.name: 1}
+            PROG[GOLDEN_BOMB_GLOVE.name] = {GOLDEN_BOMB_GLOVE.name: 1}
+            PROG[DEVASTATOR.name] = {DEVASTATOR.name: 1, GOLDEN_DEVASTATOR.name: 1}
+            PROG[GOLDEN_DEVASTATOR.name] = {GOLDEN_DEVASTATOR.name: 1}
+            PROG[BLASTER.name] = {BLASTER.name: 1, GOLDEN_BLASTER.name: 1}
+            PROG[GOLDEN_BLASTER.name] = {GOLDEN_BLASTER.name: 1}
+            PROG[PYROCITOR.name] = {PYROCITOR.name: 1, GOLDEN_PYROCITOR.name: 1}
+            PROG[GOLDEN_PYROCITOR.name] = {GOLDEN_PYROCITOR.name: 1}
+            PROG[MINE_GLOVE.name] = {MINE_GLOVE.name: 1, GOLDEN_MINE_GLOVE.name: 1}
+            PROG[GOLDEN_MINE_GLOVE.name] = {GOLDEN_MINE_GLOVE.name: 1}
+            PROG[TESLA_CLAW.name] = {TESLA_CLAW.name: 1, GOLDEN_TESLA_CLAW.name: 1}
+            PROG[GOLDEN_TESLA_CLAW.name] = {GOLDEN_TESLA_CLAW.name: 1}
+            PROG[GLOVE_OF_DOOM.name] = {GLOVE_OF_DOOM.name: 1, GOLDEN_GLOVE_OF_DOOM.name: 1}
+            PROG[GOLDEN_GLOVE_OF_DOOM.name] = {GOLDEN_GLOVE_OF_DOOM.name: 1}
+            PROG[MORPH_O_RAY.name] = {MORPH_O_RAY.name: 1, GOLDEN_MORPH_O_RAY.name: 1}
+            PROG[GOLDEN_MORPH_O_RAY.name] = {GOLDEN_MORPH_O_RAY.name: 1}
+            PROG[DECOY_GLOVE.name] = {DECOY_GLOVE.name: 1, GOLDEN_DECOY_GLOVE.name: 1}
+            PROG[GOLDEN_DECOY_GLOVE.name] = {GOLDEN_DECOY_GLOVE.name: 1}
+        case Options.GoldenWeaponProgression.option_progressive:
+            PROG[SUCK_CANNON.name] = {PROGRESSIVE_SUCK.name: 1}
+            PROG[GOLDEN_SUCK_CANNON.name] = {PROGRESSIVE_SUCK.name: 2}
+            PROG[BOMB_GLOVE.name] = {PROGRESSIVE_BOMB.name: 1}
+            PROG[GOLDEN_BOMB_GLOVE.name] = {PROGRESSIVE_BOMB.name: 2}
+            PROG[DEVASTATOR.name] = {PROGRESSIVE_DEVASTATOR.name: 1}
+            PROG[GOLDEN_DEVASTATOR.name] = {PROGRESSIVE_DEVASTATOR.name: 2}
+            PROG[BLASTER.name] = {PROGRESSIVE_BLASTER.name: 1}
+            PROG[GOLDEN_BLASTER.name] = {PROGRESSIVE_BLASTER.name: 2}
+            PROG[PYROCITOR.name] = {PROGRESSIVE_PYROCITOR.name: 1}
+            PROG[GOLDEN_PYROCITOR.name] = {PROGRESSIVE_PYROCITOR.name: 2}
+            PROG[MINE_GLOVE.name] = {PROGRESSIVE_MINE.name: 1}
+            PROG[GOLDEN_MINE_GLOVE.name] = {PROGRESSIVE_MINE.name: 2}
+            PROG[TESLA_CLAW.name] = {PROGRESSIVE_TESLA.name: 1}
+            PROG[GOLDEN_TESLA_CLAW.name] = {PROGRESSIVE_TESLA.name: 2}
+            PROG[GLOVE_OF_DOOM.name] = {PROGRESSIVE_DOOM.name: 1}
+            PROG[GOLDEN_GLOVE_OF_DOOM.name] = {PROGRESSIVE_DOOM.name: 2}
+            PROG[MORPH_O_RAY.name] = {PROGRESSIVE_MORPH.name: 1}
+            PROG[GOLDEN_MORPH_O_RAY.name] = {PROGRESSIVE_MORPH.name: 2}
+            PROG[DECOY_GLOVE.name] = {PROGRESSIVE_DECOY.name: 1}
+            PROG[GOLDEN_DECOY_GLOVE.name] = {PROGRESSIVE_DECOY.name: 2}
+        case Options.GoldenWeaponProgression.option_progressive_reversed:
+            world.orders["progressive_suck_cannon_order"].reverse()
+            PROG[SUCK_CANNON.name] = {PROGRESSIVE_SUCK.name: 1}
+            PROG[GOLDEN_SUCK_CANNON.name] = {PROGRESSIVE_SUCK.name: 1}
+            world.orders["progressive_bomb_glove_order"].reverse()
+            PROG[BOMB_GLOVE.name] = {PROGRESSIVE_BOMB.name: 1}
+            PROG[GOLDEN_BOMB_GLOVE.name] = {PROGRESSIVE_BOMB.name: 1}
+            world.orders["progressive_devastator_order"].reverse()
+            PROG[DEVASTATOR.name] = {PROGRESSIVE_DEVASTATOR.name: 1}
+            PROG[GOLDEN_DEVASTATOR.name] = {PROGRESSIVE_DEVASTATOR.name: 1}
+            world.orders["progressive_blaster_order"].reverse()
+            PROG[BLASTER.name] = {PROGRESSIVE_BLASTER.name: 1}
+            PROG[GOLDEN_BLASTER.name] = {PROGRESSIVE_BLASTER.name: 1}
+            world.orders["progressive_pyrocitor_order"].reverse()
+            PROG[PYROCITOR.name] = {PROGRESSIVE_PYROCITOR.name: 1}
+            PROG[GOLDEN_PYROCITOR.name] = {PROGRESSIVE_PYROCITOR.name: 1}
+            world.orders["progressive_mine_glove_order"].reverse()
+            PROG[MINE_GLOVE.name] = {PROGRESSIVE_MINE.name: 1}
+            PROG[GOLDEN_MINE_GLOVE.name] = {PROGRESSIVE_MINE.name: 1}
+            world.orders["progressive_tesla_claw_order"].reverse()
+            PROG[TESLA_CLAW.name] = {PROGRESSIVE_TESLA.name: 1}
+            PROG[GOLDEN_TESLA_CLAW.name] = {PROGRESSIVE_TESLA.name: 1}
+            world.orders["progressive_glove_of_doom_order"].reverse()
+            PROG[GLOVE_OF_DOOM.name] = {PROGRESSIVE_DOOM.name: 1}
+            PROG[GOLDEN_GLOVE_OF_DOOM.name] = {PROGRESSIVE_DOOM.name: 1}
+            world.orders["progressive_morph_o_ray_order"].reverse()
+            PROG[MORPH_O_RAY.name] = {PROGRESSIVE_MORPH.name: 1}
+            PROG[GOLDEN_MORPH_O_RAY.name] = {PROGRESSIVE_MORPH.name: 1}
+            world.orders["progressive_decoy_glove_order"].reverse()
+            PROG[DECOY_GLOVE.name] = {PROGRESSIVE_DECOY.name: 1}
+            PROG[GOLDEN_DECOY_GLOVE.name] = {PROGRESSIVE_DECOY.name: 1}
+        case Options.GoldenWeaponProgression.option_progressive_random:
+            world.random.shuffle(world.orders["progressive_suck_cannon_order"])
+            PROG[SUCK_CANNON.name] = {PROGRESSIVE_SUCK.name: 1}
+            PROG[GOLDEN_SUCK_CANNON.name] = {PROGRESSIVE_SUCK.name: 1 + world.orders[
+                "progressive_suck_cannon_order"].index(GOLDEN_SUCK_CANNON.item_id)}
+            world.random.shuffle(world.orders["progressive_bomb_glove_order"])
+            PROG[BOMB_GLOVE.name] = {PROGRESSIVE_BOMB.name: 1}
+            PROG[GOLDEN_BOMB_GLOVE.name] = {PROGRESSIVE_BOMB.name: 1 + world.orders[
+                "progressive_bomb_glove_order"].index(GOLDEN_BOMB_GLOVE.item_id)}
+            world.random.shuffle(world.orders["progressive_devastator_order"])
+            PROG[DEVASTATOR.name] = {PROGRESSIVE_DEVASTATOR.name: 1}
+            PROG[GOLDEN_DEVASTATOR.name] = {PROGRESSIVE_DEVASTATOR.name: 1 + world.orders[
+                "progressive_devastator_order"].index(GOLDEN_DEVASTATOR.item_id)}
+            world.random.shuffle(world.orders["progressive_blaster_order"])
+            PROG[BLASTER.name] = {PROGRESSIVE_BLASTER.name: 1}
+            PROG[GOLDEN_BLASTER.name] = {PROGRESSIVE_BLASTER.name: 1 + world.orders[
+                "progressive_blaster_order"].index(GOLDEN_BLASTER.item_id)}
+            world.random.shuffle(world.orders["progressive_pyrocitor_order"])
+            PROG[PYROCITOR.name] = {PROGRESSIVE_PYROCITOR.name: 1}
+            PROG[GOLDEN_PYROCITOR.name] = {PROGRESSIVE_PYROCITOR.name: 1 + world.orders[
+                "progressive_pyrocitor_order"].index(GOLDEN_PYROCITOR.item_id)}
+            world.random.shuffle(world.orders["progressive_mine_glove_order"])
+            PROG[MINE_GLOVE.name] = {PROGRESSIVE_MINE.name: 1}
+            PROG[GOLDEN_MINE_GLOVE.name] = {PROGRESSIVE_MINE.name: 1 + world.orders[
+                "progressive_mine_glove_order"].index(GOLDEN_MINE_GLOVE.item_id)}
+            world.random.shuffle(world.orders["progressive_tesla_claw_order"])
+            PROG[TESLA_CLAW.name] = {PROGRESSIVE_TESLA.name: 1}
+            PROG[GOLDEN_TESLA_CLAW.name] = {PROGRESSIVE_TESLA.name: 1 + world.orders[
+                "progressive_tesla_claw_order"].index(TESLA_CLAW.item_id)}
+            world.random.shuffle(world.orders["progressive_glove_of_doom_order"])
+            PROG[GLOVE_OF_DOOM.name] = {PROGRESSIVE_DOOM.name: 1}
+            PROG[GOLDEN_GLOVE_OF_DOOM.name] = {PROGRESSIVE_DOOM.name: 1 + world.orders[
+                "progressive_glove_of_doom_order"].index(GOLDEN_GLOVE_OF_DOOM.item_id)}
+            world.random.shuffle(world.orders["progressive_morph_o_ray_order"])
+            PROG[MORPH_O_RAY.name] = {PROGRESSIVE_MORPH.name: 1}
+            PROG[GOLDEN_MORPH_O_RAY.name] = {PROGRESSIVE_MORPH.name: 1 + world.orders[
+                "progressive_morph_o_ray_order"].index(GOLDEN_MORPH_O_RAY.item_id)}
+            world.random.shuffle(world.orders["progressive_decoy_glove_order"])
+            PROG[DECOY_GLOVE.name] = {PROGRESSIVE_DECOY.name: 1}
+            PROG[GOLDEN_DECOY_GLOVE.name] = {PROGRESSIVE_DECOY.name: 1 + world.orders[
+                "progressive_decoy_glove_order"].index(GOLDEN_DECOY_GLOVE.item_id)}
+        case _:
+            pass
+
+    match world.options.progressive_packs.value:
+        case Options.ProgressiveOptions.option_progressive:
+            PROG[HELI_PACK.name] = {PROGRESSIVE_PACK.name: 1}
+            PROG[THRUSTER_PACK.name] = {PROGRESSIVE_PACK.name: 2}
+            PROG[HYDRO_PACK.name] = {PROGRESSIVE_PACK.name: 3}
+        case Options.ProgressiveOptions.option_progressive_reversed:
+            world.orders["progressive_packs_order"].reverse()
+            PROG[HELI_PACK.name] = {PROGRESSIVE_PACK.name: 3}
+            PROG[THRUSTER_PACK.name] = {PROGRESSIVE_PACK.name: 2}
+            PROG[HYDRO_PACK.name] = {PROGRESSIVE_PACK.name: 1}
+        case Options.ProgressiveOptions.option_progressive_random:
+            world.random.shuffle(world.orders["progressive_packs_order"])
+            PROG[HELI_PACK.name] = {
+                PROGRESSIVE_PACK.name: 1 + world.orders["progressive_packs_order"].index(HELI_PACK.item_id)}
+            PROG[THRUSTER_PACK.name] = {
+                PROGRESSIVE_PACK.name: 1 + world.orders["progressive_packs_order"].index(THRUSTER_PACK.item_id)}
+            PROG[HYDRO_PACK.name] = {
+                PROGRESSIVE_PACK.name: 1 + world.orders["progressive_packs_order"].index(HYDRO_PACK.item_id)}
+        case _:
+            pass
+
+    match world.options.progressive_helmets.value:
+        case Options.ProgressiveOptions.option_progressive:
+            PROG[O2_MASK.name] = {PROGRESSIVE_HELMET.name: 1}
+            PROG[SONIC_SUMMONER.name] = {PROGRESSIVE_HELMET.name: 2}
+            PROG[PILOTS_HELMET.name] = {PROGRESSIVE_HELMET.name: 3}
+        case Options.ProgressiveOptions.option_progressive_reversed:
+            world.orders["progressive_helmets_order"].reverse()
+            PROG[O2_MASK.name] = {PROGRESSIVE_HELMET.name: 3}
+            PROG[SONIC_SUMMONER.name] = {PROGRESSIVE_HELMET.name: 2}
+            PROG[PILOTS_HELMET.name] = {PROGRESSIVE_HELMET.name: 1}
+        case Options.ProgressiveOptions.option_progressive_random:
+            world.random.shuffle(world.orders["progressive_helmets_order"])
+            PROG[O2_MASK.name] = {
+                PROGRESSIVE_HELMET.name: 1 + world.orders["progressive_helmets_order"].index(O2_MASK.item_id)}
+            PROG[SONIC_SUMMONER.name] = {
+                PROGRESSIVE_HELMET.name: 1 + world.orders["progressive_helmets_order"].index(SONIC_SUMMONER.item_id)}
+            PROG[PILOTS_HELMET.name] = {
+                PROGRESSIVE_HELMET.name: 1 + world.orders["progressive_helmets_order"].index(PILOTS_HELMET.item_id)}
+        case _:
+            pass
+
+    match world.options.progressive_boots.value:
+        case Options.ProgressiveOptions.option_progressive:
+            PROG[GRINDBOOTS.name] = {PROGRESSIVE_BOOT.name: 1}
+            PROG[MAGNEBOOTS.name] = {PROGRESSIVE_BOOT.name: 2}
+        case Options.ProgressiveOptions.option_progressive_reversed:
+            world.orders["progressive_boots_order"].reverse()
+            PROG[GRINDBOOTS.name] = {PROGRESSIVE_BOOT.name: 2}
+            PROG[MAGNEBOOTS.name] = {PROGRESSIVE_BOOT.name: 1}
+        case Options.ProgressiveOptions.option_progressive_random:
+            world.random.shuffle(world.orders["progressive_boots_order"])
+            PROG[GRINDBOOTS.name] = {
+                PROGRESSIVE_BOOT.name: 1 + world.orders["progressive_boots_order"].index(GRINDBOOTS.item_id)}
+            PROG[MAGNEBOOTS.name] = {
+                PROGRESSIVE_BOOT.name: 1 + world.orders["progressive_boots_order"].index(MAGNEBOOTS.item_id)}
+        case _:
+            pass
+
+    match world.options.progressive_hoverboard.value:
+        case Options.ProgressiveOptions.option_progressive:
+            PROG[HOVERBOARD.name] = {PROGRESSIVE_HOVERBOARD.name: 1}
+            PROG[ZOOMERATOR.name] = {PROGRESSIVE_HOVERBOARD.name: 2}
+        case Options.ProgressiveOptions.option_progressive_reversed:
+            world.orders["progressive_hoverboard_order"].reverse()
+            PROG[HOVERBOARD.name] = {PROGRESSIVE_HOVERBOARD.name: 2}
+            PROG[ZOOMERATOR.name] = {PROGRESSIVE_HOVERBOARD.name: 1}
+        case Options.ProgressiveOptions.option_progressive_random:
+            world.random.shuffle(world.orders["progressive_hoverboard_order"])
+            PROG[HOVERBOARD.name] = {
+                PROGRESSIVE_HOVERBOARD.name: 1 + world.orders["progressive_hoverboard_order"].index(HOVERBOARD.item_id)}
+            PROG[ZOOMERATOR.name] = {
+                PROGRESSIVE_HOVERBOARD.name: 1 + world.orders["progressive_hoverboard_order"].index(ZOOMERATOR.item_id)}
+        case _:
+            pass
+
+    match world.options.progressive_raritanium.value:
+        case Options.ProgressiveOptions.option_progressive:
+            PROG[RARITANIUM.name] = {PROGRESSIVE_TRADE.name: 1}
+            PROG[PERSUADER.name] = {PROGRESSIVE_TRADE.name: 2}
+        case Options.ProgressiveOptions.option_progressive_reversed:
+            world.orders["progressive_raritanium_order"].reverse()
+            PROG[RARITANIUM.name] = {PROGRESSIVE_TRADE.name: 2}
+            PROG[PERSUADER.name] = {PROGRESSIVE_TRADE.name: 1}
+        case Options.ProgressiveOptions.option_progressive_random:
+            world.random.shuffle(world.orders["progressive_raritanium_order"])
+            PROG[RARITANIUM.name] = {
+                PROGRESSIVE_TRADE.name: 1 + world.orders["progressive_raritanium_order"].index(RARITANIUM.item_id)}
+            PROG[PERSUADER.name] = {
+                PROGRESSIVE_TRADE.name: 1 + world.orders["progressive_raritanium_order"].index(PERSUADER.item_id)}
+        case _:
+            pass
+
+    match world.options.progressive_nanotech.value:
+        case Options.ProgressiveOptions.option_progressive:
+            PROG[PREMIUM_NANOTECH.name] = {PROGRESSIVE_NANOTECH.name: 1}
+            PROG[ULTRA_NANOTECH.name] = {PROGRESSIVE_NANOTECH.name: 2}
+        case Options.ProgressiveOptions.option_progressive_reversed:
+            world.orders["progressive_nanotech_order"].reverse()
+            PROG[PREMIUM_NANOTECH.name] = {PROGRESSIVE_NANOTECH.name: 2}
+            PROG[ULTRA_NANOTECH.name] = {PROGRESSIVE_NANOTECH.name: 1}
+        case Options.ProgressiveOptions.option_progressive_random:
+            world.random.shuffle(world.orders["progressive_nanotech_order"])
+            PROG[PREMIUM_NANOTECH.name] = {PROGRESSIVE_NANOTECH.name: 1 + world.orders[
+                "progressive_nanotech_order"].index(PREMIUM_NANOTECH.item_id)}
+            PROG[ULTRA_NANOTECH.name] = {PROGRESSIVE_NANOTECH.name: 1 + world.orders[
+                "progressive_nanotech_order"].index(ULTRA_NANOTECH.item_id)}
+        case _:
+            pass
+    return
 
 
 def get_pool(options) -> Sequence[ItemData]:

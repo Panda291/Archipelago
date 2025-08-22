@@ -12,35 +12,32 @@ def can_swingshot(state: CollectionState, player: int) -> bool:
 
 
 def can_improved_jump(state: CollectionState, player: int) -> bool:
-    return state.has_any([Items.HELI_PACK.name, Items.THRUSTER_PACK.name], player)
+    return (state.has_any_count(Items.PROG[Items.HELI_PACK.name], player) or
+            state.has_any_count(Items.PROG[Items.THRUSTER_PACK.name], player))
 
 
 def can_heli_high_jump(state: CollectionState, player: int) -> bool:  # relevant for eudora gold bolt
-    return state.has(Items.HELI_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.HELI_PACK.name], player)
 
 
 def can_glide(state: CollectionState, player: int) -> bool:  # gliding is not possible without the heli pack
-    return state.has(Items.HELI_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.HELI_PACK.name], player)
 
 
 def can_ground_pound(state: CollectionState, player: int) -> bool:
-    return state.has(Items.THRUSTER_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.THRUSTER_PACK.name], player)
 
 
 def has_hydro_pack(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HYDRO_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.HYDRO_PACK.name], player)
 
 
 def can_grind(state: CollectionState, player: int) -> bool:
-    return state.has(Items.GRINDBOOTS.name, player)
+    return state.has_any_count(Items.PROG[Items.GRINDBOOTS.name], player)
 
 
 def has_magneboots(state: CollectionState, player: int) -> bool:
-    return state.has(Items.MAGNEBOOTS.name, player)
-
-
-def can_taunt(state: CollectionState, player: int) -> bool:
-    return state.has(Items.TAUNTER.name, player)
+    return state.has_any_count(Items.PROG[Items.MAGNEBOOTS.name], player)
 
 
 def has_hydrodisplacer(state: CollectionState, player: int) -> bool:
@@ -48,19 +45,19 @@ def has_hydrodisplacer(state: CollectionState, player: int) -> bool:
 
 
 def has_raritanium(state: CollectionState, player: int) -> bool:
-    return state.has(Items.RARITANIUM.name, player)
+    return state.has_any_count(Items.PROG[Items.RARITANIUM.name], player)
 
 
 def has_zoomerator(state: CollectionState, player: int) -> bool:
-    return state.has(Items.ZOOMERATOR.name, player)
+    return state.has_any_count(Items.PROG[Items.ZOOMERATOR.name], player)
 
 
 def has_hoverboard(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HOVERBOARD.name, player)
+    return state.has_any_count(Items.PROG[Items.HOVERBOARD.name], player)
 
 
 def has_o2_mask(state: CollectionState, player: int) -> bool:
-    return state.has(Items.O2_MASK.name, player)
+    return state.has_any_count(Items.PROG[Items.O2_MASK.name], player)
 
 
 def has_trespasser(state: CollectionState, player: int) -> bool:
@@ -76,7 +73,7 @@ def has_hologuise(state: CollectionState, player: int) -> bool:
 
 
 def has_pilots_helmet(state: CollectionState, player: int) -> bool:
-    return state.has(Items.PILOTS_HELMET.name, player)
+    return state.has_any_count(Items.PROG[Items.PILOTS_HELMET.name], player)
 
 
 def has_codebot(state: CollectionState, player: int) -> bool:
@@ -92,16 +89,16 @@ def has_metal_detector(state: CollectionState, player: int) -> bool:
 
 
 def has_explosive_weapon(state: CollectionState, player: int) -> bool:
-    return (state.has_any(
-        [Items.BOMB_GLOVE.name, Items.MINE_GLOVE.name, Items.DEVASTATOR.name, Items.VISIBOMB.name, Items.RYNO.name],
-        player))
+    return (state.has_any_count(Items.PROG[Items.BOMB_GLOVE.name], player) or
+            state.has_any_count(Items.PROG[Items.MINE_GLOVE.name], player) or
+            state.has_any_count(Items.PROG[Items.DEVASTATOR.name], player) or
+            state.has_any([Items.VISIBOMB.name, Items.RYNO.name], player))
 
 
 def has_long_range_weapon(state: CollectionState, player: int) -> bool:
-    return (state.has_any([Items.BLASTER.name,
-                           Items.DEVASTATOR.name,
-                           Items.VISIBOMB.name,
-                           Items.RYNO.name], player))
+    return (state.has_any_count(Items.PROG[Items.BLASTER.name], player) or
+            state.has_any_count(Items.PROG[Items.DEVASTATOR.name], player) or
+            state.has_any([Items.VISIBOMB.name, Items.RYNO.name], player))
 
 
 def has_40_gold_bolts(state: CollectionState, player: int) -> bool:

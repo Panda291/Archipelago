@@ -62,9 +62,9 @@ NOVALIS_GOLD_WEAPON_7 = LocationData(103, "Novalis", "Novalis: Golden Weapon 7 -
 NOVALIS_GOLD_WEAPON_8 = LocationData(98, "Novalis", "Novalis: Golden Weapon 8 - 10,000",
                                      Items.GOLDEN_GLOVE_OF_DOOM.name, {POOL_GOLDEN_WEAPON}, novalis_gold_weapon_rule)
 NOVALIS_GOLD_WEAPON_9 = LocationData(104, "Novalis", "Novalis: Golden Weapon 9 - 10,000",
-                                      Items.GOLDEN_DECOY_GLOVE.name, {POOL_GOLDEN_WEAPON}, novalis_gold_weapon_rule)
+                                     Items.GOLDEN_DECOY_GLOVE.name, {POOL_GOLDEN_WEAPON}, novalis_gold_weapon_rule)
 NOVALIS_GOLD_WEAPON_10 = LocationData(99, "Novalis", "Novalis: Golden Weapon 10 - 10,000",
-                                     Items.GOLDEN_SUCK_CANNON.name, {POOL_GOLDEN_WEAPON}, novalis_gold_weapon_rule)
+                                      Items.GOLDEN_SUCK_CANNON.name, {POOL_GOLDEN_WEAPON}, novalis_gold_weapon_rule)
 
 # Skill Point Locations
 NOVALIS_SKILLPOINT = LocationData(

@@ -1009,31 +1009,3 @@ def check_progressive_item(options, item) -> str:
                     if options.progressive_nanotech.value:
                         new_item = PROGRESSIVE_NANOTECH.name
     return new_item
-
-
-def set_quantity(item, count) -> str:
-    item.quantity = count
-    match item.item_id:
-        case BOLT_PACK.item_id:
-            if count == 1:
-                item.name = f"A Single Bolt"
-            elif count == 0:
-                item.name = f"Nothing"
-            elif 1000 <= count < 1000000:
-                temp0 = count // 1000
-                temp1 = count - (temp0 * 1000)
-                item.name = f"{temp0},{temp1} Bolts"
-            elif count == 1000000:
-                item.name = f"1 MILLION BOLTS!!!"
-            else:
-                item.name = f"{item.quantity} Bolts"
-            BOLT_PACK.name = item.name
-        case GOLD_BOLT.item_id:
-            if count == 1:
-                item.name = f"A Gold Bolt"
-            else:
-                item.name = f"{item.quantity} Gold Bolts"
-            GOLD_BOLT.name = item.name
-        case _:
-            raise Exception(f"Awww heck! {item.name} was tried to be turned into a pack!")
-    return item.name

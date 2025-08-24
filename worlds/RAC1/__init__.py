@@ -227,7 +227,6 @@ class RacWorld(World):
     def fill_pool(self, pools, scope) -> (list, list):
         multiworld = self.multiworld
         placed_items = self.preplaced_items
-        placed_items += self.item_pool[Items.GOLD_BOLT.name]
         # for name in self.item_pool:
         #     if Items.from_name(name).pool == POOL_SKILLPOINT:
         #         placed_items += self.item_pool[name]
@@ -236,7 +235,13 @@ class RacWorld(World):
         for name, items in self.item_pool.items():
             rac_logger.debug(f"Checking if {name} is unplaced")
             if items:
-                if name == Items.GOLD_BOLT.name or items[0].name.endswith("Skill Point"):
+                if items[0].name.endswith("Gold Bolts"):
+                    placed_items += self.item_pool[name]
+                    continue
+                elif items[0].name.endswith("Skill Point"):
+                    continue
+                elif items[0].name.endswith("Gold Bolt"):
+                    placed_items += self.item_pool[name]
                     continue
                 else:
                     rac_logger.debug(f"Add to unplaced: {name}")

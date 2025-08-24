@@ -12,7 +12,7 @@ from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, P
                              POOL_GOLD_BOLT, POOL_GOLDEN_WEAPON, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_SKILLPOINT,
                              POOL_WEAPON)
 from .data.Planets import ALL_LOCATIONS, location_groups, PlanetData
-from .Options import RacOptions, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation
+from .Options import RacOptions, ShuffleGadgets, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation
 from .Regions import create_regions
 
 rac_logger = logging.getLogger("Ratchet & Clank")
@@ -182,19 +182,16 @@ class RacWorld(World):
         if (self.options.shuffle_weapons == ShuffleWeapons.option_vanilla or
                 self.options.starting_item == StartingItem.option_vanilla):
             starting_item = self.item_pool[check_progressive_item(self.options, Items.BOMB_GLOVE.name)].pop(0)
-        elif self.options.starting_item == StartingItem.option_random_same:
-            starting_item = []
-            weapon_list = [item.name for item in Items.ALL_WEAPONS]
-            for name, item in self.item_pool.items():
-                if name in weapon_list:
-                    starting_item.extend(item)
-            self.random.shuffle(starting_item)
-            starting_item = self.item_pool[starting_item[0].name].pop(0)
         else:
             starting_item = []
-            equip_list = [item.name for item in Items.ALL_STARTING]
+            item_list = [item.name for item in Items.STARTING_WEAPONS]
+            if (self.options.starting_item == StartingItem.option_random_item and
+                    self.options.shuffle_gadgets > ShuffleGadgets.option_random_same):
+                item_list += [item.name for item in Items.GADGETS]
+            if self.options.progressive_weapons.value is Options.GoldenWeaponProgression.option_normal:
+                item_list += [item.name for item in Items.GOLDEN_WEAPONS]
             for name, item in self.item_pool.items():
-                if name in equip_list:
+                if name in item_list:
                     starting_item.extend(item)
             self.random.shuffle(starting_item)
             starting_item = self.item_pool[starting_item[0].name].pop(0)
@@ -206,7 +203,7 @@ class RacWorld(World):
             if count > len(self.item_pool[name]):
                 rac_logger.warning(f"Too many copies of {name} in yaml start inventory! Giving only "
                                    f"{len(self.item_pool[name])} of {count} copies")
-            for i in range(count):
+            for _ in range(count):
                 if self.item_pool[name]:
                     self.preplaced_items += [self.item_pool[name].pop(0)]
                 else:

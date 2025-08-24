@@ -214,6 +214,7 @@ WEAPONS: Sequence[ItemData] = [
     TAUNTER,
     VISIBOMB,
     WALLOPER,
+    RYNO,
     DRONE_DEVICE,
 ]
 
@@ -227,7 +228,6 @@ NON_PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
     TESLA_CLAW,
     GLOVE_OF_DOOM,
     MORPH_O_RAY,
-    RYNO,
     DECOY_GLOVE,
 ]
 
@@ -484,11 +484,11 @@ ALL: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAP
                            *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
                            *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS, *PLANETS, *SKILLPOINTS, *BOLT_PACKS]
 
-ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *NON_PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS, *GADGETS, *PACKS,
-                                 *HELMETS, *BOOTS, *EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
-                                 *NON_PROGRESSIVE_NANOTECHS]  # *SKILLPOINTS
-ALL_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS,
-                                   *PROGRESSIVE_GOLDEN_WEAPONS]
+ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *GADGETS, *EXTRA_ITEMS]  # *SKILLPOINTS
+
+STARTING_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS,
+                                        *PROGRESSIVE_GOLDEN_WEAPONS]
+ALL_WEAPONS: Sequence[ItemData] = [*STARTING_WEAPONS, *GOLDEN_WEAPONS]
 ALL_PACKS: Sequence[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
 ALL_HELMETS: Sequence[ItemData] = [*HELMETS, *PROGRESSIVE_HELMETS]
 ALL_BOOTS: Sequence[ItemData] = [*BOOTS, *PROGRESSIVE_BOOTS]
@@ -498,7 +498,7 @@ ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARD
 ALL_HOVERBOARD: Sequence[ItemData] = [*NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS]
 ALL_TRADE: Sequence[ItemData] = [*NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES]
 ALL_NANOTECH: Sequence[ItemData] = [*NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS]
-ALL_STARTING: Sequence[ItemData] = [*ALL_WEAPONS, *GADGETS]
+ALL_STARTING: Sequence[ItemData] = [*STARTING_WEAPONS, *GADGETS]
 
 SUCK_GROUP: Sequence[ItemData] = [SUCK_CANNON, GOLDEN_SUCK_CANNON, PROGRESSIVE_SUCK]
 BOMB_GROUP: Sequence[ItemData] = [BOMB_GLOVE, GOLDEN_BOMB_GLOVE, PROGRESSIVE_BOMB]
@@ -734,8 +734,14 @@ def progression_rules(world):
     match world.options.progressive_helmets.value:
         case Options.ProgressiveOptions.option_progressive:
             PROG[O2_MASK.name] = {PROGRESSIVE_HELMET.name: 1}
-            PROG[SONIC_SUMMONER.name] = {PROGRESSIVE_HELMET.name: 2}
-            PROG[PILOTS_HELMET.name] = {PROGRESSIVE_HELMET.name: 3}
+            if world.options.shuffle_helmets.value <= Options.ItemOptions.option_random_same:
+                PROG[SONIC_SUMMONER.name] = {PROGRESSIVE_HELMET.name: 3}
+                PROG[PILOTS_HELMET.name] = {PROGRESSIVE_HELMET.name: 2}
+                world.orders["progressive_helmets_order"] = [O2_MASK.item_id, PILOTS_HELMET.item_id,
+                                                             SONIC_SUMMONER.item_id]
+            else:
+                PROG[SONIC_SUMMONER.name] = {PROGRESSIVE_HELMET.name: 2}
+                PROG[PILOTS_HELMET.name] = {PROGRESSIVE_HELMET.name: 3}
         case Options.ProgressiveOptions.option_progressive_reversed:
             world.orders["progressive_helmets_order"].reverse()
             PROG[O2_MASK.name] = {PROGRESSIVE_HELMET.name: 3}
@@ -749,6 +755,18 @@ def progression_rules(world):
                 PROGRESSIVE_HELMET.name: 1 + world.orders["progressive_helmets_order"].index(SONIC_SUMMONER.item_id)}
             PROG[PILOTS_HELMET.name] = {
                 PROGRESSIVE_HELMET.name: 1 + world.orders["progressive_helmets_order"].index(PILOTS_HELMET.item_id)}
+            if (world.options.shuffle_helmets.value <= Options.ItemOptions.option_random_same and
+                    PROG[PILOTS_HELMET.name].values() == 3):
+                temp = PROG[PILOTS_HELMET.name]
+                PROG[PILOTS_HELMET.name] = PROG[SONIC_SUMMONER.name]
+                PROG[SONIC_SUMMONER.name] = temp
+                if world.orders["progressive_helmets_order"].index(O2_MASK.item_id) == 0:
+                    world.orders["progressive_helmets_order"] = [O2_MASK.item_id, PILOTS_HELMET.item_id,
+                                                                 SONIC_SUMMONER.item_id]
+                else:
+                    world.orders["progressive_helmets_order"] = [PILOTS_HELMET.item_id, O2_MASK.item_id,
+                                                                 SONIC_SUMMONER.item_id]
+
         case _:
             pass
 
@@ -769,39 +787,46 @@ def progression_rules(world):
         case _:
             pass
 
-    match world.options.progressive_hoverboard.value:
-        case Options.ProgressiveOptions.option_progressive:
-            PROG[HOVERBOARD.name] = {PROGRESSIVE_HOVERBOARD.name: 1}
-            PROG[ZOOMERATOR.name] = {PROGRESSIVE_HOVERBOARD.name: 2}
-        case Options.ProgressiveOptions.option_progressive_reversed:
-            world.orders["progressive_hoverboard_order"].reverse()
-            PROG[HOVERBOARD.name] = {PROGRESSIVE_HOVERBOARD.name: 2}
-            PROG[ZOOMERATOR.name] = {PROGRESSIVE_HOVERBOARD.name: 1}
-        case Options.ProgressiveOptions.option_progressive_random:
-            world.random.shuffle(world.orders["progressive_hoverboard_order"])
-            PROG[HOVERBOARD.name] = {
-                PROGRESSIVE_HOVERBOARD.name: 1 + world.orders["progressive_hoverboard_order"].index(HOVERBOARD.item_id)}
-            PROG[ZOOMERATOR.name] = {
-                PROGRESSIVE_HOVERBOARD.name: 1 + world.orders["progressive_hoverboard_order"].index(ZOOMERATOR.item_id)}
-        case _:
-            pass
-
-    match world.options.progressive_raritanium.value:
-        case Options.ProgressiveOptions.option_progressive:
-            PROG[RARITANIUM.name] = {PROGRESSIVE_TRADE.name: 1}
-            PROG[PERSUADER.name] = {PROGRESSIVE_TRADE.name: 2}
-        case Options.ProgressiveOptions.option_progressive_reversed:
-            world.orders["progressive_raritanium_order"].reverse()
-            PROG[RARITANIUM.name] = {PROGRESSIVE_TRADE.name: 2}
-            PROG[PERSUADER.name] = {PROGRESSIVE_TRADE.name: 1}
-        case Options.ProgressiveOptions.option_progressive_random:
-            world.random.shuffle(world.orders["progressive_raritanium_order"])
-            PROG[RARITANIUM.name] = {
-                PROGRESSIVE_TRADE.name: 1 + world.orders["progressive_raritanium_order"].index(RARITANIUM.item_id)}
-            PROG[PERSUADER.name] = {
-                PROGRESSIVE_TRADE.name: 1 + world.orders["progressive_raritanium_order"].index(PERSUADER.item_id)}
-        case _:
-            pass
+    if world.options.shuffle_extra_items.value == Options.ItemOptions.option_vanilla:
+        PROG[HOVERBOARD.name] = {HOVERBOARD.name: 1, PROGRESSIVE_HOVERBOARD.name: 1}
+        PROG[ZOOMERATOR.name] = {ZOOMERATOR.name: 1, PROGRESSIVE_HOVERBOARD.name: 2}
+    else:
+        match world.options.progressive_hoverboard.value:
+            case Options.ProgressiveOptions.option_progressive:
+                PROG[HOVERBOARD.name] = {PROGRESSIVE_HOVERBOARD.name: 1}
+                PROG[ZOOMERATOR.name] = {PROGRESSIVE_HOVERBOARD.name: 2}
+            case Options.ProgressiveOptions.option_progressive_reversed:
+                world.orders["progressive_hoverboard_order"].reverse()
+                PROG[HOVERBOARD.name] = {PROGRESSIVE_HOVERBOARD.name: 2}
+                PROG[ZOOMERATOR.name] = {PROGRESSIVE_HOVERBOARD.name: 1}
+            case Options.ProgressiveOptions.option_progressive_random:
+                world.random.shuffle(world.orders["progressive_hoverboard_order"])
+                PROG[HOVERBOARD.name] = {
+                    PROGRESSIVE_HOVERBOARD.name: 1 + world.orders["progressive_hoverboard_order"].index(HOVERBOARD.item_id)}
+                PROG[ZOOMERATOR.name] = {
+                    PROGRESSIVE_HOVERBOARD.name: 1 + world.orders["progressive_hoverboard_order"].index(ZOOMERATOR.item_id)}
+            case _:
+                pass
+    if world.options.shuffle_extra_items.value == Options.ItemOptions.option_vanilla:
+        PROG[RARITANIUM.name] = {RARITANIUM.name: 1, PROGRESSIVE_TRADE.name: 1}
+        PROG[PERSUADER.name] = {PERSUADER.name: 1, PROGRESSIVE_TRADE.name: 2}
+    else:
+        match world.options.progressive_raritanium.value:
+            case Options.ProgressiveOptions.option_progressive:
+                PROG[RARITANIUM.name] = {PROGRESSIVE_TRADE.name: 1}
+                PROG[PERSUADER.name] = {PROGRESSIVE_TRADE.name: 2}
+            case Options.ProgressiveOptions.option_progressive_reversed:
+                world.orders["progressive_raritanium_order"].reverse()
+                PROG[RARITANIUM.name] = {PROGRESSIVE_TRADE.name: 2}
+                PROG[PERSUADER.name] = {PROGRESSIVE_TRADE.name: 1}
+            case Options.ProgressiveOptions.option_progressive_random:
+                world.random.shuffle(world.orders["progressive_raritanium_order"])
+                PROG[RARITANIUM.name] = {
+                    PROGRESSIVE_TRADE.name: 1 + world.orders["progressive_raritanium_order"].index(RARITANIUM.item_id)}
+                PROG[PERSUADER.name] = {
+                    PROGRESSIVE_TRADE.name: 1 + world.orders["progressive_raritanium_order"].index(PERSUADER.item_id)}
+            case _:
+                pass
 
     match world.options.progressive_nanotech.value:
         case Options.ProgressiveOptions.option_progressive:
@@ -970,23 +995,43 @@ def check_progressive_item(options, item) -> str:
                 match item:
                     case SUCK_CANNON.name:
                         new_item = PROGRESSIVE_SUCK.name
+                    case GOLDEN_SUCK_CANNON.name:
+                        new_item = PROGRESSIVE_SUCK.name
                     case BOMB_GLOVE.name:
+                        new_item = PROGRESSIVE_BOMB.name
+                    case GOLDEN_BOMB_GLOVE.name:
                         new_item = PROGRESSIVE_BOMB.name
                     case DEVASTATOR.name:
                         new_item = PROGRESSIVE_DEVASTATOR.name
+                    case GOLDEN_DEVASTATOR.name:
+                        new_item = PROGRESSIVE_DEVASTATOR.name
                     case BLASTER.name:
+                        new_item = PROGRESSIVE_BLASTER.name
+                    case GOLDEN_BLASTER.name:
                         new_item = PROGRESSIVE_BLASTER.name
                     case PYROCITOR.name:
                         new_item = PROGRESSIVE_PYROCITOR.name
+                    case GOLDEN_PYROCITOR.name:
+                        new_item = PROGRESSIVE_PYROCITOR.name
                     case MINE_GLOVE.name:
+                        new_item = PROGRESSIVE_MINE.name
+                    case GOLDEN_MINE_GLOVE.name:
                         new_item = PROGRESSIVE_MINE.name
                     case TESLA_CLAW.name:
                         new_item = PROGRESSIVE_TESLA.name
+                    case GOLDEN_TESLA_CLAW.name:
+                        new_item = PROGRESSIVE_TESLA.name
                     case GLOVE_OF_DOOM.name:
+                        new_item = PROGRESSIVE_DOOM.name
+                    case GOLDEN_GLOVE_OF_DOOM.name:
                         new_item = PROGRESSIVE_DOOM.name
                     case MORPH_O_RAY.name:
                         new_item = PROGRESSIVE_MORPH.name
+                    case GOLDEN_MORPH_O_RAY.name:
+                        new_item = PROGRESSIVE_MORPH.name
                     case DECOY_GLOVE.name:
+                        new_item = PROGRESSIVE_DECOY.name
+                    case GOLDEN_DECOY_GLOVE.name:
                         new_item = PROGRESSIVE_DECOY.name
         case HELI_PACK.pool:
             if options.progressive_packs.value:

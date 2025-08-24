@@ -83,7 +83,7 @@ def has_codebot(state: CollectionState, player: int) -> bool:
 def has_taunter(state: CollectionState, player: int) -> bool:
     return state.has(Items.TAUNTER.name, player)
 
-
+# TODO Logic for accessing dig spots on each planet
 def has_metal_detector(state: CollectionState, player: int) -> bool:
     return state.has(Items.METAL_DETECTOR.name, player)
 
@@ -102,16 +102,54 @@ def has_long_range_weapon(state: CollectionState, player: int) -> bool:
 
 
 def has_40_gold_bolts(state: CollectionState, player: int) -> bool:
-    count, mod = divmod(20, Items.GOLD_BOLT.quantity)
-    if mod != 0:
-        count = count // 1
-    if count < 1:
-        count = 1
-    if state.count(Items.GOLD_BOLT.name, player) < count:
+    lookup: dict[int, tuple[str, int]] = {
+        1: (Items.GOLD_BOLT_1.name, 40),
+        2: (Items.GOLD_BOLT_2.name, 20),
+        3: (Items.GOLD_BOLT_3.name, 14),
+        4: (Items.GOLD_BOLT_4.name, 10),
+        5: (Items.GOLD_BOLT_5.name, 8),
+        6: (Items.GOLD_BOLT_6.name, 7),
+        7: (Items.GOLD_BOLT_7.name, 6),
+        8: (Items.GOLD_BOLT_8.name, 5),
+        9: (Items.GOLD_BOLT_9.name, 5),
+        10: (Items.GOLD_BOLT_10.name, 4),
+        11: (Items.GOLD_BOLT_11.name, 4),
+        12: (Items.GOLD_BOLT_12.name, 4),
+        13: (Items.GOLD_BOLT_13.name, 4),
+        14: (Items.GOLD_BOLT_14.name, 3),
+        15: (Items.GOLD_BOLT_15.name, 3),
+        16: (Items.GOLD_BOLT_16.name, 3),
+        17: (Items.GOLD_BOLT_17.name, 3),
+        18: (Items.GOLD_BOLT_18.name, 3),
+        19: (Items.GOLD_BOLT_19.name, 3),
+        20: (Items.GOLD_BOLT_20.name, 2),
+        21: (Items.GOLD_BOLT_21.name, 2),
+        22: (Items.GOLD_BOLT_22.name, 2),
+        23: (Items.GOLD_BOLT_23.name, 2),
+        24: (Items.GOLD_BOLT_24.name, 2),
+        25: (Items.GOLD_BOLT_25.name, 2),
+        26: (Items.GOLD_BOLT_26.name, 2),
+        27: (Items.GOLD_BOLT_27.name, 2),
+        28: (Items.GOLD_BOLT_28.name, 2),
+        29: (Items.GOLD_BOLT_29.name, 2),
+        30: (Items.GOLD_BOLT_30.name, 2),
+        31: (Items.GOLD_BOLT_31.name, 2),
+        32: (Items.GOLD_BOLT_32.name, 2),
+        33: (Items.GOLD_BOLT_33.name, 2),
+        34: (Items.GOLD_BOLT_34.name, 2),
+        35: (Items.GOLD_BOLT_35.name, 2),
+        36: (Items.GOLD_BOLT_36.name, 2),
+        37: (Items.GOLD_BOLT_37.name, 2),
+        38: (Items.GOLD_BOLT_38.name, 2),
+        39: (Items.GOLD_BOLT_39.name, 2),
+        40: (Items.GOLD_BOLT_40.name, 1),
+    }
+    item, count = lookup[state.multiworld.worlds[player].options.pack_size_gold_bolts.value]
+    if state.count(item, player) < count:
         rac_logger.debug(f"Missing gold bolt packs from world, expected {count} but only had"
-                         f" {state.count(Items.GOLD_BOLT.name, player)}. Can reach "
+                         f" {state.count(item, player)}. Can reach "
                          f"{state.prog_items}")
-    return state.has(Items.GOLD_BOLT.name, player, count)
+    return state.has(item, player, count)
 
 
 # Novalis

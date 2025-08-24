@@ -7,7 +7,8 @@ def get_classification(item: ItemData) -> ItemClassification:
     if (item in Items.PLANETS
             or item in Items.ALL_PACKS
             or item in Items.GADGETS
-            or item in Items.ALL_BOOTS):
+            or item in Items.ALL_BOOTS
+            or item in Items.GOLD_BOLTS):
         return ItemClassification.progression
     if item in [
         Items.TAUNTER,
@@ -29,7 +30,6 @@ def get_classification(item: ItemData) -> ItemClassification:
         Items.VISIBOMB,
         Items.RYNO,
         Items.PROGRESSIVE_TRADE,
-        Items.GOLD_BOLT,
     ]:
         return ItemClassification.progression
     if (item == Items.SONIC_SUMMONER

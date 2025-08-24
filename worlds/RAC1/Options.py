@@ -148,12 +148,37 @@ class GoldBoltPackSize(Range):
     range_end = 40
 
 
-class BoltPackSize(Range):
+class BoltPackSize(Choice):
     """Number of Bolts received each time you collect a pack of Bolts."""
     display_name = "Bolt Pack Size"
-    default = 15000
-    range_start = 0
-    range_end = 1000000
+    option_0 = 0
+    option_1 = 1
+    option_10 = 10
+    option_100 = 100
+    option_250 = 250
+    option_500 = 500
+    option_750 = 750
+    option_1000 = 1000
+    option_2000 = 2000
+    option_3000 = 3000
+    option_4000 = 4000
+    option_5000 = 5000
+    option_6000 = 6000
+    option_7000 = 7000
+    option_8000 = 8000
+    option_9000 = 9000
+    option_10000 = 10000
+    option_12500 = 12500
+    option_15000 = 15000
+    option_17500 = 17500
+    option_20000 = 20000
+    option_25000 = 25000
+    option_30000 = 30000
+    option_40000 = 40000
+    option_50000 = 50000
+    option_75000 = 75000
+    option_100000 = 100000
+    default = option_15000
 
 
 class ShuffleInfobots(ItemOptions):
@@ -204,6 +229,8 @@ class MDBoltMultiplier(Range):
     range_start = 1
     range_end = 100
 
+
+# TODO Option: Vendor in logic without metal detector
 
 class ProgressiveOptions(Choice):
     """Template

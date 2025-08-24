@@ -139,8 +139,76 @@ class CollectableData(ItemData):
 
 
 # Collectables
-GOLD_BOLT = ItemData(301, "Gold Bolt Pack", "GoldBolts")
-BOLT_PACK = ItemData(302, "Bolt Pack", "Filler", 15000)
+GOLD_BOLT = ItemData(261, "Generic Gold Bolt", "GoldBolts")
+GOLD_BOLT_1 = ItemData(262, "1 Gold Bolt", "GoldBolts", 1)
+GOLD_BOLT_2 = ItemData(263, "2 Gold Bolts", "GoldBolts", 2)
+GOLD_BOLT_3 = ItemData(264, "3 Gold Bolts", "GoldBolts", 3)
+GOLD_BOLT_4 = ItemData(265, "4 Gold Bolts", "GoldBolts", 4)
+GOLD_BOLT_5 = ItemData(266, "5 Gold Bolts", "GoldBolts", 5)
+GOLD_BOLT_6 = ItemData(267, "6 Gold Bolts", "GoldBolts", 6)
+GOLD_BOLT_7 = ItemData(268, "7 Gold Bolts", "GoldBolts", 7)
+GOLD_BOLT_8 = ItemData(269, "8 Gold Bolts", "GoldBolts", 8)
+GOLD_BOLT_9 = ItemData(270, "9 Gold Bolts", "GoldBolts", 9)
+GOLD_BOLT_10 = ItemData(271, "10 Gold Bolts", "GoldBolts", 10)
+GOLD_BOLT_11 = ItemData(272, "11 Gold Bolts", "GoldBolts", 11)
+GOLD_BOLT_12 = ItemData(273, "12 Gold Bolts", "GoldBolts", 12)
+GOLD_BOLT_13 = ItemData(274, "13 Gold Bolts", "GoldBolts", 13)
+GOLD_BOLT_14 = ItemData(275, "14 Gold Bolts", "GoldBolts", 14)
+GOLD_BOLT_15 = ItemData(276, "15 Gold Bolts", "GoldBolts", 15)
+GOLD_BOLT_16 = ItemData(277, "16 Gold Bolts", "GoldBolts", 16)
+GOLD_BOLT_17 = ItemData(278, "17 Gold Bolts", "GoldBolts", 17)
+GOLD_BOLT_18 = ItemData(279, "18 Gold Bolts", "GoldBolts", 18)
+GOLD_BOLT_19 = ItemData(280, "19 Gold Bolts", "GoldBolts", 19)
+GOLD_BOLT_20 = ItemData(281, "20 Gold Bolts", "GoldBolts", 20)
+GOLD_BOLT_21 = ItemData(282, "21 Gold Bolts", "GoldBolts", 21)
+GOLD_BOLT_22 = ItemData(283, "22 Gold Bolts", "GoldBolts", 22)
+GOLD_BOLT_23 = ItemData(284, "23 Gold Bolts", "GoldBolts", 23)
+GOLD_BOLT_24 = ItemData(285, "24 Gold Bolts", "GoldBolts", 24)
+GOLD_BOLT_25 = ItemData(286, "25 Gold Bolts", "GoldBolts", 25)
+GOLD_BOLT_26 = ItemData(287, "26 Gold Bolts", "GoldBolts", 26)
+GOLD_BOLT_27 = ItemData(288, "27 Gold Bolts", "GoldBolts", 27)
+GOLD_BOLT_28 = ItemData(289, "28 Gold Bolts", "GoldBolts", 28)
+GOLD_BOLT_29 = ItemData(290, "29 Gold Bolts", "GoldBolts", 29)
+GOLD_BOLT_30 = ItemData(291, "30 Gold Bolts", "GoldBolts", 30)
+GOLD_BOLT_31 = ItemData(292, "31 Gold Bolts", "GoldBolts", 31)
+GOLD_BOLT_32 = ItemData(293, "32 Gold Bolts", "GoldBolts", 32)
+GOLD_BOLT_33 = ItemData(294, "33 Gold Bolts", "GoldBolts", 33)
+GOLD_BOLT_34 = ItemData(295, "34 Gold Bolts", "GoldBolts", 34)
+GOLD_BOLT_35 = ItemData(296, "35 Gold Bolts", "GoldBolts", 35)
+GOLD_BOLT_36 = ItemData(297, "36 Gold Bolts", "GoldBolts", 36)
+GOLD_BOLT_37 = ItemData(298, "37 Gold Bolts", "GoldBolts", 37)
+GOLD_BOLT_38 = ItemData(299, "38 Gold Bolts", "GoldBolts", 38)
+GOLD_BOLT_39 = ItemData(300, "39 Gold Bolts", "GoldBolts", 39)
+GOLD_BOLT_40 = ItemData(301, "40 Gold Bolts", "GoldBolts", 40)
+
+BOLT_PACK = ItemData(302, "Generic Bolt Pack", "Filler")
+BOLT_PACK_0 = ItemData(400, "Nothing", "Filler", 0)
+BOLT_PACK_1 = ItemData(401, "A single bolt", "Filler", 1)
+BOLT_PACK_2 = ItemData(402, "10 bolts", "Filler", 10)
+BOLT_PACK_3 = ItemData(403, "100 bolts", "Filler", 100)
+BOLT_PACK_4 = ItemData(404, "250 bolts", "Filler", 250)
+BOLT_PACK_5 = ItemData(405, "500 bolts", "Filler", 500)
+BOLT_PACK_6 = ItemData(406, "750 bolts", "Filler", 750)
+BOLT_PACK_7 = ItemData(407, "1,000 bolts", "Filler", 1000)
+BOLT_PACK_8 = ItemData(408, "2,000 bolts", "Filler", 2000)
+BOLT_PACK_9 = ItemData(409, "3,000 bolts", "Filler", 3000)
+BOLT_PACK_10 = ItemData(410, "4,000 bolts", "Filler", 4000)
+BOLT_PACK_11 = ItemData(411, "5,000 bolts", "Filler", 5000)
+BOLT_PACK_12 = ItemData(412, "6,000 bolts", "Filler", 6000)
+BOLT_PACK_13 = ItemData(413, "7,000 bolts", "Filler", 7000)
+BOLT_PACK_14 = ItemData(414, "8,000 bolts", "Filler", 8000)
+BOLT_PACK_15 = ItemData(415, "9,000 bolts", "Filler", 9000)
+BOLT_PACK_16 = ItemData(416, "10,000 bolts", "Filler", 10000)
+BOLT_PACK_17 = ItemData(417, "12,500 bolts", "Filler", 12500)
+BOLT_PACK_18 = ItemData(418, "15,000 bolts", "Filler", 15000)
+BOLT_PACK_19 = ItemData(419, "17,500 bolts", "Filler", 17500)
+BOLT_PACK_20 = ItemData(420, "20,000 bolts", "Filler", 20000)
+BOLT_PACK_21 = ItemData(421, "25,000 bolts", "Filler", 25000)
+BOLT_PACK_22 = ItemData(422, "30,000 bolts", "Filler", 30000)
+BOLT_PACK_23 = ItemData(423, "40,000 bolts", "Filler", 40000)
+BOLT_PACK_24 = ItemData(424, "50,000 bolts", "Filler", 50000)
+BOLT_PACK_25 = ItemData(425, "75,000 bolts", "Filler", 75000)
+BOLT_PACK_26 = ItemData(426, "100,000 bolts", "Filler", 100000)
 
 WEAPONS: Sequence[ItemData] = [
     TAUNTER,
@@ -273,8 +341,79 @@ PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
     *[PROGRESSIVE_NANOTECH] * 2,
 ]
 
-GOLD_BOLTS: Sequence[CollectableData] = [
-    *[GOLD_BOLT] * 40,
+GOLD_BOLTS: Sequence[ItemData] = [
+    GOLD_BOLT,
+    GOLD_BOLT_1,
+    GOLD_BOLT_2,
+    GOLD_BOLT_3,
+    GOLD_BOLT_4,
+    GOLD_BOLT_5,
+    GOLD_BOLT_6,
+    GOLD_BOLT_7,
+    GOLD_BOLT_8,
+    GOLD_BOLT_9,
+    GOLD_BOLT_10,
+    GOLD_BOLT_11,
+    GOLD_BOLT_12,
+    GOLD_BOLT_13,
+    GOLD_BOLT_14,
+    GOLD_BOLT_15,
+    GOLD_BOLT_16,
+    GOLD_BOLT_17,
+    GOLD_BOLT_18,
+    GOLD_BOLT_19,
+    GOLD_BOLT_20,
+    GOLD_BOLT_21,
+    GOLD_BOLT_22,
+    GOLD_BOLT_23,
+    GOLD_BOLT_24,
+    GOLD_BOLT_25,
+    GOLD_BOLT_26,
+    GOLD_BOLT_27,
+    GOLD_BOLT_28,
+    GOLD_BOLT_29,
+    GOLD_BOLT_30,
+    GOLD_BOLT_31,
+    GOLD_BOLT_32,
+    GOLD_BOLT_33,
+    GOLD_BOLT_34,
+    GOLD_BOLT_35,
+    GOLD_BOLT_36,
+    GOLD_BOLT_37,
+    GOLD_BOLT_38,
+    GOLD_BOLT_39,
+    GOLD_BOLT_40,
+]
+
+BOLT_PACKS: Sequence[ItemData] = [
+    BOLT_PACK,
+    BOLT_PACK_0,
+    BOLT_PACK_1,
+    BOLT_PACK_2,
+    BOLT_PACK_3,
+    BOLT_PACK_4,
+    BOLT_PACK_5,
+    BOLT_PACK_6,
+    BOLT_PACK_7,
+    BOLT_PACK_8,
+    BOLT_PACK_9,
+    BOLT_PACK_10,
+    BOLT_PACK_11,
+    BOLT_PACK_12,
+    BOLT_PACK_13,
+    BOLT_PACK_14,
+    BOLT_PACK_15,
+    BOLT_PACK_16,
+    BOLT_PACK_17,
+    BOLT_PACK_18,
+    BOLT_PACK_19,
+    BOLT_PACK_20,
+    BOLT_PACK_21,
+    BOLT_PACK_22,
+    BOLT_PACK_23,
+    BOLT_PACK_24,
+    BOLT_PACK_25,
+    BOLT_PACK_26,
 ]
 
 PLANETS: Sequence[ItemData] = [
@@ -343,7 +482,7 @@ ALL: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAP
                            *GADGETS, *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *PROGRESSIVE_HELMETS, *BOOTS,
                            *PROGRESSIVE_BOOTS, *EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS,
                            *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
-                           *PROGRESSIVE_NANOTECHS, GOLD_BOLT, *PLANETS, *SKILLPOINTS, BOLT_PACK]
+                           *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS, *PLANETS, *SKILLPOINTS, *BOLT_PACKS]
 
 ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *NON_PROGRESSIVE_WEAPONS, *GOLDEN_WEAPONS, *GADGETS, *PACKS,
                                  *HELMETS, *BOOTS, *EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *NON_PROGRESSIVE_TRADES,
@@ -408,6 +547,48 @@ PROG: dict[str, Mapping[str, int]] = {
     PREMIUM_NANOTECH.name: {PREMIUM_NANOTECH.name: 1, PROGRESSIVE_NANOTECH.name: 1},
     ULTRA_NANOTECH.name: {ULTRA_NANOTECH.name: 1, PROGRESSIVE_NANOTECH.name: 2},
 }
+
+
+def get_bolt_pack(options: Options) -> str:
+    lookup: dict[int, str] = {
+        BOLT_PACK_0.quantity: BOLT_PACK_0.name,
+        BOLT_PACK_1.quantity: BOLT_PACK_1.name,
+        BOLT_PACK_2.quantity: BOLT_PACK_2.name,
+        BOLT_PACK_3.quantity: BOLT_PACK_3.name,
+        BOLT_PACK_4.quantity: BOLT_PACK_4.name,
+        BOLT_PACK_5.quantity: BOLT_PACK_5.name,
+        BOLT_PACK_6.quantity: BOLT_PACK_6.name,
+        BOLT_PACK_7.quantity: BOLT_PACK_7.name,
+        BOLT_PACK_8.quantity: BOLT_PACK_8.name,
+        BOLT_PACK_9.quantity: BOLT_PACK_9.name,
+        BOLT_PACK_10.quantity: BOLT_PACK_10.name,
+        BOLT_PACK_11.quantity: BOLT_PACK_11.name,
+        BOLT_PACK_12.quantity: BOLT_PACK_12.name,
+        BOLT_PACK_13.quantity: BOLT_PACK_13.name,
+        BOLT_PACK_14.quantity: BOLT_PACK_14.name,
+        BOLT_PACK_15.quantity: BOLT_PACK_15.name,
+        BOLT_PACK_16.quantity: BOLT_PACK_16.name,
+        BOLT_PACK_17.quantity: BOLT_PACK_17.name,
+        BOLT_PACK_18.quantity: BOLT_PACK_18.name,
+        BOLT_PACK_19.quantity: BOLT_PACK_19.name,
+        BOLT_PACK_20.quantity: BOLT_PACK_20.name,
+        BOLT_PACK_21.quantity: BOLT_PACK_21.name,
+        BOLT_PACK_22.quantity: BOLT_PACK_22.name,
+        BOLT_PACK_23.quantity: BOLT_PACK_23.name,
+        BOLT_PACK_24.quantity: BOLT_PACK_24.name,
+        BOLT_PACK_25.quantity: BOLT_PACK_25.name,
+        BOLT_PACK_26.quantity: BOLT_PACK_26.name,
+    }
+    return lookup[options.pack_size_bolts.value]
+
+
+def get_gold_bolts(options: Options) -> str:
+    lookup: dict[int, str] = {}
+    for gold_bolt in GOLD_BOLTS:
+        if gold_bolt.name.startswith("Generic"):
+            continue
+        lookup.update({gold_bolt.quantity: gold_bolt.name})
+    return lookup[options.pack_size_gold_bolts.value]
 
 
 def progression_rules(world):
@@ -645,12 +826,94 @@ def get_pool(options) -> Sequence[ItemData]:
     pool = []
     for item in ITEM_POOL:
         pool += [item]
-    gb_count = 0
-    if pool.count(GOLD_BOLT) > 0:
-        raise AssertionError("Gold Bolts should not be in the pool before getting added")
-    while gb_count < 40:
-        pool += [GOLD_BOLT]
-        gb_count += options.pack_size_gold_bolts
+    if options.progressive_weapons.value > Options.GoldenWeaponProgression.option_normal:
+        for item in PROGRESSIVE_WEAPONS:
+            pool += [item, item]
+    else:
+        for item in NON_PROGRESSIVE_WEAPONS:
+            pool += [item]
+        for item in GOLDEN_WEAPONS:
+            pool += [item]
+    if options.progressive_packs.value > Options.ProgressiveOptions.option_vanilla:
+        for item in PROGRESSIVE_PACKS:
+            pool += [item]
+    else:
+        for item in PACKS:
+            pool += [item]
+    if options.progressive_helmets.value > Options.ProgressiveOptions.option_vanilla:
+        for item in PROGRESSIVE_HELMETS:
+            pool += [item]
+    else:
+        for item in HELMETS:
+            pool += [item]
+    if options.progressive_boots.value > Options.ProgressiveOptions.option_vanilla:
+        for item in PROGRESSIVE_BOOTS:
+            pool += [item]
+    else:
+        for item in BOOTS:
+            pool += [item]
+    if options.progressive_hoverboard.value > Options.ProgressiveOptions.option_vanilla:
+        for item in PROGRESSIVE_HOVERBOARDS:
+            pool += [item]
+    else:
+        for item in NON_PROGRESSIVE_HOVERBOARDS:
+            pool += [item]
+    if options.progressive_raritanium.value > Options.ProgressiveOptions.option_vanilla:
+        for item in PROGRESSIVE_TRADES:
+            pool += [item]
+    else:
+        for item in NON_PROGRESSIVE_TRADES:
+            pool += [item]
+    if options.progressive_nanotech.value > Options.ProgressiveOptions.option_vanilla:
+        for item in PROGRESSIVE_NANOTECHS:
+            pool += [item]
+    else:
+        for item in NON_PROGRESSIVE_NANOTECHS:
+            pool += [item]
+    lookup: dict[int, tuple[ItemData, int]] = {
+        1: (GOLD_BOLT_1, 40),
+        2: (GOLD_BOLT_2, 30),
+        3: (GOLD_BOLT_3, 20),
+        4: (GOLD_BOLT_4, 15),
+        5: (GOLD_BOLT_5, 12),
+        6: (GOLD_BOLT_6, 10),
+        7: (GOLD_BOLT_7, 9),
+        8: (GOLD_BOLT_8, 8),
+        9: (GOLD_BOLT_9, 7),
+        10: (GOLD_BOLT_10, 6),
+        11: (GOLD_BOLT_11, 5),
+        12: (GOLD_BOLT_12, 5),
+        13: (GOLD_BOLT_13, 5),
+        14: (GOLD_BOLT_14, 4),
+        15: (GOLD_BOLT_15, 4),
+        16: (GOLD_BOLT_16, 4),
+        17: (GOLD_BOLT_17, 4),
+        18: (GOLD_BOLT_18, 4),
+        19: (GOLD_BOLT_19, 4),
+        20: (GOLD_BOLT_20, 3),
+        21: (GOLD_BOLT_21, 3),
+        22: (GOLD_BOLT_22, 3),
+        23: (GOLD_BOLT_23, 3),
+        24: (GOLD_BOLT_24, 3),
+        25: (GOLD_BOLT_25, 3),
+        26: (GOLD_BOLT_26, 3),
+        27: (GOLD_BOLT_27, 3),
+        28: (GOLD_BOLT_28, 3),
+        29: (GOLD_BOLT_29, 3),
+        30: (GOLD_BOLT_30, 2),
+        31: (GOLD_BOLT_31, 2),
+        32: (GOLD_BOLT_32, 2),
+        33: (GOLD_BOLT_33, 2),
+        34: (GOLD_BOLT_34, 2),
+        35: (GOLD_BOLT_35, 2),
+        36: (GOLD_BOLT_36, 2),
+        37: (GOLD_BOLT_37, 2),
+        38: (GOLD_BOLT_38, 2),
+        39: (GOLD_BOLT_39, 2),
+        40: (GOLD_BOLT_40, 1),
+    }
+    for _ in range(lookup[options.pack_size_gold_bolts.value][1]):
+        pool += [lookup[options.pack_size_gold_bolts.value][0]]
     return pool
 
 

@@ -1,5 +1,10 @@
+import logging
+
 from BaseClasses import CollectionState
 from .data import Items
+
+rac_logger = logging.getLogger("Ratchet & Clank")
+rac_logger.setLevel(logging.DEBUG)
 
 
 def can_swingshot(state: CollectionState, player: int) -> bool:
@@ -7,35 +12,32 @@ def can_swingshot(state: CollectionState, player: int) -> bool:
 
 
 def can_improved_jump(state: CollectionState, player: int) -> bool:
-    return state.has_any([Items.HELI_PACK.name, Items.THRUSTER_PACK.name], player)
+    return (state.has_any_count(Items.PROG[Items.HELI_PACK.name], player) or
+            state.has_any_count(Items.PROG[Items.THRUSTER_PACK.name], player))
 
 
 def can_heli_high_jump(state: CollectionState, player: int) -> bool:  # relevant for eudora gold bolt
-    return state.has(Items.HELI_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.HELI_PACK.name], player)
 
 
 def can_glide(state: CollectionState, player: int) -> bool:  # gliding is not possible without the heli pack
-    return state.has(Items.HELI_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.HELI_PACK.name], player)
 
 
 def can_ground_pound(state: CollectionState, player: int) -> bool:
-    return state.has(Items.THRUSTER_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.THRUSTER_PACK.name], player)
 
 
 def has_hydro_pack(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HYDRO_PACK.name, player)
+    return state.has_any_count(Items.PROG[Items.HYDRO_PACK.name], player)
 
 
 def can_grind(state: CollectionState, player: int) -> bool:
-    return state.has(Items.GRINDBOOTS.name, player)
+    return state.has_any_count(Items.PROG[Items.GRINDBOOTS.name], player)
 
 
 def has_magneboots(state: CollectionState, player: int) -> bool:
-    return state.has(Items.MAGNEBOOTS.name, player)
-
-
-def can_taunt(state: CollectionState, player: int) -> bool:
-    return state.has(Items.TAUNTER.name, player)
+    return state.has_any_count(Items.PROG[Items.MAGNEBOOTS.name], player)
 
 
 def has_hydrodisplacer(state: CollectionState, player: int) -> bool:
@@ -43,19 +45,19 @@ def has_hydrodisplacer(state: CollectionState, player: int) -> bool:
 
 
 def has_raritanium(state: CollectionState, player: int) -> bool:
-    return state.has(Items.RARITANIUM.name, player)
+    return state.has_any_count(Items.PROG[Items.RARITANIUM.name], player)
 
 
 def has_zoomerator(state: CollectionState, player: int) -> bool:
-    return state.has(Items.ZOOMERATOR.name, player)
+    return state.has_any_count(Items.PROG[Items.ZOOMERATOR.name], player)
 
 
 def has_hoverboard(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HOVERBOARD.name, player)
+    return state.has_any_count(Items.PROG[Items.HOVERBOARD.name], player)
 
 
 def has_o2_mask(state: CollectionState, player: int) -> bool:
-    return state.has(Items.O2_MASK.name, player)
+    return state.has_any_count(Items.PROG[Items.O2_MASK.name], player)
 
 
 def has_trespasser(state: CollectionState, player: int) -> bool:
@@ -71,7 +73,7 @@ def has_hologuise(state: CollectionState, player: int) -> bool:
 
 
 def has_pilots_helmet(state: CollectionState, player: int) -> bool:
-    return state.has(Items.PILOTS_HELMET.name, player)
+    return state.has_any_count(Items.PROG[Items.PILOTS_HELMET.name], player)
 
 
 def has_codebot(state: CollectionState, player: int) -> bool:
@@ -81,26 +83,73 @@ def has_codebot(state: CollectionState, player: int) -> bool:
 def has_taunter(state: CollectionState, player: int) -> bool:
     return state.has(Items.TAUNTER.name, player)
 
-
+# TODO Logic for accessing dig spots on each planet
 def has_metal_detector(state: CollectionState, player: int) -> bool:
     return state.has(Items.METAL_DETECTOR.name, player)
 
 
 def has_explosive_weapon(state: CollectionState, player: int) -> bool:
-    return (state.has_any(
-        [Items.BOMB_GLOVE.name, Items.MINE_GLOVE.name, Items.DEVASTATOR.name, Items.VISIBOMB.name, Items.RYNO.name],
-        player))
+    return (state.has_any_count(Items.PROG[Items.BOMB_GLOVE.name], player) or
+            state.has_any_count(Items.PROG[Items.MINE_GLOVE.name], player) or
+            state.has_any_count(Items.PROG[Items.DEVASTATOR.name], player) or
+            state.has_any([Items.VISIBOMB.name, Items.RYNO.name], player))
 
 
 def has_long_range_weapon(state: CollectionState, player: int) -> bool:
-    return (state.has_any([Items.BLASTER.name,
-                           Items.DEVASTATOR.name,
-                           Items.VISIBOMB.name,
-                           Items.RYNO.name], player))
+    return (state.has_any_count(Items.PROG[Items.BLASTER.name], player) or
+            state.has_any_count(Items.PROG[Items.DEVASTATOR.name], player) or
+            state.has_any([Items.VISIBOMB.name, Items.RYNO.name], player))
 
 
 def has_40_gold_bolts(state: CollectionState, player: int) -> bool:
-    return state.has(Items.GOLD_BOLT.name, player, 40)
+    lookup: dict[int, tuple[str, int]] = {
+        1: (Items.GOLD_BOLT_1.name, 40),
+        2: (Items.GOLD_BOLT_2.name, 20),
+        3: (Items.GOLD_BOLT_3.name, 14),
+        4: (Items.GOLD_BOLT_4.name, 10),
+        5: (Items.GOLD_BOLT_5.name, 8),
+        6: (Items.GOLD_BOLT_6.name, 7),
+        7: (Items.GOLD_BOLT_7.name, 6),
+        8: (Items.GOLD_BOLT_8.name, 5),
+        9: (Items.GOLD_BOLT_9.name, 5),
+        10: (Items.GOLD_BOLT_10.name, 4),
+        11: (Items.GOLD_BOLT_11.name, 4),
+        12: (Items.GOLD_BOLT_12.name, 4),
+        13: (Items.GOLD_BOLT_13.name, 4),
+        14: (Items.GOLD_BOLT_14.name, 3),
+        15: (Items.GOLD_BOLT_15.name, 3),
+        16: (Items.GOLD_BOLT_16.name, 3),
+        17: (Items.GOLD_BOLT_17.name, 3),
+        18: (Items.GOLD_BOLT_18.name, 3),
+        19: (Items.GOLD_BOLT_19.name, 3),
+        20: (Items.GOLD_BOLT_20.name, 2),
+        21: (Items.GOLD_BOLT_21.name, 2),
+        22: (Items.GOLD_BOLT_22.name, 2),
+        23: (Items.GOLD_BOLT_23.name, 2),
+        24: (Items.GOLD_BOLT_24.name, 2),
+        25: (Items.GOLD_BOLT_25.name, 2),
+        26: (Items.GOLD_BOLT_26.name, 2),
+        27: (Items.GOLD_BOLT_27.name, 2),
+        28: (Items.GOLD_BOLT_28.name, 2),
+        29: (Items.GOLD_BOLT_29.name, 2),
+        30: (Items.GOLD_BOLT_30.name, 2),
+        31: (Items.GOLD_BOLT_31.name, 2),
+        32: (Items.GOLD_BOLT_32.name, 2),
+        33: (Items.GOLD_BOLT_33.name, 2),
+        34: (Items.GOLD_BOLT_34.name, 2),
+        35: (Items.GOLD_BOLT_35.name, 2),
+        36: (Items.GOLD_BOLT_36.name, 2),
+        37: (Items.GOLD_BOLT_37.name, 2),
+        38: (Items.GOLD_BOLT_38.name, 2),
+        39: (Items.GOLD_BOLT_39.name, 2),
+        40: (Items.GOLD_BOLT_40.name, 1),
+    }
+    item, count = lookup[state.multiworld.worlds[player].options.pack_size_gold_bolts.value]
+    if state.count(item, player) < count:
+        rac_logger.debug(f"Missing gold bolt packs from world, expected {count} but only had"
+                         f" {state.count(item, player)}. Can reach "
+                         f"{state.prog_items}")
+    return state.has(item, player, count)
 
 
 # Novalis

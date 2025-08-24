@@ -2,8 +2,10 @@ import typing
 
 from BaseClasses import CollectionState, Location, Region
 from .data import Planets
-from .data.Locations import LocationData
+from .data.Items import check_progressive_item, get_gold_bolts
+from .data.Locations import LocationData, POOL_GOLD_BOLT, POOL_GOLDEN_WEAPON
 from .data.Planets import PlanetData
+from ..generic.Rules import forbid_item
 
 if typing.TYPE_CHECKING:
     from . import RacWorld
@@ -47,10 +49,6 @@ def create_regions(world: 'RacWorld'):
             menu.connect(region, None, generate_planet_access_rule(planet_data))
 
             for location_data in planet_data.locations:
-                # Don't create the location if there is a "pool" it is in that is not enabled
-                # if location_data.name in world.disabled_pools:
-                #     continue
-
                 def generate_access_rule(loc: LocationData) -> typing.Callable[[CollectionState], bool]:
                     def access_rule(state: CollectionState):
                         if loc.access_rule:
@@ -60,8 +58,15 @@ def create_regions(world: 'RacWorld'):
                     return access_rule
 
                 region.add_locations({location_data.name: location_data.location_id}, RacLocation)
+                if POOL_GOLD_BOLT in location_data.pools:
+                    location_data.vanilla_item = get_gold_bolts(world.options)
+                elif location_data.vanilla_item is not None:
+                    location_data.vanilla_item = check_progressive_item(world.options, location_data.vanilla_item)
+
                 location = world.multiworld.get_location(location_data.name, world.player)
                 location.access_rule = generate_access_rule(location_data)
+                if POOL_GOLDEN_WEAPON in location_data.pools:
+                    forbid_item(location, get_gold_bolts(world.options), world.player)
 
     # from Utils import visualize_regions
     # visualize_regions(world.multiworld.get_region("Menu", world.player), "my_world.puml")

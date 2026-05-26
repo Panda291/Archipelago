@@ -14,6 +14,7 @@ The following are required in order to play Ratchet & Clank in Archipelago
 - A Ratchet & Clank PAL ISO (`NPEA00385`)
 - The latest version of the [Ratchet & Clank Multiplayer Client](https://github.com/bordplate/rac1-multiplayer/releases).
 - (optional) The latest version of the [Ratchet & Clank Multiplayer Server](https://github.com/bordplate/Lawrence/releases).
+- (optional) There exists a [poptracker](https://github.com/SomeLazyGamer/RaC-AP-Poptracker/releases).
 
 ## AP World Installation
 

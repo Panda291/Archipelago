@@ -11,10 +11,18 @@ The following are required in order to play Ratchet & Clank in Archipelago
 - A device to play on:
   - [RPCS3 Emulator](https://rpcs3.net/download).
   - A Homebrew enabled PS3 (easiest is PS3 HEN).
-- A Ratchet & Clank PAL ISO (`NPEA00385`)
+- A Ratchet & Clank PS3 copy (See version compatibility below)
 - The latest version of the [Ratchet & Clank Multiplayer Client](https://github.com/bordplate/rac1-multiplayer/releases).
 - (optional) The latest version of the [Ratchet & Clank Multiplayer Server](https://github.com/bordplate/Lawrence/releases).
 - (optional) There exists a [poptracker](https://github.com/SomeLazyGamer/RaC-AP-Poptracker/releases).
+
+## Version Compatibility
+On the latest versions of the multiplayer mod all 4 major version of Ratchet & Clank PS3 should be supported by the multiplayer
+mod to various degrees:
+- PAL Digital version `NPEA00385`: Fully compatible on emulator and PS3 hardware.
+- PAL Trilogy disc version: `BCES01503`: Tested on PS3 hardware, untested Emulator, extra setup required for Emulator. (See below)
+- US Digital version `NPUA80643`: Untested on PS3 hardware and Emulator.
+- US Trilogy disc version `BCUS98282`: Untested on PS3 and Emulator, extra setup required for Emulator. (See below)
 
 ## AP World Installation
 
@@ -28,13 +36,26 @@ The following are required in order to play Ratchet & Clank in Archipelago
 
 ## Installing the Ratchet & Clank Multiplayer Mod
 To install the Ratchet & Clank Multiplayer Mod, it would be best to follow its [installation guide](https://github.com/bordplate/rac1-multiplayer/blob/main/README.md).
-A short TL;DR:
-- Have NPEA00385 installed to either your emulator or PS3 .\
-    **Note**: **For PS3 only** a Ratchet & Clank PAL Trilogy (`BCES01503`) disk should also work.
+**A short TL;DR for the digital versions:**
+- Have NPEA00385/NPUA80643 installed to either your emulator or PS3 .\
+    **Note**: A Ratchet & Clank PAL Trilogy (`BCES01503` or `BCUS98282`) disk should also work. See in the section below.
 - Get the latest release of the [mod](https://github.com/bordplate/rac1-multiplayer/releases)
 - **For Emulator:** Go to Files --> Install Packages/Raps/Edats --> select the downloaded mod from the step before. \
 Then you can launch `Ratchet Multiplayer` from the games list.
 - **For PS3:** This requires a modded PS3, I will not be going into the details here. Look up PS3 HEN if you don't know where to start
+
+**For the disc versions:**
+To use the trilogy disc version (BCES01503/BCUS98282),you have to perform the following extra steps:
+- Mount the disc on your pc, on windows this is as simple as double-clicking the .iso. If you have a blu-ray reader in 
+your pc, it's automatically mounted when you insert the disc.
+- From the disc contents, copy the entire PS3_GAME folder to`<rpcs3_folder>/dev_hdd0/game/` and rename it to `BCES01503`. 
+**Yes this step is for US and PAL copies as well!**
+  - If you are not sure if you're doing it right, refer to the attached image.
+  - ![Disc Filesystem](Disc_filesystem.png "Disc Filesystem")
+- The setup of the multiplayer mod and the randomizer is the same for all versions from this point on.
+
+The game should now appear in RPCS3, it should launch as a standalone game if everything was done correctly. 
+If yes, you should be able to start up the multiplayer mod as well.
 
 ## Configuring your YAML file
 

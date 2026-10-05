@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import NamedTuple, Sequence
 
 from .Locations import *
 
@@ -16,6 +16,11 @@ NOVALIS = PlanetData("Novalis", 1, [
     NOVALIS_SEWER_GOLD_BOLT,
     NOVALIS_CAVES_GOLD_BOLT,
     NOVALIS_UNDERWATER_CAVES_GOLD_BOLT,
+    NOVALIS_GOLD_WEAPON_1,
+    NOVALIS_GOLD_WEAPON_2,
+    NOVALIS_GOLD_WEAPON_3,
+    NOVALIS_GOLD_WEAPON_4,
+    NOVALIS_GOLD_WEAPON_5,
 ])
 
 ARIDIA = PlanetData("Aridia", 2, [
@@ -116,6 +121,11 @@ HOVEN = PlanetData("Hoven", 12, [
 GEMLIK = PlanetData("Gemlik", 13, [
     GEMLIK_QUARK_FIGHT,
     GEMLIK_GOLD_BOLT,
+    GEMLIK_GOLD_WEAPON_1,
+    GEMLIK_GOLD_WEAPON_2,
+    GEMLIK_GOLD_WEAPON_3,
+    GEMLIK_GOLD_WEAPON_4,
+    GEMLIK_GOLD_WEAPON_5,
 ])
 
 OLTANIS = PlanetData("Oltanis", 14, [
@@ -176,7 +186,7 @@ LOGIC_PLANETS: Sequence[PlanetData] = [
     QUARTU,
     KALEBO,
     FLEET,
-    VELDIN
+    VELDIN,
 ]
 
 ALL_LOCATIONS: Sequence[LocationData] = [
@@ -184,3 +194,38 @@ ALL_LOCATIONS: Sequence[LocationData] = [
     for locations in [planet.locations for planet in LOGIC_PLANETS]
     for location in locations
 ]
+
+location_table_by_name: dict[str, LocationData] = {location.name: location for location in ALL_LOCATIONS}
+location_groups: dict[str, set[str]] = {
+    "Novalis": set(loc.name for loc in ALL_LOCATIONS if loc.planet in NOVALIS),
+    "Aridia": set(loc.name for loc in ALL_LOCATIONS if loc.planet in ARIDIA),
+    "Kerwan": set(loc.name for loc in ALL_LOCATIONS if loc.planet in KERWAN),
+    "Eudora": set(loc.name for loc in ALL_LOCATIONS if loc.planet in EUDORA),
+    "Rilgar": set(loc.name for loc in ALL_LOCATIONS if loc.planet in RILGAR),
+    "Blarg": set(loc.name for loc in ALL_LOCATIONS if loc.planet in BLARG),
+    "Umbris": set(loc.name for loc in ALL_LOCATIONS if loc.planet in UMBRIS),
+    "Batalia": set(loc.name for loc in ALL_LOCATIONS if loc.planet in BATALIA),
+    "Gaspar": set(loc.name for loc in ALL_LOCATIONS if loc.planet in GASPAR),
+    "Orxon": set(loc.name for loc in ALL_LOCATIONS if loc.planet in ORXON),
+    "Pokitaru": set(loc.name for loc in ALL_LOCATIONS if loc.planet in POKITARU),
+    "Hoven": set(loc.name for loc in ALL_LOCATIONS if loc.planet in HOVEN),
+    "Gemlik": set(loc.name for loc in ALL_LOCATIONS if loc.planet in GEMLIK),
+    "Oltanis": set(loc.name for loc in ALL_LOCATIONS if loc.planet in OLTANIS),
+    "Quartu": set(loc.name for loc in ALL_LOCATIONS if loc.planet in QUARTU),
+    "Kalebo": set(loc.name for loc in ALL_LOCATIONS if loc.planet in KALEBO),
+    "Fleet": set(loc.name for loc in ALL_LOCATIONS if loc.planet in FLEET),
+    "Veldin": set(loc.name for loc in ALL_LOCATIONS if loc.planet in VELDIN),
+    "Weapons": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_WEAPON) and len(loc.pools)),
+    "GoldenWeapons": set(
+        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GOLDEN_WEAPON) and len(loc.pools)),
+    "Gadgets": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GADGET) and len(loc.pools)),
+    "Packs": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_PACK) and len(loc.pools)),
+    "Helmets": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_HELMET) and len(loc.pools)),
+    "Boots": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_BOOT) and len(loc.pools)),
+    "ExtraItems": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_EXTRA_ITEM) and len(loc.pools)),
+    "GoldBolt": set(
+        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_GOLD_BOLT) and len(loc.pools)),
+    "Infobots": set(loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_INFOBOT) and len(loc.pools)),
+    "Skillpoint": set(
+        loc.name for loc in ALL_LOCATIONS if loc.pools.issubset(POOL_SKILLPOINT) and len(loc.pools)),
+}

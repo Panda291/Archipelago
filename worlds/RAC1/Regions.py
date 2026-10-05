@@ -10,8 +10,10 @@ from ..generic.Rules import set_rule
 if typing.TYPE_CHECKING:
     from . import RacWorld
 
+
 class RacLocation(Location):
     game: str = "Ratchet & Clank"
+
 
 def create_regions(world: 'RacWorld'):
     # create all regions and populate with locations
@@ -24,10 +26,9 @@ def create_regions(world: 'RacWorld'):
             world.multiworld.regions.append(region)
             menu.connect(region, None, Has(planet_data.name))
 
-            # options_dict = world.get_options_as_dict()
             for location_data in planet_data.locations:
-                # Don't create the location if there is an "enable_if" clause and it returned False
-                # if location_data.enable_if is not None and not location_data.enable_if(options_dict):
+                # Don't create the location if there is a "pool" it is in that is not enabled
+                # if location_data.name in world.disabled_pools:
                 #     continue
 
                 region.add_locations({location_data.name: location_data.location_id}, RacLocation)

@@ -40,4 +40,10 @@ Some of the changes include:
 - Any location that costs more than 7500 bolts has the metal detector listed as a requirement
 
 # Credit
-This AP implementation was largely inspired on the [work by evilwb](https://github.com/evilwb/APRac2)
+The following wonderful people helped on this project:
+
+[Bordplate](https://github.com/bordplate) - Client
+[evilwb](https://github.com/evilwb/APRac2) - APWorld
+[Myth197](https://github.com/Myth197) - APWorld
+[SharloBun](https://www.twitch.tv/sharlobun) - Playtesting
+Amondo - Playtesting

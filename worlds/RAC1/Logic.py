@@ -20,9 +20,14 @@ has_long_range_weapon = HasAny(Items.BLASTER.name,
                              Items.RYNO.name)
 can_farm_money = Has(Items.METAL_DETECTOR.name)
 
+has_40_gold_bolts = Has(Items.GOLD_BOLT.name, count=40)
+
 
 # Novalis
 novalis_underwater_caves_rule = Has(Items.HYDRO_PACK.name)
+novalis_gold_weapon_rule = has_40_gold_bolts & can_farm_money
+novalis_skillpoint_rule = has_long_range_weapon
+
 
 # Eudora
 eudora_suck_cannon_rule = can_improved_jump & can_glide
@@ -64,6 +69,13 @@ hoven_raritanium_rule = can_swingshot & can_improved_jump
 gemlik_quark_rule = (can_improved_jump & has_long_range_weapon & can_swingshot &
                      HasAll(Items.TRESPASSER.name, Items.MAGNEBOOTS.name))
 gemlik_bolt_rule = can_improved_jump & HasAll(Items.VISIBOMB.name, Items.TRESPASSER.name)
+gemlik_gold_weapon_rule = (can_improved_jump &
+                           has_long_range_weapon  &
+                           can_swingshot &
+                           has_40_gold_bolts &
+                           can_farm_money &
+                           HasAll(Items.TRESPASSER.name, Items.MAGNEBOOTS.name))
+
 
 # Oltanis
 oltanis_main_bolt_rule = can_grind & can_swingshot

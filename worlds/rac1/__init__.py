@@ -228,7 +228,7 @@ class RacWorld(World):
                                  if loc in loc_temp]
                     rac_logger.debug(f"Reachable Locations: {reachable}")
                     fill_restrictive(multiworld, base_state, loc_temp, item_temp, single_player_placement=True,
-                                     swap=True, name=f"RAC1 Restricted Item Fill: {pool}")
+                                     swap=True, name=f"rac1 Restricted Item Fill: {pool}")
                     for loc in loc_temp:
                         placed_locations.remove(loc)
                     # if item_temp:
@@ -264,7 +264,7 @@ class RacWorld(World):
                     # TODO: Try using remaining_fill() to prevent deadend seeds
                     fill_restrictive(multiworld, base_state, loc_temp, item_temp, single_player_placement=True,
                                      swap=True, allow_partial=True, allow_excluded=True,
-                                     name="RAC1 Useful Item Fill")
+                                     name="rac1 Useful Item Fill")
                     for loc in loc_temp:
                         placed_locations.remove(loc)
                     # if loc_temp:

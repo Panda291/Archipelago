@@ -1,5 +1,5 @@
-from worlds.RAC1.Options import *
-from worlds.RAC1.test import RACTestBase
+from worlds.rac1.Options import *
+from worlds.rac1.test import RACTestBase
 
 
 class TestVanillaWeapons(RACTestBase):

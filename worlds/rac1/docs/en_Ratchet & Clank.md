@@ -3,7 +3,7 @@ An Archipelago implementation for Ratchet & Clank
 
 
 ## Setup Guide
-To get started or for troubleshooting, see [the Setup Guide](https://github.com/Panda291/Archipelago/blob/main/worlds/RAC1/docs/setup_en.md).
+To get started or for troubleshooting, see [the Setup Guide](https://github.com/Panda291/Archipelago/blob/main/worlds/rac1/docs/setup_en.md).
 
 
 ## What does randomization do to this game?

@@ -158,12 +158,9 @@ class RacWorld(World):
         self.multiworld.push_precollected(starting_planet)
         rac_logger.debug(f"Starting items: {self.starting_items}")
 
-        rac_logger.debug(f"Disabled Items:")
-        self.preplaced_locations += self.fill_pool(disabled_pools, 0)
-        rac_logger.debug(f"Restricted Items:")
-        self.preplaced_locations += self.fill_pool(restricted_pools, 1)
-        rac_logger.debug(f"Useful Items:")
-        self.preplaced_locations += self.fill_pool(useful_pools, 2)
+        self.disabled_pools = disabled_pools
+        self.restricted_pools = restricted_pools
+        self.useful_pools = useful_pools
         rac_logger.debug(f"Pre-placed Items placed: {[loc.item for loc in self.preplaced_locations]}")
         rac_logger.debug(f"Pre-filled Locations removed: {self.preplaced_locations}")
         rac_logger.debug(f"_________END EARLY GENERATION____________")
@@ -287,6 +284,17 @@ class RacWorld(World):
     def create_event(self, name: str) -> "Item":
         return RacItem(name, ItemClassification.progression, None, self.player)
 
+    def pre_fill(self) -> None:
+        disabled_pools = self.disabled_pools
+        restricted_pools = self.restricted_pools
+        useful_pools = self.useful_pools
+        rac_logger.debug(f"Disabled Shuffled Pools___")
+        self.preplaced_locations+= self.fill_pool(disabled_pools, 0)
+        rac_logger.debug(f"___Internal Shuffled Pools___")
+        self.preplaced_locations += self.fill_pool(restricted_pools, 1)
+        rac_logger.debug(f"___Group Shuffled Pools___")
+        self.preplaced_locations += self.fill_pool(useful_pools, 2)
+
     def get_pre_fill_items(self) -> list["Item"]:
         rac_logger.debug(f"fetching preplaced_items")
         return [loc.item for loc in self.preplaced_locations]
@@ -307,6 +315,7 @@ class RacWorld(World):
 
         items_to_remove: list[Item] = [loc.item for loc in self.preplaced_locations]
         items_to_remove += self.starting_items
+        rac_logger.debug(f"Preplaced item list before removal: {items_to_add}")
         rac_logger.debug(f"Preplaced item list before removal: {items_to_remove}")
         for item in items_to_remove:
             items_to_add.remove(item)

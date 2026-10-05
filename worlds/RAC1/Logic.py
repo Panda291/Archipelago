@@ -1,318 +1,90 @@
 from BaseClasses import CollectionState
+from rule_builder.rules import Has, HasAny, HasAll
 from .data import Items
 
-
-def can_swingshot(state: CollectionState, player: int) -> bool:
-    return state.has(Items.SWINGSHOT.name, player)
-
-
-def can_improved_jump(state: CollectionState, player: int) -> bool:
-    return state.has_any([Items.HELI_PACK.name, Items.THRUSTER_PACK.name], player)
-
-
-def can_heli_high_jump(state: CollectionState, player: int) -> bool:  # relevant for eudora gold bolt
-    return state.has(Items.HELI_PACK.name, player)
-
-
-def can_glide(state: CollectionState, player: int) -> bool:  # gliding is not possible without the heli pack
-    return state.has(Items.HELI_PACK.name, player)
-
-
-def can_ground_pound(state: CollectionState, player: int) -> bool:
-    return state.has(Items.THRUSTER_PACK.name, player)
-
-
-def has_hydro_pack(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HYDRO_PACK.name, player)
-
-
-def can_grind(state: CollectionState, player: int) -> bool:
-    return state.has(Items.GRINDBOOTS.name, player)
-
-
-def has_magneboots(state: CollectionState, player: int) -> bool:
-    return state.has(Items.MAGNEBOOTS.name, player)
-
-
-def can_taunt(state: CollectionState, player: int) -> bool:
-    return state.has(Items.TAUNTER.name, player)
-
-
-def has_hydrodisplacer(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HYDRODISPLACER.name, player)
-
-
-def has_raritanium(state: CollectionState, player: int) -> bool:
-    return state.has(Items.RARITANIUM.name, player)
-
-
-def has_zoomerator(state: CollectionState, player: int) -> bool:
-    return state.has(Items.ZOOMERATOR.name, player)
-
-
-def has_hoverboard(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HOVERBOARD.name, player)
-
-
-def has_o2_mask(state: CollectionState, player: int) -> bool:
-    return state.has(Items.O2_MASK.name, player)
-
-
-def has_trespasser(state: CollectionState, player: int) -> bool:
-    return state.has(Items.TRESPASSER.name, player)
-
-
-def has_visibomb(state: CollectionState, player: int) -> bool:
-    return state.has(Items.VISIBOMB.name, player)
-
-
-def has_hologuise(state: CollectionState, player: int) -> bool:
-    return state.has(Items.HOLOGUISE.name, player)
-
-
-def has_pilots_helmet(state: CollectionState, player: int) -> bool:
-    return state.has(Items.PILOTS_HELMET.name, player)
-
-
-def has_codebot(state: CollectionState, player: int) -> bool:
-    return state.has(Items.CODEBOT.name, player)
-
-
-def has_taunter(state: CollectionState, player: int) -> bool:
-    return state.has(Items.TAUNTER.name, player)
-
-
-def has_metal_detector(state: CollectionState, player: int) -> bool:
-    return state.has(Items.METAL_DETECTOR.name, player)
-
-
-def has_explosive_weapon(state: CollectionState, player: int) -> bool:
-    return state.has_any([Items.BOMB_GLOVE.name, Items.DEVASTATOR.name], player)
-
-
-def has_long_range_weapon(state: CollectionState, player: int) -> bool:
-    return (state.has_any([Items.BLASTER.name,
-                           Items.DEVASTATOR.name,
-                           Items.VISIBOMB.name,
-                           Items.RYNO.name], player))
+can_swingshot = Has(Items.SWINGSHOT.name)
+can_improved_jump = HasAny(Items.HELI_PACK.name, Items.THRUSTER_PACK.name)
+can_heli_high_jump = Has(Items.HELI_PACK.name)
+can_glide = Has(Items.HELI_PACK.name)
+can_ground_pound = Has(Items.THRUSTER_PACK.name)
+can_grind = Has(Items.GRINDBOOTS.name)
+can_taunt = Has(Items.TAUNTER.name)
+has_explosive_weapon = HasAny(Items.BOMB_GLOVE.name,
+                              Items.DEVASTATOR.name,
+                              Items.MINE_GLOVE.name,
+                              Items.VISIBOMB.name,
+                              Items.RYNO.name)
+has_long_range_weapon = HasAny(Items.BLASTER.name,
+                             Items.DEVASTATOR.name,
+                             Items.VISIBOMB.name,
+                             Items.RYNO.name)
+can_farm_money = Has(Items.METAL_DETECTOR.name)
 
 
 # Novalis
-def novalis_underwater_caves_rule(state: CollectionState, player: int) -> bool:
-    return has_hydro_pack(state, player)
-
+novalis_underwater_caves_rule = Has(Items.HYDRO_PACK.name)
 
 # Eudora
-def eudora_suck_cannon_rule(state: CollectionState, player: int) -> bool:
-    return (can_improved_jump(state, player)
-            and can_glide(state, player))
-
-
-def eudora_henchman_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player)
-            and has_trespasser(state, player)
-            and can_improved_jump(state, player))
-
+eudora_suck_cannon_rule = can_improved_jump & can_glide
+eudora_henchman_rule = can_swingshot & Has(Items.TRESPASSER.name) & can_improved_jump
 
 # Rilgar
-def rilgar_hoverboard_rule(state: CollectionState, player: int) -> bool:
-    return (has_hoverboard(state, player)
-            and can_improved_jump(state, player))
-
-
-def rilgar_bouncer_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player)
-            and can_improved_jump(state, player)
-            and has_hydrodisplacer(state, player))
-
-
-def rilgar_underwater_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (rilgar_bouncer_rule(state, player)
-            and has_o2_mask(state, player))
-
-
-def rilgar_ryno_rule(state: CollectionState, player: int) -> bool:
-    return (can_improved_jump(state, player)
-            and has_metal_detector(state, player))
-
+rilgar_hoverboard_rule = can_improved_jump & Has(Items.HOVERBOARD.name)
+rilgar_bouncer_rule = can_swingshot & can_improved_jump & Has(Items.HYDRODISPLACER.name)
+rilgar_underwater_bolt_rule = rilgar_bouncer_rule & Has(Items.O2_MASK.name)
+rilgar_ryno_rule = can_improved_jump & can_farm_money
 
 # Blarg
-def blarg_outside_gold_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player)
-            and has_trespasser(state, player))
-
+blarg_outside_gold_bolt_rule = HasAll(Items.O2_MASK.name, Items.TRESPASSER.name)
 
 # Umbris
-def umbris_snagglebeast_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player)
-            and can_glide(state, player)
-            and has_hydrodisplacer(state, player))
-
-
-def umbris_pressure_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player)
-            and can_glide(state, player))
-
-
-def umbris_jump_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player)
-            and can_glide(state, player)
-            and has_hydrodisplacer(state, player))
-
+umbris_snagglebeast_rule = can_swingshot & can_glide & Has(Items.HYDRODISPLACER.name)
+umbris_pressure_bolt_rule = can_swingshot & can_glide
+umbris_jump_bolt_rule = can_swingshot & can_glide & Has(Items.HYDRODISPLACER.name)
 
 # Orxon
-def orxon_nanotech_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player)
-            and can_glide(state, player))
-
-
-def orxon_ultra_nanotech_rule(state: CollectionState, player: int) -> bool:
-    return (orxon_nanotech_rule(state, player)
-            and has_metal_detector(state, player))
-
-
-def orxon_visibomb_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player)
-            and has_metal_detector(state, player))
-
-
-def orxon_visibomb_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player)
-            and has_visibomb(state, player)
-            and can_glide(state, player)
-            and can_swingshot(state, player)
-            and has_magneboots(state, player))
-
-
-def orxon_ratchet_infobot_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player)
-            and can_glide(state, player)
-            and can_swingshot(state, player)
-            and has_magneboots(state, player))
-
+orxon_nanotech_rule = can_glide & Has(Items.O2_MASK.name)
+orxon_ultra_nanotech_rule = orxon_nanotech_rule & can_farm_money
+orxon_visibomb_rule = can_farm_money & Has(Items.O2_MASK.name)
+orxon_visibomb_bolt_rule = (HasAll(Items.O2_MASK.name, Items.VISIBOMB.name, Items.MAGNEBOOTS.name) &
+                            can_swingshot &
+                            can_glide)
+orxon_ratchet_infobot_rule = can_glide & can_swingshot & HasAll(Items.O2_MASK.name, Items.MAGNEBOOTS.name)
 
 # Pokitaru
-def pokitaru_ship_rule(state: CollectionState, player: int) -> bool:
-    return (has_pilots_helmet(state, player)
-            and can_ground_pound(state, player))
-
-
-def pokitaru_persuader_rule(state: CollectionState, player: int) -> bool:
-    return (has_raritanium(state, player)
-            and has_trespasser(state, player)
-            and has_hydrodisplacer(state, player))
-
-
-def pokitaru_gold_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player)
-            and can_ground_pound(state, player))
-
+pokitaru_ship_rule = can_ground_pound & Has(Items.PILOTS_HELMET.name)
+pokitaru_persuader_rule = HasAll(Items.RARITANIUM.name, Items.TRESPASSER.name, Items.HYDRODISPLACER.name)
+pokitaru_gold_bolt_rule = can_swingshot & can_ground_pound
 
 # Hoven
-def hoven_infobot_rule(state: CollectionState, player: int) -> bool:
-    return (has_long_range_weapon(state, player)
-            and can_improved_jump(state, player))
-
-
-def hoven_raritanium_rule(state: CollectionState, player: int) -> bool:
-    return (can_swingshot(state, player)
-            and can_improved_jump(state, player))
-
+hoven_infobot_rule = can_improved_jump & has_long_range_weapon
+hoven_raritanium_rule = can_swingshot & can_improved_jump
 
 # Gemlik
-def gemlik_quark_rule(state: CollectionState, player: int) -> bool:
-    return (has_magneboots(state, player)
-            and can_improved_jump(state, player)
-            and has_long_range_weapon(state, player)
-            and has_trespasser(state, player)
-            and can_swingshot(state, player))
-
-
-def gemlik_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (has_visibomb(state, player)
-            and can_improved_jump(state, player)
-            and has_trespasser(state, player))
-
+gemlik_quark_rule = (can_improved_jump & has_long_range_weapon & can_swingshot &
+                     HasAll(Items.TRESPASSER.name, Items.MAGNEBOOTS.name))
+gemlik_bolt_rule = can_improved_jump & HasAll(Items.VISIBOMB.name, Items.TRESPASSER.name)
 
 # Oltanis
-def oltanis_main_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (can_grind(state, player)
-            and can_swingshot(state, player))
-
-
-def oltanis_final_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (can_grind(state, player)
-            and can_swingshot(state, player)
-            and has_magneboots(state, player))
-
+oltanis_main_bolt_rule = can_grind & can_swingshot
+oltanis_final_bolt_rule = can_grind & can_swingshot & Has(Items.MAGNEBOOTS.name)
 
 # Quartu
-def quartu_infiltrate_rule(state: CollectionState, player: int) -> bool:
-    return (has_hologuise(state, player)
-            and can_swingshot(state, player)
-            and can_ground_pound(state, player))
-
-
-def quartu_codebot_rule(state: CollectionState, player: int) -> bool:
-    return (has_codebot(state, player)
-            and can_swingshot(state, player))
-
-
-def quartu_bolt_grabber_rule(state: CollectionState, player: int) -> bool:
-    return (has_hydro_pack(state, player)
-            and has_o2_mask(state, player))
-
+quartu_infiltrate_rule = can_swingshot & can_ground_pound & Has(Items.HOLOGUISE.name)
+quartu_codebot_rule = can_swingshot & Has(Items.CODEBOT.name)
+quartu_bolt_grabber_rule = HasAll(Items.HYDRO_PACK.name, Items.O2_MASK.name)
 
 # Kalebo III
-def kalebo_hologuise_rule(state: CollectionState, player: int) -> bool:
-    return (has_hoverboard(state, player)
-            and can_swingshot(state, player)
-            and can_grind(state, player))
-
+kalebo_hologuise_rule = can_swingshot & can_grind & Has(Items.HOVERBOARD.name)
 
 # Drek's Fleet
-def fleet_infobot_rule(state: CollectionState, player: int) -> bool:
-    return (has_magneboots(state, player)
-            and has_pilots_helmet(state, player)
-            and has_hologuise(state, player)
-            and can_swingshot(state, player))
-
-
-def fleet_water_rule(state: CollectionState, player: int) -> bool:
-    return (has_o2_mask(state, player)
-            and has_hydro_pack(state, player))
-
-
-def fleet_second_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (has_magneboots(state, player)
-            and has_pilots_helmet(state, player)
-            and has_hologuise(state, player)
-            and can_swingshot(state, player))
-
+fleet_infobot_rule = can_swingshot & HasAll(Items.MAGNEBOOTS.name, Items.PILOTS_HELMET.name, Items.HOLOGUISE.name)
+fleet_water_rule = HasAll(Items.HYDRO_PACK.name, Items.O2_MASK.name)
+fleet_second_bolt_rule = can_swingshot & HasAll(Items.MAGNEBOOTS.name, Items.PILOTS_HELMET.name, Items.HOLOGUISE.name)
 
 # Veldin
-def veldin_global_rule(state: CollectionState, player: int) -> bool:
-    return (has_trespasser(state, player)
-            and has_magneboots(state, player)
-            and has_hydrodisplacer(state, player)
-            and can_ground_pound(state, player))
-
-
-def veldin_grind_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (veldin_global_rule(state, player)
-            and can_grind(state, player)
-            and can_swingshot(state, player))
-
-
-def veldin_halfway_bolt_rule(state: CollectionState, player: int) -> bool:
-    return veldin_global_rule(state, player)
-
-
-def veldin_taunter_bolt_rule(state: CollectionState, player: int) -> bool:
-    return (veldin_global_rule(state, player)
-            and has_taunter(state, player))
-
-
-def veldin_defeat_drek_rule(state: CollectionState, player: int) -> bool:
-    return (veldin_global_rule(state, player)
-            and can_swingshot(state, player))
+veldin_global_rule = can_ground_pound & HasAll(Items.TRESPASSER.name, Items.MAGNEBOOTS.name, Items.HYDRODISPLACER.name)
+veldin_grind_bolt_rule = veldin_global_rule & can_grind & can_swingshot
+veldin_halfway_bolt_rule = veldin_global_rule
+veldin_taunter_bolt_rule = veldin_global_rule & Has(Items.TAUNTER.name)
+veldin_defeat_drek_rule = veldin_global_rule & can_swingshot

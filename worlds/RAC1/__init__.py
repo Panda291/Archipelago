@@ -1,6 +1,7 @@
 from typing import Dict, Optional
 
 from BaseClasses import Item, ItemClassification, Tutorial
+from rule_builder.rules import Has
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
 from . import ItemPool
@@ -96,11 +97,12 @@ class RacWorld(World):
         #     items_to_add.append(self.create_item(Items.GOLD_BOLT.name, ItemClassification.filler))
 
         self.multiworld.itempool += items_to_add
+        print(f"Itempool: {self.multiworld.itempool}\nlength: {len(self.multiworld.itempool)}")
 
     def set_rules(self) -> None:
         boss_location = self.multiworld.get_location(Locations.VELDIN_DREK.name, self.player)
         boss_location.place_locked_item(self.create_event("Victory"))
-        self.multiworld.completion_condition[self.player] = lambda state: state.has("Victory", self.player)
+        self.set_completion_rule(Has("Victory"))
         # def generate_output(self, output_directory: str) -> None:
         #     aprac2 = Rac2ProcedurePatch(player=self.player, player_name=self.multiworld.get_player_name(self.player))
         #     generate_patch(self, aprac2)

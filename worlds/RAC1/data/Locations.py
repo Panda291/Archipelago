@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Callable, Optional
 
 from rule_builder.rules import Rule, True_
@@ -31,7 +31,7 @@ class LocationData:
     vanilla_item: Optional[str]
     pools: set[str] = frozenset()
     """All of these must be enabled for this spot to be randomized"""
-    access_rule: Rule = True_()
+    access_rule: Rule = field(default_factory=True_)
 
 
 # Novalis

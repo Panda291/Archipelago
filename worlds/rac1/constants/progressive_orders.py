@@ -1,0 +1,21 @@
+"""This module defines constants for RAC1 progressive orders"""
+
+
+class RAC1ORDER:
+    """String constants for RAC1 progressive orders"""
+    SUCK_CANNON = "progressive_suck_cannon_order"
+    BOMB_GLOVE = "progressive_bomb_glove_order"
+    DEVASTATOR = "progressive_devastator_order"
+    BLASTER = "progressive_blaster_order"
+    PYROCITOR = "progressive_pyrocitor_order"
+    MINE_GLOVE = "progressive_mine_glove_order"
+    TESLA_CLAW = "progressive_tesla_claw_order"
+    GLOVE_OF_DOOM = "progressive_glove_of_doom_order"
+    MORPH_O_RAY = "progressive_morph_o_ray_order"
+    DECOY_GLOVE = "progressive_decoy_glove_order"
+    PACKS = "progressive_packs_order"
+    HELMETS = "progressive_helmets_order"
+    BOOTS = "progressive_boots_order"
+    HOVERBOARD = "progressive_hoverboard_order"
+    TRADE = "progressive_raritanium_order"
+    NANOTECH = "progressive_nanotech_order"

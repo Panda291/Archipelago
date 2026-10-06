@@ -1,5 +1,5 @@
-# Ratchet & Clank Archipelago
-An Archipelago implementation for Ratchet & Clank
+# Ratchet and Clank Archipelago
+An Archipelago implementation for Ratchet and Clank
 
 
 ## Setup Guide
@@ -7,10 +7,10 @@ To get started or for troubleshooting, see [the Setup Guide](https://github.com/
 
 
 ## What does randomization do to this game?
-In Ratchet & Clank 1, all Gadgets, Gold Bolts and Planet Infobots are shuffled into the multiworld, giving the game a greater variety in routing to complete the end goal.
+In Ratchet and Clank 1, all Gadgets, Gold Bolts and Planet Infobots are shuffled into the multiworld, giving the game a greater variety in routing to complete the end goal.
 
 
-## What is the goal of Ratchet & Clank when randomized?
+## What is the goal of Ratchet and Clank when randomized?
 The end goal of the randomizer game is to defeat Ultimate Supreme Executive Chairman Drek in planet Veldin.
 
 
@@ -18,11 +18,11 @@ The end goal of the randomizer game is to defeat Ultimate Supreme Executive Chai
 All Gadgets/Items, Gold Bolts and Planet Infobots can be shuffled in other players' worlds.
 
 
-## What does another world's item look like in Ratchet & Clank?
+## What does another world's item look like in Ratchet and Clank?
 There is no model replacement support yet so all items will their vanilla appearance.
 
 
-## What versions of the Ratchet & Clank are supported?
+## What versions of the Ratchet and Clank are supported?
 Only the PS3 version of the game is supported: NPEA00385
 
 
@@ -46,4 +46,4 @@ The following wonderful people helped on this project:
 [evilwb](https://github.com/evilwb/APRac2) - APWorld
 [Myth197](https://github.com/Myth197) - APWorld
 [SharloBun](https://www.twitch.tv/sharlobun) - Playtesting
-Amondo - Playtesting
+[Amondo](https://github.com/AmondoVagyok) - Playtesting

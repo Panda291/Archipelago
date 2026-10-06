@@ -69,6 +69,8 @@ Output Logs/
 /datapackage
 /datapackage_export.json
 /custom_worlds
+/fuzz.py
+/fuzz_output/
 # stubgen output
 /out/
 

@@ -239,7 +239,7 @@ class RacWorld(World):
                             self.get_location(loc.name).place_locked_item(item)
                             add_items += [item]
                             rac_logger.debug(f"vanilla: {loc.name}, item: {item}")
-                            placed_locations[len(placed_locations) - 1].place_locked_item(item)
+                            placed_items[len(placed_items) - 1].place_locked_item(item)
             case 1:
                 for pool in pools:
                     if pool == RAC1POOL.GOLD_WEAPONS and RAC1POOL.WEAPONS in pools:

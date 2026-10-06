@@ -239,7 +239,7 @@ class RacWorld(World):
                             self.get_location(loc.name).place_locked_item(item)
                             add_items += [item]
                             rac_logger.debug(f"vanilla: {loc.name}, item: {item}")
-                            placed_items[len(placed_items) - 1].place_locked_item(item)
+
             case 1:
                 for pool in pools:
                     if pool == RAC1POOL.GOLD_WEAPONS and RAC1POOL.WEAPONS in pools:
@@ -315,11 +315,6 @@ class RacWorld(World):
                         if pool in loc.pools and loc.vanilla_item is not None:
                             loc_temp += [self.get_location(loc.name)]
                 if loc_temp:
-                    for item in starting_item_list:
-                        item_sweep += [self.create_item(item)]
-                    for item in unplaced_items:
-                        if item.name != Items.GOLD_BOLT.name:
-                            item_temp += [self.create_item(item.name)]
                     base_state = sweep_from_pool(base_state, item_sweep)
                     rac_logger.debug(f"Randomizing Useful Locations: {loc_temp}")
                     self.random.shuffle(unplaced_items)

@@ -21,26 +21,9 @@ from worlds.rac1.options import (get_options_as_dict, GoldWeaponProgression, Ite
                                  ShuffleGoldWeapons, ShuffleInfobots,
                                  ShuffleWeapons, StartingItem, StartingLocation)
 from worlds.rac1.regions import create_regions
-from worlds.LauncherComponents import Component, components, SuffixIdentifier, Type
-from . import ItemPool
-from .data import Items, Locations, Planets
-from .data.Items import CollectableData, ItemData
-from .data.Locations import (ALL_POOLS, DEFAULT_LIST, LocationData, POOL_BOOT, POOL_EXTRA_ITEM, POOL_GADGET,
-                             POOL_GOLD_BOLT, POOL_HELMET, POOL_INFOBOT, POOL_PACK, POOL_WEAPON)
-from .data.Planets import ALL_LOCATIONS, location_groups, PlanetData
-from .Options import RacOptions, ShuffleWeapons, StartingItem, ShuffleInfobots
-from .Regions import create_regions
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
 rac_logger.setLevel(logging.DEBUG)
-
-
-def run_client(_url: Optional[str] = None):
-    # from .RacClient import launch
-    # launch_subprocess(launch, name="RacClient")
-    components.append(Component("Ratchet & Clank Client", func=run_client, component_type=Type.CLIENT,
-                                file_identifier=SuffixIdentifier(".aprac")))
-
 
 class RacWeb(WebWorld):
     tutorials = [Tutorial(
@@ -200,7 +183,7 @@ class RacWorld(World):
         self.preplaced_items = [starting_item, starting_planet]
         self.multiworld.push_precollected(starting_item)
         self.multiworld.push_precollected(starting_planet)
-        for name, count in self.options.start_inventory:
+        for name, count in self.options.start_inventory.items():
             if count > len(self.item_pool[name]):
                 rac_logger.warning(f"Too many copies of {name} in yaml start inventory! Giving only "
                                    f"{len(self.item_pool[name])} of {count} copies")
@@ -386,11 +369,11 @@ class RacWorld(World):
         restricted_pools = self.restricted_pools
         useful_pools = self.useful_pools
         rac_logger.debug(f"Disabled Shuffled Pools___")
-        self.preplaced_locations+= self.fill_pool(disabled_pools, 0)
+        self.preplaced_items += self.fill_pool(disabled_pools, 0)
         rac_logger.debug(f"___Internal Shuffled Pools___")
-        self.preplaced_locations += self.fill_pool(restricted_pools, 1)
+        self.preplaced_items += self.fill_pool(restricted_pools, 1)
         rac_logger.debug(f"___Group Shuffled Pools___")
-        self.preplaced_locations += self.fill_pool(useful_pools, 2)
+        self.preplaced_items += self.fill_pool(useful_pools, 2)
 
     def get_pre_fill_items(self) -> list["Item"]:
         rac_logger.debug(f"fetching preplaced_items")

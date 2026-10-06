@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+﻿from dataclasses import dataclass
 from typing import Callable, Optional, TYPE_CHECKING
 
 from worlds.rac1.constants.items import RAC1ITEM

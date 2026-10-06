@@ -1,4 +1,4 @@
-from typing import NamedTuple, Sequence
+﻿from typing import NamedTuple, Sequence
 
 from worlds.rac1 import RAC1ITEM
 from worlds.rac1.data.locations import LocationData, RAC1LocationData

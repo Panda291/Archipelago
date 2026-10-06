@@ -232,61 +232,61 @@ class RAC1ItemData:
                             ItemClassification.progression_deprioritized_skip_balancing, 40)
 
     BOLT_PACK = ItemData(302, RAC1ITEM.BOLT_PACK_GENERIC, RAC1POOL.FILLER,
-                         ItemClassification.progression_deprioritized_skip_balancing)
+                         ItemClassification.filler)
     BOLT_PACK_0 = ItemData(400, RAC1ITEM.BOLT_PACK_0, RAC1POOL.FILLER,
-                           ItemClassification.progression_deprioritized_skip_balancing, 0)
+                           ItemClassification.filler, 0)
     BOLT_PACK_1 = ItemData(401, RAC1ITEM.BOLT_PACK_1, RAC1POOL.FILLER,
-                           ItemClassification.progression_deprioritized_skip_balancing)
+                           ItemClassification.filler)
     BOLT_PACK_10 = ItemData(402, RAC1ITEM.BOLT_PACK_10, RAC1POOL.FILLER,
-                            ItemClassification.progression_deprioritized_skip_balancing, 10)
+                            ItemClassification.filler, 10)
     BOLT_PACK_100 = ItemData(403, RAC1ITEM.BOLT_PACK_100, RAC1POOL.FILLER,
-                             ItemClassification.progression_deprioritized_skip_balancing, 100)
+                             ItemClassification.filler, 100)
     BOLT_PACK_250 = ItemData(404, RAC1ITEM.BOLT_PACK_250, RAC1POOL.FILLER,
-                             ItemClassification.progression_deprioritized_skip_balancing, 250)
+                             ItemClassification.filler, 250)
     BOLT_PACK_500 = ItemData(405, RAC1ITEM.BOLT_PACK_500, RAC1POOL.FILLER,
-                             ItemClassification.progression_deprioritized_skip_balancing, 500)
+                             ItemClassification.filler, 500)
     BOLT_PACK_750 = ItemData(406, RAC1ITEM.BOLT_PACK_750, RAC1POOL.FILLER,
-                             ItemClassification.progression_deprioritized_skip_balancing, 750)
+                             ItemClassification.filler, 750)
     BOLT_PACK_1000 = ItemData(407, RAC1ITEM.BOLT_PACK_1000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 1000)
+                              ItemClassification.filler, 1000)
     BOLT_PACK_2000 = ItemData(408, RAC1ITEM.BOLT_PACK_2000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 2000)
+                              ItemClassification.filler, 2000)
     BOLT_PACK_3000 = ItemData(409, RAC1ITEM.BOLT_PACK_3000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 3000)
+                              ItemClassification.filler, 3000)
     BOLT_PACK_4000 = ItemData(410, RAC1ITEM.BOLT_PACK_4000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 4000)
+                              ItemClassification.filler, 4000)
     BOLT_PACK_5000 = ItemData(411, RAC1ITEM.BOLT_PACK_5000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 5000)
+                              ItemClassification.filler, 5000)
     BOLT_PACK_6000 = ItemData(412, RAC1ITEM.BOLT_PACK_6000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 6000)
+                              ItemClassification.filler, 6000)
     BOLT_PACK_7000 = ItemData(413, RAC1ITEM.BOLT_PACK_7000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 7000)
+                              ItemClassification.filler, 7000)
     BOLT_PACK_8000 = ItemData(414, RAC1ITEM.BOLT_PACK_8000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 8000)
+                              ItemClassification.filler, 8000)
     BOLT_PACK_9000 = ItemData(415, RAC1ITEM.BOLT_PACK_9000, RAC1POOL.FILLER,
-                              ItemClassification.progression_deprioritized_skip_balancing, 9000)
+                              ItemClassification.filler, 9000)
     BOLT_PACK_10000 = ItemData(416, RAC1ITEM.BOLT_PACK_10000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 10000)
+                               ItemClassification.filler, 10000)
     BOLT_PACK_12500 = ItemData(417, RAC1ITEM.BOLT_PACK_12500, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 12500)
+                               ItemClassification.filler, 12500)
     BOLT_PACK_15000 = ItemData(418, RAC1ITEM.BOLT_PACK_15000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 15000)
+                               ItemClassification.filler, 15000)
     BOLT_PACK_17500 = ItemData(419, RAC1ITEM.BOLT_PACK_17500, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 17500)
+                               ItemClassification.filler, 17500)
     BOLT_PACK_20000 = ItemData(420, RAC1ITEM.BOLT_PACK_20000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 20000)
+                               ItemClassification.filler, 20000)
     BOLT_PACK_25000 = ItemData(421, RAC1ITEM.BOLT_PACK_25000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 25000)
+                               ItemClassification.filler, 25000)
     BOLT_PACK_30000 = ItemData(422, RAC1ITEM.BOLT_PACK_30000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 30000)
+                               ItemClassification.filler, 30000)
     BOLT_PACK_40000 = ItemData(423, RAC1ITEM.BOLT_PACK_40000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 40000)
+                               ItemClassification.filler, 40000)
     BOLT_PACK_50000 = ItemData(424, RAC1ITEM.BOLT_PACK_50000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 50000)
+                               ItemClassification.filler, 50000)
     BOLT_PACK_75000 = ItemData(425, RAC1ITEM.BOLT_PACK_75000, RAC1POOL.FILLER,
-                               ItemClassification.progression_deprioritized_skip_balancing, 75000)
+                               ItemClassification.filler, 75000)
     BOLT_PACK_100000 = ItemData(426, RAC1ITEM.BOLT_PACK_100000, RAC1POOL.FILLER,
-                                ItemClassification.progression_deprioritized_skip_balancing, 100000)
+                                ItemClassification.filler, 100000)
 
 
 WEAPONS: Sequence[ItemData] = [

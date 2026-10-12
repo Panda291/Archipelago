@@ -254,13 +254,11 @@ class ProgressiveOptions(Choice):
         vanilla: These items are not progressive, each item is independent of other items.
         progressive: These items are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: These items are progressive, the order of upgrading is reversed.
-        progressive_random: These items are progressive, the order of upgrading is random.
     """
     value: int
     option_vanilla = 0
     option_progressive = 1
     option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 
@@ -272,8 +270,7 @@ class GoldWeaponProgression(ProgressiveOptions):
         found.
         normal: Gold Weapons and Weapons are not progressive, each item is independent of other items.
         progressive: Gold Weapons and Weapons are progressive, collecting multiple of an item will upgrade it.
-        progressive_reversed: Gold Weapons and Weapons are progressive, the order of upgrading is reversed.
-        progressive_random: Gold Weapons and Weapons are progressive, the order of upgrading is random."""
+        progressive_reversed: Gold Weapons and Weapons are progressive, the order of upgrading is reversed."""
     display_name = RAC1OPTION.PROGRESSIVE_WEAPONS
     rich_text_doc = True
     value: int
@@ -281,7 +278,6 @@ class GoldWeaponProgression(ProgressiveOptions):
     option_normal = 1
     option_progressive = 2
     option_progressive_reversed = 3
-    option_progressive_random = 4
     alias_true = 2
     alias_false = 0
     default = 1
@@ -292,7 +288,6 @@ class PackProgression(ProgressiveOptions):
         vanilla: Packs are not progressive, each item is independent of other items.
         progressive: Packs are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Packs are progressive, the order of upgrading is reversed.
-        progressive_random: Packs are progressive, the order of upgrading is random.
     """
     display_name = RAC1OPTION.PROGRESSIVE_PACKS
     rich_text_doc = True
@@ -300,7 +295,6 @@ class PackProgression(ProgressiveOptions):
     option_vanilla = 0
     option_progressive = 1
     option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 
@@ -310,7 +304,6 @@ class HelmetProgression(ProgressiveOptions):
         vanilla: Helmets are not progressive, each item is independent of other items.
         progressive: Helmets are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Helmets are progressive, the order of upgrading is reversed.
-        progressive_random: Helmets are progressive, the order of upgrading is random.
     """
     display_name = RAC1OPTION.PROGRESSIVE_HELMETS
     rich_text_doc = True
@@ -318,7 +311,6 @@ class HelmetProgression(ProgressiveOptions):
     option_vanilla = 0
     option_progressive = 1
     option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 
@@ -328,7 +320,6 @@ class BootsProgression(ProgressiveOptions):
         vanilla: Grind and Magneboots are not progressive, each item is independent of other items.
         progressive: Grind and Magneboots are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Grind and Magneboots are progressive, the order of upgrading is reversed.
-        progressive_random: Grind and Magneboots are progressive, the order of upgrading is random.
     """
     display_name = RAC1OPTION.PROGRESSIVE_BOOTS
     rich_text_doc = True
@@ -336,7 +327,6 @@ class BootsProgression(ProgressiveOptions):
     option_vanilla = 0
     option_progressive = 1
     option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 
@@ -346,7 +336,6 @@ class HoverboardProgression(ProgressiveOptions):
         vanilla: Hoverboard and Zoomerator are not progressive, each item is independent of other items.
         progressive: Hoverboard and Zoomerator are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Hoverboard and Zoomerator are progressive, the order of upgrading is reversed.
-        progressive_random: Hoverboard and Zoomerator are progressive, the order of upgrading is random.
     """
     display_name = RAC1OPTION.PROGRESSIVE_HOVERBOARD
     rich_text_doc = True
@@ -354,7 +343,6 @@ class HoverboardProgression(ProgressiveOptions):
     option_vanilla = 0
     option_progressive = 1
     option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 
@@ -364,7 +352,6 @@ class RaritaniumProgression(ProgressiveOptions):
         vanilla: Raritanium and Persuader are not progressive, each item is independent of other items.
         progressive: Raritanium and Persuader are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Raritanium and Persuader are progressive, the order of upgrading is reversed.
-        progressive_random: Raritanium and Persuader are progressive, the order of upgrading is random.
     """
     display_name = RAC1OPTION.PROGRESSIVE_RARITANIUM
     rich_text_doc = True
@@ -372,7 +359,6 @@ class RaritaniumProgression(ProgressiveOptions):
     option_vanilla = 0
     option_progressive = 1
     option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 
@@ -382,7 +368,6 @@ class NanotechProgression(ProgressiveOptions):
         vanilla: Nanotech is not progressive, each item is independent of other items.
         progressive: Nanotech are progressive, collecting multiple of an item will upgrade it.
         progressive_reversed: Nanotech are progressive, the order of upgrading is reversed.
-        progressive_random: Nanotech are progressive, the order of upgrading is random.
     """
     display_name = RAC1OPTION.PROGRESSIVE_NANOTECH
     rich_text_doc = True
@@ -390,7 +375,6 @@ class NanotechProgression(ProgressiveOptions):
     option_vanilla = 0
     option_progressive = 1
     option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 

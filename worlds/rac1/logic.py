@@ -1,71 +1,151 @@
 import dataclasses
 import logging
-from typing import TYPE_CHECKING
 
 from typing_extensions import override
 
 from BaseClasses import CollectionState
 from rule_builder.options import OptionFilter
-from rule_builder.rules import HasAnyCount, Rule, Has, True_, HasAny, HasAll
+from rule_builder.rules import Rule, Has, True_, HasAny, HasAll
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.options import RAC1OPTION
-from worlds.rac1.options import VendorOptions, GoldBoltPackSize
+from worlds.rac1.data.progressive_order import orders
+from worlds.rac1.options import VendorOptions, GoldBoltPackSize, PackProgression, HelmetProgression, BootsProgression, \
+    RaritaniumProgression, HoverboardProgression, GoldWeaponProgression
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
 rac_logger.setLevel(logging.DEBUG)
 
+### start progressive filters ###
+progressive_pack_vanilla = [OptionFilter(PackProgression, PackProgression.option_vanilla)]
+progressive_pack_progressive = [OptionFilter(PackProgression, PackProgression.option_progressive)]
+progressive_pack_reversed = [OptionFilter(PackProgression, PackProgression.option_progressive_reversed)]
 
-@dataclasses.dataclass()
-class HasProgressive(Rule["RacWorld"], game="My Game"):
-    item: str
+progressive_helmet_vanilla = [OptionFilter(HelmetProgression, HelmetProgression.option_vanilla)]
+progressive_helmet_progressive = [OptionFilter(HelmetProgression, HelmetProgression.option_progressive)]
+progressive_helmet_reversed = [OptionFilter(HelmetProgression, HelmetProgression.option_progressive_reversed)]
 
-    @override
-    def _instantiate(self, world: "RacWorld") -> Rule.Resolved:
-        return self.Resolved(item=self.item, player=world.player)
+progressive_boots_vanilla = [OptionFilter(BootsProgression, BootsProgression.option_vanilla)]
+progressive_boots_progressive = [OptionFilter(BootsProgression, BootsProgression.option_progressive)]
+progressive_boots_reversed = [OptionFilter(BootsProgression, BootsProgression.option_progressive_reversed)]
 
-    class Resolved(Rule.Resolved):
-        item: str
+progressive_trade_vanilla = [OptionFilter(RaritaniumProgression, RaritaniumProgression.option_vanilla)]
+progressive_trade_progressive = [OptionFilter(RaritaniumProgression, RaritaniumProgression.option_progressive)]
+progressive_trade_reversed = [OptionFilter(RaritaniumProgression, RaritaniumProgression.option_progressive_reversed)]
 
-        @override
-        def _evaluate(self, state: CollectionState) -> bool:
-            from worlds.rac1 import RacWorld
-            if self.item in RacWorld.progressive_convert:
-                item_counts: dict[str, int] = RacWorld.progressive_convert[self.item]
-            else:
-                item_counts: dict[str, int] = {}
-                rac_logger.debug(f"Did not find item {self.item} in progressive table: {RacWorld.progressive_convert}")
-            return state.has_any_count(item_counts, self.player)
+progressive_hoverboard_vanilla = [OptionFilter(HoverboardProgression, HoverboardProgression.option_vanilla)]
+progressive_hoverboard_progressive = [OptionFilter(HoverboardProgression, HoverboardProgression.option_progressive)]
+progressive_hoverboard_reversed = [OptionFilter(HoverboardProgression, HoverboardProgression.option_progressive_reversed)]
+
+progressive_weapons_vanilla = [OptionFilter(GoldWeaponProgression, GoldWeaponProgression.option_vanilla)]
+progressive_weapons_normal = [OptionFilter(GoldWeaponProgression, GoldWeaponProgression.option_normal)]
+progressive_weapons_progressive = [OptionFilter(GoldWeaponProgression, GoldWeaponProgression.option_progressive)]
+progressive_weapons_reversed = [OptionFilter(GoldWeaponProgression, GoldWeaponProgression.option_progressive_reversed)]
+### end progressive filters ###
+
+### start progressive rules ###
+has_progressive_helipack = (Has(RAC1ITEM.HELI_PACK, options=progressive_pack_vanilla)
+                            | Has(RAC1ITEM.PROGRESSIVE_PACK, count=1, options=progressive_pack_progressive)
+                            | Has(RAC1ITEM.PROGRESSIVE_PACK, count=3, options=progressive_pack_reversed))
+has_progressive_thruster_pack = (Has(RAC1ITEM.THRUSTER_PACK, options=progressive_pack_vanilla)
+                            | Has(RAC1ITEM.PROGRESSIVE_PACK, count=2, options=progressive_pack_progressive)
+                            | Has(RAC1ITEM.PROGRESSIVE_PACK, count=2, options=progressive_pack_reversed))
+has_progressive_hydro_pack = (Has(RAC1ITEM.THRUSTER_PACK, options=progressive_pack_vanilla)
+                            | Has(RAC1ITEM.PROGRESSIVE_PACK, count=3, options=progressive_pack_progressive)
+                            | Has(RAC1ITEM.PROGRESSIVE_PACK, count=1, options=progressive_pack_reversed))
+
+has_o2_mask = (Has(RAC1ITEM.O2_MASK, options=progressive_helmet_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_HELMET, count=1, options=progressive_helmet_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_HELMET, count=3, options=progressive_helmet_reversed))
+has_sonic = (Has(RAC1ITEM.SONIC_SUMMONER, options=progressive_helmet_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_HELMET, count=2, options=progressive_helmet_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_HELMET, count=2, options=progressive_helmet_reversed))
+has_pilots_helmet = (Has(RAC1ITEM.PILOTS_HELMET, options=progressive_helmet_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_HELMET, count=3, options=progressive_helmet_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_HELMET, count=1, options=progressive_helmet_reversed))
+
+has_grindboots = (Has(RAC1ITEM.GRINDBOOTS, options=progressive_boots_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_BOOT, count=1, options=progressive_boots_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_BOOT, count=2, options=progressive_boots_reversed))
+has_magneboots = (Has(RAC1ITEM.MAGNEBOOTS, options=progressive_boots_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_BOOT, count=2, options=progressive_boots_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_BOOT, count=1, options=progressive_boots_reversed))
+
+has_raritanium = (Has(RAC1ITEM.RARITANIUM, options=progressive_trade_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_TRADE, count=1, options=progressive_trade_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_TRADE, count=2, options=progressive_trade_reversed))
+has_persuader = (Has(RAC1ITEM.PERSUADER, options=progressive_trade_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_TRADE, count=2, options=progressive_trade_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_TRADE, count=1, options=progressive_trade_reversed))
+
+has_hoverboard = (Has(RAC1ITEM.HOVERBOARD, options=progressive_hoverboard_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_HOVERBOARD, count=1, options=progressive_hoverboard_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_HOVERBOARD, count=2, options=progressive_hoverboard_reversed))
+has_zoomerator = (Has(RAC1ITEM.ZOOMERATOR, options=progressive_hoverboard_vanilla)
+            | Has(RAC1ITEM.PROGRESSIVE_HOVERBOARD, count=2, options=progressive_hoverboard_progressive)
+            | Has(RAC1ITEM.PROGRESSIVE_HOVERBOARD, count=1, options=progressive_hoverboard_reversed))
 
 
+has_morph = (Has(RAC1ITEM.MORPH_O_RAY, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.MORPH_O_RAY, RAC1ITEM.GOLD_MORPH_O_RAY, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_MORPH, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_MORPH, count=1, options=progressive_weapons_reversed))
 
-can_improved_jump = HasProgressive(RAC1ITEM.HELI_PACK) | HasProgressive(RAC1ITEM.THRUSTER_PACK)
-can_heli_high_jump = HasProgressive(RAC1ITEM.HELI_PACK)
-can_glide = HasProgressive(RAC1ITEM.HELI_PACK)
-can_ground_pound = HasProgressive(RAC1ITEM.THRUSTER_PACK)
-has_hydro_pack = HasProgressive(RAC1ITEM.HYDRO_PACK)
-has_sonic = HasProgressive(RAC1ITEM.SONIC_SUMMONER)
-has_o2_mask = HasProgressive(RAC1ITEM.O2_MASK)
-has_pilots_helmet = HasProgressive(RAC1ITEM.PILOTS_HELMET)
-has_morph = HasProgressive(RAC1ITEM.MORPH_O_RAY)
-has_magneboots = HasProgressive(RAC1ITEM.MAGNEBOOTS)
-has_grindboots = HasProgressive(RAC1ITEM.GRINDBOOTS)
-has_hoverboard = HasProgressive(RAC1ITEM.HOVERBOARD)
-has_zoomerator = HasProgressive(RAC1ITEM.ZOOMERATOR)
-has_raritanium = HasProgressive(RAC1ITEM.RARITANIUM)
+has_bomb_glove = (Has(RAC1ITEM.BOMB_GLOVE, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.BOMB_GLOVE, RAC1ITEM.GOLD_BOMB_GLOVE, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_BOMB, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_BOMB, count=1, options=progressive_weapons_reversed))
+
+has_mine_glove = (Has(RAC1ITEM.MINE_GLOVE, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.MINE_GLOVE, RAC1ITEM.GOLD_MINE_GLOVE, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_MINE, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_MINE, count=1, options=progressive_weapons_reversed))
+
+has_devastator = (Has(RAC1ITEM.DEVASTATOR, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.DEVASTATOR, RAC1ITEM.GOLD_DEVASTATOR, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_DEVASTATOR, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_DEVASTATOR, count=1, options=progressive_weapons_reversed))
+
+has_blaster = (Has(RAC1ITEM.BLASTER, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.BLASTER, RAC1ITEM.GOLD_BLASTER, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_BLASTER, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_BLASTER, count=1, options=progressive_weapons_reversed))
+
+has_pyro = (Has(RAC1ITEM.PYROCITOR, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.PYROCITOR, RAC1ITEM.GOLD_PYROCITOR, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_PYROCITOR, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_PYROCITOR, count=1, options=progressive_weapons_reversed))
+
+has_suck = (Has(RAC1ITEM.SUCK_CANNON, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.SUCK_CANNON, RAC1ITEM.GOLD_SUCK_CANNON, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_SUCK, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_SUCK, count=1, options=progressive_weapons_reversed))
+
+has_tesla = (Has(RAC1ITEM.TESLA_CLAW, options=progressive_weapons_vanilla)
+            |HasAny(RAC1ITEM.TESLA_CLAW, RAC1ITEM.GOLD_TESLA_CLAW, options=progressive_weapons_normal)
+            |Has(RAC1ITEM.PROGRESSIVE_TESLA, count=1, options=progressive_weapons_progressive)
+            |Has(RAC1ITEM.PROGRESSIVE_TESLA, count=1, options=progressive_weapons_reversed))
+
+### end progressive rules ###
+
+can_improved_jump = has_progressive_helipack | has_progressive_thruster_pack
+can_heli_high_jump = has_progressive_helipack
+can_glide = has_progressive_helipack
+can_ground_pound =has_progressive_thruster_pack
+has_hydro_pack = has_progressive_hydro_pack
 has_explosive_weapon = (HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) |
-                        HasProgressive(RAC1ITEM.BOMB_GLOVE) |
-                        HasProgressive(RAC1ITEM.MINE_GLOVE) |
-                        HasProgressive(RAC1ITEM.DEVASTATOR))
-has_long_range_weapon = Has(RAC1ITEM.VISIBOMB) | HasProgressive(RAC1ITEM.DEVASTATOR)
+                        has_bomb_glove |
+                        has_mine_glove |
+                        has_devastator)
+has_long_range_weapon = Has(RAC1ITEM.VISIBOMB) | has_devastator
 has_medium_range_weapon = (HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) |
-                        HasProgressive(RAC1ITEM.DEVASTATOR) |
-                        HasProgressive(RAC1ITEM.BLASTER))
+                        has_devastator |
+                        has_blaster)
 has_short_range_weapon = (HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) |
-                        HasProgressive(RAC1ITEM.PYROCITOR) |
-                        HasProgressive(RAC1ITEM.BLASTER) |
-                        HasProgressive(RAC1ITEM.SUCK_CANNON) |
-                        HasProgressive(RAC1ITEM.DEVASTATOR) |
-                        HasProgressive(RAC1ITEM.TESLA_CLAW))
+                        has_pyro |
+                        has_blaster |
+                        has_suck |
+                        has_devastator |
+                        has_tesla)
 
 early_metal_spots = HasAny(RAC1ITEM.NOVALIS,
         RAC1ITEM.KERWAN,
@@ -82,7 +162,7 @@ gaspar_metal_spots = Has(RAC1ITEM.GASPAR) & (can_improved_jump | Has(RAC1ITEM.SW
 orxon_metal_spots = has_o2_mask & Has(RAC1ITEM.ORXON)
 gemlik_metal_spots = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT, RAC1ITEM.TRESPASSER) & Has(RAC1ITEM.GEMLIK)
 oltanis_metal_spots = Has(RAC1ITEM.OLTANIS) & (has_magneboots | Has(RAC1ITEM.SWINGSHOT))
-kalebo_metal_spots = (has_medium_range_weapon | HasProgressive(RAC1ITEM.BOMB_GLOVE) | HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO)) & Has(RAC1ITEM.KALEBO) & (can_improved_jump | Has(RAC1ITEM.SWINGSHOT))
+kalebo_metal_spots = (has_medium_range_weapon | has_bomb_glove | HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO)) & Has(RAC1ITEM.KALEBO) & (can_improved_jump | Has(RAC1ITEM.SWINGSHOT))
 fleet_metal_spots = Has(RAC1ITEM.FLEET) & ((has_o2_mask & has_hydro_pack) | Has(RAC1ITEM.HOLOGUISE))
 veldin_metal_spots = (has_magneboots & can_ground_pound & HasAll(RAC1ITEM.TRESPASSER, RAC1ITEM.HYDRODISPLACER)) & Has(RAC1ITEM.VELDIN) & Has(RAC1ITEM.SWINGSHOT)
 can_farm_bolts = (Has(RAC1ITEM.METAL_DETECTOR) &
@@ -306,7 +386,7 @@ quartu_codebot_rule = HasAll(RAC1ITEM.CODEBOT, RAC1ITEM.SWINGSHOT)
 quartu_bolt_grabber_rule = has_o2_mask & has_hydro_pack
 
 # Kalebo III
-kalebo_switch_rule = has_medium_range_weapon | HasProgressive(RAC1ITEM.BOMB_GLOVE) | HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO)
+kalebo_switch_rule = has_medium_range_weapon | has_bomb_glove | HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO)
 kalebo_hologuise_rule = has_hoverboard & has_grindboots & kalebo_switch_rule & Has(RAC1ITEM.SWINGSHOT)
 
 # Drek's Fleet

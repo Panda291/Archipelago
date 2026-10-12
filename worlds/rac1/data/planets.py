@@ -1,6 +1,6 @@
 ﻿from typing import NamedTuple, Sequence
 
-from worlds.rac1 import RAC1ITEM
+from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.data.locations import LocationData, RAC1LocationData
 from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.pools import RAC1POOL

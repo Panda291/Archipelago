@@ -12,7 +12,7 @@ from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.slotdata import RAC1SLOT
 from worlds.rac1.data.items import ALL_ITEMS, get_item_groups, check_progressive_item, from_name, get_pool, \
-    get_bolt_pack, STARTING_WEAPONS, GADGETS, GOLD_WEAPONS, get_starting_planets
+    get_bolt_pack, STARTING_WEAPONS, GADGETS, GOLD_WEAPONS, get_starting_planets, progression_rules
 from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST
 from worlds.rac1.data.planets import ALL_LOCATIONS, location_groups
 from worlds.rac1.options import RacOptions, ItemOptions, StartingItem, ShuffleWeapons, ShuffleGadgets, \
@@ -77,6 +77,8 @@ class RacWorld(World):
             self.options.shuffle_extra_items,
             self.options.shuffle_gold_weapons,
         ]
+
+        progression_rules(self)
 
         for pool in shuffle_pools:
             rac_logger.debug(f"Option: {pool}")
@@ -188,7 +190,7 @@ class RacWorld(World):
                 self.preplaced_items += item.name
 
             for _ in range(count):
-                self.multiworld.push_precollected(item)
+                self.multiworld.push_precollected(self.create_item(item.name))
 
         return
 

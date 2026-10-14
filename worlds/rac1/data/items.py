@@ -1028,9 +1028,6 @@ def get_pool(_options) -> Sequence[ItemData]:
     else:
         for item in NON_PROGRESSIVE_NANOTECHS:
             pool += [item]
-    # if _options.shuffle_skill_points.value == 1:
-    #     for item in SKILLPOINTS:
-    #         pool += [item]
     lookup: dict[int, tuple[ItemData, int]] = {
         1: (RAC1ItemData.GOLD_BOLT_1, 40),
         2: (RAC1ItemData.GOLD_BOLT_2, 30),

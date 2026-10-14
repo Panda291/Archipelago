@@ -1,20 +1,22 @@
 ﻿import logging
 from typing import Optional, Mapping, Any
 
-from BaseClasses import Item, ItemClassification, LocationProgressType
+from BaseClasses import Item, ItemClassification, LocationProgressType, Location
 from Fill import FillError
 from rule_builder.rules import Has
 from worlds.AutoWorld import World
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.general import RAC1LOCATION
+from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.locations.skillpoints import RAC1SKILLPOINT
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.slotdata import RAC1SLOT
 from worlds.rac1.data.items import ALL_ITEMS, get_item_groups, check_progressive_item, from_name, get_pool, \
     get_bolt_pack, STARTING_WEAPONS, GADGETS, GOLD_WEAPONS, get_starting_planets, progression_rules
-from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST
+from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST, RAC1LocationData
 from worlds.rac1.data.planets import ALL_LOCATIONS, location_groups
+from worlds.rac1.logic import veldin_defeat_drek_rule
 from worlds.rac1.options import RacOptions, ItemOptions, StartingItem, ShuffleWeapons, ShuffleGadgets, \
     GoldWeaponProgression, ShuffleGoldWeapons, ShuffleInfobots, StartingLocation, get_options_as_dict
 from worlds.rac1.regions import create_regions
@@ -122,7 +124,7 @@ class RacWorld(World):
                             if self.get_location(loc.name).item is not None:
                                 raise FillError(f"Slot {self.player_name} selected vanilla {pool}, but Location:"
                                                 f" {loc.name} was already filled")
-                            self.get_location(loc.name).place_locked_item(vanilla_item)
+                            self.get_location(loc.name).place_locked_item(self.create_item(vanilla_item.name))
                             add_items += [vanilla_item.name]
                             rac_logger.debug(f"vanilla: {loc.name}, item: {vanilla_item.name}")
             case 1: # restricted
@@ -158,19 +160,18 @@ class RacWorld(World):
 
         if (self.options.shuffle_weapons == ShuffleWeapons.option_vanilla
             or self.options.starting_item == StartingItem.option_vanilla):
-            starting_item = RAC1ITEM.BOMB_GLOVE
+            starting_item = [RAC1ITEM.BOMB_GLOVE]
         else:
-            starting_item = []
-            item_list = [item.name for item in STARTING_WEAPONS]
+            starting_item = [item.name for item in STARTING_WEAPONS]
             if (self.options.starting_item == StartingItem.option_random_item
                     and self.options.shuffle_gadgets > ShuffleGadgets.option_random_same):
-                item_list += [item.name for item in GADGETS]
+                starting_item += [item.name for item in GADGETS]
             if (self.options.progressive_weapons.value is GoldWeaponProgression.option_normal and
                     self.options.shuffle_gold_weapons.value is not ShuffleGoldWeapons.option_vanilla):
-                item_list += [item.name for item in GOLD_WEAPONS]
+                starting_item += [item.name for item in GOLD_WEAPONS]
 
             self.random.shuffle(starting_item)
-            self.starting_item = starting_item[0].name
+            self.starting_item = starting_item[0]
 
         if (self.options.shuffle_infobots == ShuffleInfobots.option_vanilla
                 or self.options.starting_location == StartingLocation.option_false):

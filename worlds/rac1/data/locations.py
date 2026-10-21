@@ -86,7 +86,7 @@ class RAC1LocationData:
         novalis_gold_weapon_10k)
     NOVALIS_SKILLPOINT = LocationData(
         105, RAC1PLANET.NOVALIS, RAC1SKILLPOINT.NOVALIS_TAKE_AIM, None, {RAC1POOL.SKILLPOINT},
-        has_medium_range_weapon)
+        has_long_range_weapon)
 
     # Aridia
     ARIDIA_HOVERBOARD = LocationData(
@@ -291,9 +291,9 @@ class RAC1LocationData:
     POKITARU_GOLD_BOLT = LocationData(
         62, RAC1PLANET.POKITARU, RAC1BOLT.POKITARU, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         pokitaru_gold_bolt_rule)
-    POKITARU_ALIEN_INVASION = LocationData(  # Todo: Pokitaru Logic
+    POKITARU_ALIEN_INVASION = LocationData(
         123, RAC1PLANET.POKITARU, RAC1SKILLPOINT.POKITARU_ALIEN_INVASION, None,
-        {RAC1POOL.SKILLPOINT})
+        {RAC1POOL.SKILLPOINT}, Has(RAC1ITEM.VISIBOMB))
     POKITARU_BURIED_TREASURE = LocationData(
         124, RAC1PLANET.POKITARU, RAC1SKILLPOINT.POKITARU_BURIED_TREASURE, None,
         {RAC1POOL.SKILLPOINT})
@@ -315,10 +315,10 @@ class RAC1LocationData:
         68, RAC1PLANET.HOVEN, RAC1BOLT.HOVEN_WALLJUMP, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS})
     HOVEN_PEST_CONTROL = LocationData(
         125, RAC1PLANET.HOVEN, RAC1SKILLPOINT.HOVEN_PEST_CONTROL, None,
-        {RAC1POOL.SKILLPOINT})  # Todo: Hoven Logic
+        {RAC1POOL.SKILLPOINT})
     HOVEN_WHIRLYBIRDS = LocationData(
         126, RAC1PLANET.HOVEN, RAC1SKILLPOINT.HOVEN_WHIRLYBIRDS, None,
-        {RAC1POOL.SKILLPOINT})  # Todo: Hoven Logic
+        {RAC1POOL.SKILLPOINT}, has_long_range_weapon)
 
     # Gemlik
     GEMLIK_QUARK_FIGHT = LocationData(
@@ -327,8 +327,8 @@ class RAC1LocationData:
     GEMLIK_GOLD_BOLT = LocationData(
         70, RAC1PLANET.GEMLIK, RAC1BOLT.GEMLIK, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         gemlik_bolt_rule)
-    GEMLIK_SITTING_DUCKS = LocationData(  # Todo: Gemlik logic
-        127, RAC1PLANET.GEMLIK, RAC1SKILLPOINT.GEMLIK_SITTING_DUCKS, None, {RAC1POOL.SKILLPOINT})
+    GEMLIK_SITTING_DUCKS = LocationData(
+        127, RAC1PLANET.GEMLIK, RAC1SKILLPOINT.GEMLIK_SITTING_DUCKS, None, {RAC1POOL.SKILLPOINT}, Has(RAC1ITEM.VISIBOMB))
 
     # Oltanis
     OLTANIS_VENDOR_TESLA_CLAW = LocationData(
@@ -354,12 +354,12 @@ class RAC1LocationData:
     OLTANIS_FINAL_GOLD_BOLT = LocationData(
         78, RAC1PLANET.OLTANIS, RAC1BOLT.OLTANIS_FINAL, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         oltanis_final_bolt_rule)
-    OLTANIS_SHATTERED_GLASS = LocationData(  # Todo: Oltanis Logic
+    OLTANIS_SHATTERED_GLASS = LocationData(
         128, RAC1PLANET.OLTANIS, RAC1SKILLPOINT.OLTANIS_SHATTERED_GLASS, None,
-        {RAC1POOL.SKILLPOINT})
+        {RAC1POOL.SKILLPOINT}, oltanis_shattered_glass)
     OLTANIS_BLAST_EM = LocationData(
         129, RAC1PLANET.OLTANIS, RAC1SKILLPOINT.OLTANIS_BLAST_EM, None,
-        {RAC1POOL.SKILLPOINT})  # Todo: Oltanis Logic
+        {RAC1POOL.SKILLPOINT}, has_long_range_weapon)
 
     # Quartu
     QUARTU_GIANT_CLANK_INFOBOT = LocationData(
@@ -394,7 +394,7 @@ class RAC1LocationData:
         has_grindboots)
     KALEBO_MAGICIAN = LocationData(
         131, RAC1PLANET.KALEBO, RAC1SKILLPOINT.KALEBO_MAGICIAN, None,
-        {RAC1POOL.SKILLPOINT})  # Todo: Kalebo Logic
+        {RAC1POOL.SKILLPOINT}, kalebo_magician_rule)
 
     # Drek's Fleet
     FLEET_INFOBOT = LocationData(
@@ -409,9 +409,9 @@ class RAC1LocationData:
         91, RAC1PLANET.FLEET, RAC1BOLT.FLEET_ROBOT, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         fleet_second_bolt_rule))
     FLEET_SNEAKY = LocationData(
-        132, RAC1PLANET.FLEET, RAC1SKILLPOINT.FLEET_SNEAKY, None, {RAC1POOL.SKILLPOINT})  # Todo: Fleet Logic
-    FLEET_CAREFUL_CRUISE = LocationData(  # Todo: Fleet Logic
-        133, RAC1PLANET.FLEET, RAC1SKILLPOINT.FLEET_CAREFUL_CRUISE, None, {RAC1POOL.SKILLPOINT})
+        132, RAC1PLANET.FLEET, RAC1SKILLPOINT.FLEET_SNEAKY, None, {RAC1POOL.SKILLPOINT}, fleet_sneaky_rule)
+    FLEET_CAREFUL_CRUISE = LocationData(
+        133, RAC1PLANET.FLEET, RAC1SKILLPOINT.FLEET_CAREFUL_CRUISE, None, {RAC1POOL.SKILLPOINT}, fleet_careful_cruise_rule)
 
     # Veldin
     VELDIN_TAUNTER_GOLD_BOLT = LocationData(

@@ -306,6 +306,7 @@ gemlik_bolt_rule = can_improved_jump & HasAll(RAC1ITEM.VISIBOMB, RAC1ITEM.TRESPA
 # Oltanis
 oltanis_main_bolt_rule = has_grindboots & Has(RAC1ITEM.SWINGSHOT)
 oltanis_final_bolt_rule = has_grindboots & has_magneboots & Has(RAC1ITEM.SWINGSHOT)
+oltanis_shattered_glass = oltanis_final_bolt_rule & has_medium_range_weapon
 
 # Quartu
 quartu_infiltrate_rule = can_ground_pound & HasAll(RAC1ITEM.HOLOGUISE, RAC1ITEM.SWINGSHOT)
@@ -315,11 +316,14 @@ quartu_bolt_grabber_rule = has_o2_mask & has_hydro_pack
 # Kalebo III
 kalebo_switch_rule = has_medium_range_weapon | HasProgressive(RAC1ITEM.BOMB_GLOVE) | HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO)
 kalebo_hologuise_rule = has_hoverboard & has_grindboots & kalebo_switch_rule & Has(RAC1ITEM.SWINGSHOT)
+kalebo_magician_rule = kalebo_hologuise_rule & Has(RAC1ITEM.ZOOMERATOR)
 
 # Drek's Fleet
 fleet_infobot_rule = has_magneboots & has_pilots_helmet & HasAll(RAC1ITEM.HOLOGUISE, RAC1ITEM.SWINGSHOT)
 fleet_water_rule = has_o2_mask & has_hydro_pack
 fleet_second_bolt_rule = has_magneboots & has_pilots_helmet & HasAll(RAC1ITEM.HOLOGUISE, RAC1ITEM.SWINGSHOT)
+fleet_sneaky_rule = Has(RAC1ITEM.HOLOGUISE) & Has(RAC1ITEM.SWINGSHOT)
+fleet_careful_cruise_rule = has_hydro_pack
 
 # Veldin
 veldin_global_rule = has_magneboots & can_ground_pound & HasAll(RAC1ITEM.TRESPASSER, RAC1ITEM.HYDRODISPLACER)

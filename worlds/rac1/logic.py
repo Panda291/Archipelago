@@ -301,6 +301,7 @@ hoven_raritanium_rule = can_improved_jump & Has(RAC1ITEM.SWINGSHOT)
 # Gemlik
 gemlik_quark_rule = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT, RAC1ITEM.TRESPASSER)
 gemlik_bolt_rule = can_improved_jump & HasAll(RAC1ITEM.VISIBOMB, RAC1ITEM.TRESPASSER)
+gemlik_sitting_ducks_rule = gemlik_quark_rule & Has(RAC1ITEM.VISIBOMB)
 #gemlik_gold_weapon_rule = gemlik_quark_rule & has_40_gold_bolts & has_bolts
 
 # Oltanis

@@ -137,7 +137,7 @@ class RacWorld(World):
             if (self.options.progressive_weapons.value is GoldWeaponProgression.option_normal and
                     self.options.shuffle_gold_weapons.value is not ShuffleGoldWeapons.option_vanilla):
                 starting_item += [item.name for item in GOLD_WEAPONS]
-
+            starting_item = [item for item in starting_item if item not in [RAC1ITEM.DRONE_DEVICE]] # only items that can be held in hand
         self.random.shuffle(starting_item)
         self.starting_item = starting_item[0]
         if self.starting_item in self.progressive_convert.keys():
@@ -329,5 +329,6 @@ class RacWorld(World):
     def fill_slot_data(self) -> Mapping[str, Any]:
         slot_data: dict[str, Any] = {}
         slot_data |= get_options_as_dict(self.options)
+        slot_data |= self.orders
         slot_data[RAC1SLOT.STARTING_PLANET] = self.item_name_to_id[self.starting_planet]
         return slot_data

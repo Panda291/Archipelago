@@ -23,10 +23,6 @@ class RAC1SLOT:
     VENDOR_LOGIC = "vendor_logic"
     PROGRESSIVE_WEAPONS = "progressive_weapons"
     PROGRESSIVE_PACKS = "progressive_packs"
-    PROGRESSIVE_HELMETS = "progressive_helmets"
-    PROGRESSIVE_BOOTS = "progressive_boots"
-    PROGRESSIVE_HOVERBOARD = "progressive_hoverboard"
-    PROGRESSIVE_TRADE = "progressive_raritanium"
     PROGRESSIVE_NANOTECH = "progressive_nanotech"
 
     STARTING_PLANET = "starting_planet"  # used in __init__.py

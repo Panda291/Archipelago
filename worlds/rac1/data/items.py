@@ -5,8 +5,8 @@ from BaseClasses import Item, ItemClassification
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.progressive_orders import RAC1ORDER
-from worlds.rac1.options import (BootsProgression, GoldWeaponProgression, HelmetProgression, HoverboardProgression,
-                                 NanotechProgression, PackProgression, RacOptions, RaritaniumProgression,
+from worlds.rac1.options import (GoldWeaponProgression,
+                                 NanotechProgression, PackProgression, RacOptions,
                                  ShuffleExtraItems, ShuffleHelmets, ShuffleInfobots)
 
 
@@ -78,7 +78,6 @@ class RAC1ItemData:
     GOLD_DECOY_GLOVE = ItemData(325, RAC1ITEM.GOLD_DECOY_GLOVE, RAC1POOL.GOLD_WEAPONS, ItemClassification.useful)
 
     PROGRESSIVE_PACK = ItemData(80, RAC1ITEM.PROGRESSIVE_PACK, RAC1POOL.PACKS, ItemClassification.progression)
-    PROGRESSIVE_HELMET = ItemData(81, RAC1ITEM.PROGRESSIVE_HELMET, RAC1POOL.HELMETS, ItemClassification.progression)
     PROGRESSIVE_SUCK = ItemData(82, RAC1ITEM.PROGRESSIVE_SUCK, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_BOMB = ItemData(83, RAC1ITEM.PROGRESSIVE_BOMB, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_DEVASTATOR = ItemData(84, RAC1ITEM.PROGRESSIVE_DEVASTATOR,
@@ -91,10 +90,6 @@ class RAC1ItemData:
     PROGRESSIVE_DOOM = ItemData(89, RAC1ITEM.PROGRESSIVE_DOOM, RAC1POOL.WEAPONS, ItemClassification.useful)
     PROGRESSIVE_MORPH = ItemData(90, RAC1ITEM.PROGRESSIVE_MORPH, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_DECOY = ItemData(91, RAC1ITEM.PROGRESSIVE_DECOY, RAC1POOL.WEAPONS, ItemClassification.useful)
-    PROGRESSIVE_BOOT = ItemData(92, RAC1ITEM.PROGRESSIVE_BOOT, RAC1POOL.BOOTS, ItemClassification.progression)
-    PROGRESSIVE_HOVERBOARD = ItemData(93, RAC1ITEM.PROGRESSIVE_HOVERBOARD,
-                                      RAC1POOL.EXTRA_ITEMS, ItemClassification.progression)
-    PROGRESSIVE_TRADE = ItemData(94, RAC1ITEM.PROGRESSIVE_TRADE, RAC1POOL.EXTRA_ITEMS, ItemClassification.progression)
     PROGRESSIVE_NANOTECH = ItemData(95, RAC1ITEM.PROGRESSIVE_NANOTECH, RAC1POOL.EXTRA_ITEMS, ItemClassification.useful)
 
     NOVALIS = ItemData(101, RAC1ITEM.NOVALIS, RAC1POOL.INFOBOTS, ItemClassification.progression)
@@ -374,17 +369,9 @@ HELMETS: Sequence[ItemData] = [
     RAC1ItemData.PILOTS_HELMET,
 ]
 
-PROGRESSIVE_HELMETS: Sequence[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_HELMET] * 3,
-]
-
 BOOTS: Sequence[ItemData] = [
     RAC1ItemData.MAGNEBOOTS,
     RAC1ItemData.GRINDBOOTS,
-]
-
-PROGRESSIVE_BOOTS: Sequence[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_BOOT] * 2,
 ]
 
 EXTRA_ITEMS: Sequence[ItemData] = [
@@ -393,22 +380,14 @@ EXTRA_ITEMS: Sequence[ItemData] = [
     RAC1ItemData.CODEBOT,
 ]
 
-NON_PROGRESSIVE_HOVERBOARDS: Sequence[ItemData] = [
+HOVERBOARDS: Sequence[ItemData] = [
     RAC1ItemData.HOVERBOARD,
     RAC1ItemData.ZOOMERATOR,
 ]
 
-PROGRESSIVE_HOVERBOARDS: Sequence[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_HOVERBOARD] * 2,
-]
-
-NON_PROGRESSIVE_TRADES: Sequence[ItemData] = [
+TRADES: Sequence[ItemData] = [
     RAC1ItemData.PERSUADER,
     RAC1ItemData.RARITANIUM,
-]
-
-PROGRESSIVE_TRADES: Sequence[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_TRADE] * 2,
 ]
 
 NON_PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
@@ -558,23 +537,23 @@ STARTING_PLANETS: Sequence[ItemData] = [
 # ]
 
 ALL_ITEMS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS, *GADGETS,
-                                 *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *PROGRESSIVE_HELMETS, *BOOTS, *PROGRESSIVE_BOOTS,
-                                 *EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS,
-                                 *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
+                                 *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *BOOTS,
+                                 *EXTRA_ITEMS, *HOVERBOARDS,
+                                 *TRADES, *NON_PROGRESSIVE_NANOTECHS,
                                  *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS, *PLANETS, *BOLT_PACKS]
 
-ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *GADGETS, *EXTRA_ITEMS]
+ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *GADGETS, *EXTRA_ITEMS, *HELMETS, *BOOTS, *TRADES, *HOVERBOARDS]
 
 STARTING_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS]
 ALL_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS]
 ALL_PACKS: Sequence[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
-ALL_HELMETS: Sequence[ItemData] = [*HELMETS, *PROGRESSIVE_HELMETS]
-ALL_BOOTS: Sequence[ItemData] = [*BOOTS, *PROGRESSIVE_BOOTS]
-ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS,
-                                       *NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES, *NON_PROGRESSIVE_NANOTECHS,
+ALL_HELMETS: Sequence[ItemData] = [*HELMETS]
+ALL_BOOTS: Sequence[ItemData] = [*BOOTS]
+ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *HOVERBOARDS,
+                                       *TRADES, *NON_PROGRESSIVE_NANOTECHS,
                                        *PROGRESSIVE_NANOTECHS]
-ALL_HOVERBOARD: Sequence[ItemData] = [*NON_PROGRESSIVE_HOVERBOARDS, *PROGRESSIVE_HOVERBOARDS]
-ALL_TRADE: Sequence[ItemData] = [*NON_PROGRESSIVE_TRADES, *PROGRESSIVE_TRADES]
+ALL_HOVERBOARD: Sequence[ItemData] = [*HOVERBOARDS]
+ALL_TRADE: Sequence[ItemData] = [*TRADES]
 ALL_NANOTECH: Sequence[ItemData] = [*NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS]
 ALL_STARTING: Sequence[ItemData] = [*STARTING_WEAPONS, *GADGETS]
 
@@ -643,20 +622,12 @@ def progression_rules(world):
         RAC1ORDER.DECOY_GLOVE: [RAC1ItemData.DECOY_GLOVE.item_id, RAC1ItemData.GOLD_DECOY_GLOVE.item_id],
         RAC1ORDER.PACKS: [RAC1ItemData.HELI_PACK.item_id,
                           RAC1ItemData.THRUSTER_PACK.item_id, RAC1ItemData.HYDRO_PACK.item_id],
-        RAC1ORDER.HELMETS: [RAC1ItemData.O2_MASK.item_id,
-                            RAC1ItemData.SONIC_SUMMONER.item_id, RAC1ItemData.PILOTS_HELMET.item_id],
-        RAC1ORDER.BOOTS: [RAC1ItemData.GRINDBOOTS.item_id, RAC1ItemData.MAGNEBOOTS.item_id],
-        RAC1ORDER.HOVERBOARD: [RAC1ItemData.HOVERBOARD.item_id, RAC1ItemData.ZOOMERATOR.item_id],
-        RAC1ORDER.TRADE: [RAC1ItemData.RARITANIUM.item_id, RAC1ItemData.PERSUADER.item_id],
         RAC1ORDER.NANOTECH: [RAC1ItemData.PREMIUM_NANOTECH.item_id, RAC1ItemData.ULTRA_NANOTECH.item_id],
     }
     world.progressive_convert = {
         RAC1ITEM.HELI_PACK: {RAC1ITEM.HELI_PACK: 1},
         RAC1ITEM.THRUSTER_PACK: {RAC1ITEM.THRUSTER_PACK: 1},
         RAC1ITEM.HYDRO_PACK: {RAC1ITEM.HYDRO_PACK: 1},
-        RAC1ITEM.SONIC_SUMMONER: {RAC1ITEM.SONIC_SUMMONER: 1, RAC1ITEM.PROGRESSIVE_HELMET: 2},
-        RAC1ITEM.O2_MASK: {RAC1ITEM.O2_MASK: 1, RAC1ITEM.PROGRESSIVE_HELMET: 1},
-        RAC1ITEM.PILOTS_HELMET: {RAC1ITEM.PILOTS_HELMET: 1, RAC1ITEM.PROGRESSIVE_HELMET: 3},
         RAC1ITEM.SUCK_CANNON: {RAC1ITEM.SUCK_CANNON: 1},
         RAC1ITEM.GOLD_SUCK_CANNON: {RAC1ITEM.SUCK_CANNON: 1, RAC1ITEM.GOLD_SUCK_CANNON: 1},
         RAC1ITEM.BOMB_GLOVE: {RAC1ITEM.BOMB_GLOVE: 1},
@@ -677,12 +648,6 @@ def progression_rules(world):
         RAC1ITEM.GOLD_MORPH_O_RAY: {RAC1ITEM.MORPH_O_RAY: 1, RAC1ITEM.GOLD_MORPH_O_RAY: 1},
         RAC1ITEM.DECOY_GLOVE: {RAC1ITEM.DECOY_GLOVE: 1},
         RAC1ITEM.GOLD_DECOY_GLOVE: {RAC1ITEM.DECOY_GLOVE: 1, RAC1ITEM.GOLD_DECOY_GLOVE: 1},
-        RAC1ITEM.MAGNEBOOTS: {RAC1ITEM.MAGNEBOOTS: 1, RAC1ITEM.PROGRESSIVE_BOOT: 2},
-        RAC1ITEM.GRINDBOOTS: {RAC1ITEM.GRINDBOOTS: 1, RAC1ITEM.PROGRESSIVE_BOOT: 1},
-        RAC1ITEM.HOVERBOARD: {RAC1ITEM.HOVERBOARD: 1, RAC1ITEM.PROGRESSIVE_HOVERBOARD: 1},
-        RAC1ITEM.ZOOMERATOR: {RAC1ITEM.ZOOMERATOR: 1, RAC1ITEM.PROGRESSIVE_HOVERBOARD: 2},
-        RAC1ITEM.PERSUADER: {RAC1ITEM.PERSUADER: 1, RAC1ITEM.PROGRESSIVE_TRADE: 1},
-        RAC1ITEM.RARITANIUM: {RAC1ITEM.RARITANIUM: 1, RAC1ITEM.PROGRESSIVE_TRADE: 2},
         RAC1ITEM.PREMIUM_NANOTECH: {RAC1ITEM.PREMIUM_NANOTECH: 1, RAC1ITEM.PROGRESSIVE_NANOTECH: 1},
         RAC1ITEM.ULTRA_NANOTECH: {RAC1ITEM.ULTRA_NANOTECH: 1, RAC1ITEM.PROGRESSIVE_NANOTECH: 2},
     }
@@ -739,88 +704,6 @@ def progression_rules(world):
             world.progressive_convert[RAC1ITEM.GOLD_MORPH_O_RAY] = {RAC1ITEM.PROGRESSIVE_MORPH: 2}
             world.progressive_convert[RAC1ITEM.DECOY_GLOVE] = {RAC1ITEM.PROGRESSIVE_DECOY: 1}
             world.progressive_convert[RAC1ITEM.GOLD_DECOY_GLOVE] = {RAC1ITEM.PROGRESSIVE_DECOY: 2}
-        case GoldWeaponProgression.option_progressive_reversed:
-            world.orders[RAC1ORDER.SUCK_CANNON].reverse()
-            world.progressive_convert[RAC1ITEM.SUCK_CANNON] = {RAC1ITEM.PROGRESSIVE_SUCK: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_SUCK_CANNON] = {RAC1ITEM.PROGRESSIVE_SUCK: 1}
-            world.orders[RAC1ORDER.BOMB_GLOVE].reverse()
-            world.progressive_convert[RAC1ITEM.BOMB_GLOVE] = {RAC1ITEM.PROGRESSIVE_BOMB: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BOMB_GLOVE] = {RAC1ITEM.PROGRESSIVE_BOMB: 1}
-            world.orders[RAC1ORDER.DEVASTATOR].reverse()
-            world.progressive_convert[RAC1ITEM.DEVASTATOR] = {RAC1ITEM.PROGRESSIVE_DEVASTATOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DEVASTATOR] = {RAC1ITEM.PROGRESSIVE_DEVASTATOR: 1}
-            world.orders[RAC1ORDER.BLASTER].reverse()
-            world.progressive_convert[RAC1ITEM.BLASTER] = {RAC1ITEM.PROGRESSIVE_BLASTER: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BLASTER] = {RAC1ITEM.PROGRESSIVE_BLASTER: 1}
-            world.orders[RAC1ORDER.PYROCITOR].reverse()
-            world.progressive_convert[RAC1ITEM.PYROCITOR] = {RAC1ITEM.PROGRESSIVE_PYROCITOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_PYROCITOR] = {RAC1ITEM.PROGRESSIVE_PYROCITOR: 1}
-            world.orders[RAC1ORDER.MINE_GLOVE].reverse()
-            world.progressive_convert[RAC1ITEM.MINE_GLOVE] = {RAC1ITEM.PROGRESSIVE_MINE: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MINE_GLOVE] = {RAC1ITEM.PROGRESSIVE_MINE: 1}
-            world.orders[RAC1ORDER.TESLA_CLAW].reverse()
-            world.progressive_convert[RAC1ITEM.TESLA_CLAW] = {RAC1ITEM.PROGRESSIVE_TESLA: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_TESLA_CLAW] = {RAC1ITEM.PROGRESSIVE_TESLA: 1}
-            world.orders[RAC1ORDER.GLOVE_OF_DOOM].reverse()
-            world.progressive_convert[RAC1ITEM.GLOVE_OF_DOOM] = {RAC1ITEM.PROGRESSIVE_DOOM: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_GLOVE_OF_DOOM] = {RAC1ITEM.PROGRESSIVE_DOOM: 1}
-            world.orders[RAC1ORDER.MORPH_O_RAY].reverse()
-            world.progressive_convert[RAC1ITEM.MORPH_O_RAY] = {RAC1ITEM.PROGRESSIVE_MORPH: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MORPH_O_RAY] = {RAC1ITEM.PROGRESSIVE_MORPH: 1}
-            world.orders[RAC1ORDER.DECOY_GLOVE].reverse()
-            world.progressive_convert[RAC1ITEM.DECOY_GLOVE] = {RAC1ITEM.PROGRESSIVE_DECOY: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DECOY_GLOVE] = {RAC1ITEM.PROGRESSIVE_DECOY: 1}
-        case GoldWeaponProgression.option_progressive_random:
-            world.random.shuffle(world.orders[RAC1ORDER.SUCK_CANNON])
-            world.progressive_convert[RAC1ITEM.SUCK_CANNON] = {RAC1ITEM.PROGRESSIVE_SUCK: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_SUCK_CANNON] = {
-                RAC1ITEM.PROGRESSIVE_SUCK:
-                    1 + world.orders[RAC1ORDER.SUCK_CANNON].index(RAC1ItemData.GOLD_SUCK_CANNON.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.BOMB_GLOVE])
-            world.progressive_convert[RAC1ITEM.BOMB_GLOVE] = {RAC1ITEM.PROGRESSIVE_BOMB: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BOMB_GLOVE] = {
-                RAC1ITEM.PROGRESSIVE_BOMB:
-                    1 + world.orders[RAC1ORDER.BOMB_GLOVE].index(RAC1ItemData.GOLD_BOMB_GLOVE.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.DEVASTATOR])
-            world.progressive_convert[RAC1ITEM.DEVASTATOR] = {RAC1ITEM.PROGRESSIVE_DEVASTATOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DEVASTATOR] = {
-                RAC1ITEM.PROGRESSIVE_DEVASTATOR:
-                    1 + world.orders[RAC1ORDER.DEVASTATOR].index(RAC1ItemData.GOLD_DEVASTATOR.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.BLASTER])
-            world.progressive_convert[RAC1ITEM.BLASTER] = {RAC1ITEM.PROGRESSIVE_BLASTER: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BLASTER] = {
-                RAC1ITEM.PROGRESSIVE_BLASTER:
-                    1 + world.orders[RAC1ORDER.BLASTER].index(RAC1ItemData.GOLD_BLASTER.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.PYROCITOR])
-            world.progressive_convert[RAC1ITEM.PYROCITOR] = {RAC1ITEM.PROGRESSIVE_PYROCITOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_PYROCITOR] = {
-                RAC1ITEM.PROGRESSIVE_PYROCITOR:
-                    1 + world.orders[RAC1ORDER.PYROCITOR].index(RAC1ItemData.GOLD_PYROCITOR.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.MINE_GLOVE])
-            world.progressive_convert[RAC1ITEM.MINE_GLOVE] = {RAC1ITEM.PROGRESSIVE_MINE: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MINE_GLOVE] = {
-                RAC1ITEM.PROGRESSIVE_MINE:
-                    1 + world.orders[RAC1ORDER.MINE_GLOVE].index(RAC1ItemData.GOLD_MINE_GLOVE.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.TESLA_CLAW])
-            world.progressive_convert[RAC1ITEM.TESLA_CLAW] = {RAC1ITEM.PROGRESSIVE_TESLA: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_TESLA_CLAW] = {
-                RAC1ITEM.PROGRESSIVE_TESLA:
-                    1 + world.orders[RAC1ORDER.TESLA_CLAW].index(RAC1ItemData.TESLA_CLAW.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.GLOVE_OF_DOOM])
-            world.progressive_convert[RAC1ITEM.GLOVE_OF_DOOM] = {RAC1ITEM.PROGRESSIVE_DOOM: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_GLOVE_OF_DOOM] = {
-                RAC1ITEM.PROGRESSIVE_DOOM:
-                    1 + world.orders[RAC1ORDER.GLOVE_OF_DOOM].index(RAC1ItemData.GOLD_GLOVE_OF_DOOM.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.MORPH_O_RAY])
-            world.progressive_convert[RAC1ITEM.MORPH_O_RAY] = {RAC1ITEM.PROGRESSIVE_MORPH: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MORPH_O_RAY] = {
-                RAC1ITEM.PROGRESSIVE_MORPH:
-                    1 + world.orders[RAC1ORDER.MORPH_O_RAY].index(RAC1ItemData.GOLD_MORPH_O_RAY.item_id)}
-            world.random.shuffle(world.orders[RAC1ORDER.DECOY_GLOVE])
-            world.progressive_convert[RAC1ITEM.DECOY_GLOVE] = {RAC1ITEM.PROGRESSIVE_DECOY: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DECOY_GLOVE] = {
-                RAC1ITEM.PROGRESSIVE_DECOY:
-                    1 + world.orders[RAC1ORDER.DECOY_GLOVE].index(RAC1ItemData.GOLD_DECOY_GLOVE.item_id)}
         case _:
             pass
 
@@ -844,112 +727,6 @@ def progression_rules(world):
                 RAC1ITEM.PROGRESSIVE_PACK: 1 + world.orders[RAC1ORDER.PACKS].index(RAC1ItemData.HYDRO_PACK.item_id)}
         case _:
             pass
-
-    match world.options.progressive_helmets.value:
-        case HelmetProgression.option_progressive:
-            world.progressive_convert[RAC1ITEM.O2_MASK] = {RAC1ITEM.PROGRESSIVE_HELMET: 1}
-            if world.options.shuffle_helmets.value <= ShuffleHelmets.option_random_same:
-                world.progressive_convert[RAC1ITEM.SONIC_SUMMONER] = {RAC1ITEM.PROGRESSIVE_HELMET: 3}
-                world.progressive_convert[RAC1ITEM.PILOTS_HELMET] = {RAC1ITEM.PROGRESSIVE_HELMET: 2}
-                world.orders[RAC1ORDER.HELMETS] = [RAC1ItemData.O2_MASK.item_id, RAC1ItemData.PILOTS_HELMET.item_id,
-                                                   RAC1ItemData.SONIC_SUMMONER.item_id]
-            else:
-                world.progressive_convert[RAC1ITEM.SONIC_SUMMONER] = {RAC1ITEM.PROGRESSIVE_HELMET: 2}
-                world.progressive_convert[RAC1ITEM.PILOTS_HELMET] = {RAC1ITEM.PROGRESSIVE_HELMET: 3}
-        case HelmetProgression.option_progressive_reversed:
-            world.orders[RAC1ORDER.HELMETS].reverse()
-            world.progressive_convert[RAC1ITEM.O2_MASK] = {RAC1ITEM.PROGRESSIVE_HELMET: 3}
-            world.progressive_convert[RAC1ITEM.SONIC_SUMMONER] = {RAC1ITEM.PROGRESSIVE_HELMET: 2}
-            world.progressive_convert[RAC1ITEM.PILOTS_HELMET] = {RAC1ITEM.PROGRESSIVE_HELMET: 1}
-        case HelmetProgression.option_progressive_random:
-            world.random.shuffle(world.orders[RAC1ORDER.HELMETS])
-            world.progressive_convert[RAC1ITEM.O2_MASK] = {
-                RAC1ITEM.PROGRESSIVE_HELMET:
-                    1 + world.orders[RAC1ORDER.HELMETS].index(RAC1ItemData.O2_MASK.item_id)}
-            world.progressive_convert[RAC1ITEM.SONIC_SUMMONER] = {
-                RAC1ITEM.PROGRESSIVE_HELMET:
-                    1 + world.orders[RAC1ORDER.HELMETS].index(RAC1ItemData.SONIC_SUMMONER.item_id)}
-            world.progressive_convert[RAC1ITEM.PILOTS_HELMET] = {
-                RAC1ITEM.PROGRESSIVE_HELMET:
-                    1 + world.orders[RAC1ORDER.HELMETS].index(RAC1ItemData.PILOTS_HELMET.item_id)}
-            if (world.options.shuffle_helmets.value <= ShuffleHelmets.option_random_same
-                    and world.progressive_convert[RAC1ITEM.PILOTS_HELMET].values() == 3):
-                temp = world.progressive_convert[RAC1ITEM.PILOTS_HELMET]
-                world.progressive_convert[RAC1ITEM.PILOTS_HELMET] = world.progressive_convert[RAC1ITEM.SONIC_SUMMONER]
-                world.progressive_convert[RAC1ITEM.SONIC_SUMMONER] = temp
-                if world.orders[RAC1ORDER.HELMETS].index(RAC1ItemData.O2_MASK.item_id) == 0:
-                    world.orders[RAC1ORDER.HELMETS] = [RAC1ItemData.O2_MASK.item_id, RAC1ItemData.PILOTS_HELMET.item_id,
-                                                       RAC1ItemData.SONIC_SUMMONER.item_id]
-                else:
-                    world.orders[RAC1ORDER.HELMETS] = [RAC1ItemData.PILOTS_HELMET.item_id, RAC1ItemData.O2_MASK.item_id,
-                                                       RAC1ItemData.SONIC_SUMMONER.item_id]
-
-        case _:
-            pass
-
-    match world.options.progressive_boots.value:
-        case BootsProgression.option_progressive:
-            world.progressive_convert[RAC1ITEM.GRINDBOOTS] = {RAC1ITEM.PROGRESSIVE_BOOT: 1}
-            world.progressive_convert[RAC1ITEM.MAGNEBOOTS] = {RAC1ITEM.PROGRESSIVE_BOOT: 2}
-        case BootsProgression.option_progressive_reversed:
-            world.orders[RAC1ORDER.BOOTS].reverse()
-            world.progressive_convert[RAC1ITEM.GRINDBOOTS] = {RAC1ITEM.PROGRESSIVE_BOOT: 2}
-            world.progressive_convert[RAC1ITEM.MAGNEBOOTS] = {RAC1ITEM.PROGRESSIVE_BOOT: 1}
-        case BootsProgression.option_progressive_random:
-            world.random.shuffle(world.orders[RAC1ORDER.BOOTS])
-            world.progressive_convert[RAC1ITEM.GRINDBOOTS] = {
-                RAC1ITEM.PROGRESSIVE_BOOT:
-                    1 + world.orders[RAC1ORDER.BOOTS].index(RAC1ItemData.GRINDBOOTS.item_id)}
-            world.progressive_convert[RAC1ITEM.MAGNEBOOTS] = {
-                RAC1ITEM.PROGRESSIVE_BOOT:
-                    1 + world.orders[RAC1ORDER.BOOTS].index(RAC1ItemData.MAGNEBOOTS.item_id)}
-        case _:
-            pass
-
-    if world.options.shuffle_extra_items.value == ShuffleExtraItems.option_vanilla:
-        world.progressive_convert[RAC1ITEM.HOVERBOARD] = {RAC1ITEM.HOVERBOARD: 1, RAC1ITEM.PROGRESSIVE_HOVERBOARD: 1}
-        world.progressive_convert[RAC1ITEM.ZOOMERATOR] = {RAC1ITEM.ZOOMERATOR: 1, RAC1ITEM.PROGRESSIVE_HOVERBOARD: 2}
-    else:
-        match world.options.progressive_hoverboard.value:
-            case HoverboardProgression.option_progressive:
-                world.progressive_convert[RAC1ITEM.HOVERBOARD] = {RAC1ITEM.PROGRESSIVE_HOVERBOARD: 1}
-                world.progressive_convert[RAC1ITEM.ZOOMERATOR] = {RAC1ITEM.PROGRESSIVE_HOVERBOARD: 2}
-            case HoverboardProgression.option_progressive_reversed:
-                world.orders[RAC1ORDER.HOVERBOARD].reverse()
-                world.progressive_convert[RAC1ITEM.HOVERBOARD] = {RAC1ITEM.PROGRESSIVE_HOVERBOARD: 2}
-                world.progressive_convert[RAC1ITEM.ZOOMERATOR] = {RAC1ITEM.PROGRESSIVE_HOVERBOARD: 1}
-            case HoverboardProgression.option_progressive_random:
-                world.random.shuffle(world.orders[RAC1ORDER.HOVERBOARD])
-                world.progressive_convert[RAC1ITEM.HOVERBOARD] = {
-                    RAC1ITEM.PROGRESSIVE_HOVERBOARD:
-                        1 + world.orders[RAC1ORDER.HOVERBOARD].index(RAC1ItemData.HOVERBOARD.item_id)}
-                world.progressive_convert[RAC1ITEM.ZOOMERATOR] = {
-                    RAC1ITEM.PROGRESSIVE_HOVERBOARD:
-                        1 + world.orders[RAC1ORDER.HOVERBOARD].index(RAC1ItemData.ZOOMERATOR.item_id)}
-            case _:
-                pass
-    if world.options.shuffle_extra_items.value == ShuffleExtraItems.option_vanilla:
-        world.progressive_convert[RAC1ITEM.RARITANIUM] = {RAC1ITEM.RARITANIUM: 1, RAC1ITEM.PROGRESSIVE_TRADE: 1}
-        world.progressive_convert[RAC1ITEM.PERSUADER] = {RAC1ITEM.PERSUADER: 1, RAC1ITEM.PROGRESSIVE_TRADE: 2}
-    else:
-        match world.options.progressive_raritanium.value:
-            case RaritaniumProgression.option_progressive:
-                world.progressive_convert[RAC1ITEM.RARITANIUM] = {RAC1ITEM.PROGRESSIVE_TRADE: 1}
-                world.progressive_convert[RAC1ITEM.PERSUADER] = {RAC1ITEM.PROGRESSIVE_TRADE: 2}
-            case RaritaniumProgression.option_progressive_reversed:
-                world.orders[RAC1ORDER.TRADE].reverse()
-                world.progressive_convert[RAC1ITEM.RARITANIUM] = {RAC1ITEM.PROGRESSIVE_TRADE: 2}
-                world.progressive_convert[RAC1ITEM.PERSUADER] = {RAC1ITEM.PROGRESSIVE_TRADE: 1}
-            case RaritaniumProgression.option_progressive_random:
-                world.random.shuffle(world.orders[RAC1ORDER.TRADE])
-                world.progressive_convert[RAC1ITEM.RARITANIUM] = {
-                    RAC1ITEM.PROGRESSIVE_TRADE:
-                        1 + world.orders[RAC1ORDER.TRADE].index(RAC1ItemData.RARITANIUM.item_id)}
-                world.progressive_convert[RAC1ITEM.PERSUADER] = {
-                    RAC1ITEM.PROGRESSIVE_TRADE:
-                        1 + world.orders[RAC1ORDER.TRADE].index(RAC1ItemData.PERSUADER.item_id)}
-            case _:
-                pass
 
     match world.options.progressive_nanotech.value:
         case NanotechProgression.option_progressive:
@@ -997,30 +774,6 @@ def get_pool(_options) -> Sequence[ItemData]:
             pool += [item]
     else:
         for item in PACKS:
-            pool += [item]
-    if _options.progressive_helmets.value > HelmetProgression.option_vanilla:
-        for item in PROGRESSIVE_HELMETS:
-            pool += [item]
-    else:
-        for item in HELMETS:
-            pool += [item]
-    if _options.progressive_boots.value > BootsProgression.option_vanilla:
-        for item in PROGRESSIVE_BOOTS:
-            pool += [item]
-    else:
-        for item in BOOTS:
-            pool += [item]
-    if _options.progressive_hoverboard.value > HoverboardProgression.option_vanilla:
-        for item in PROGRESSIVE_HOVERBOARDS:
-            pool += [item]
-    else:
-        for item in NON_PROGRESSIVE_HOVERBOARDS:
-            pool += [item]
-    if _options.progressive_raritanium.value > RaritaniumProgression.option_vanilla:
-        for item in PROGRESSIVE_TRADES:
-            pool += [item]
-    else:
-        for item in NON_PROGRESSIVE_TRADES:
             pool += [item]
     if _options.progressive_nanotech.value > NanotechProgression.option_vanilla:
         for item in PROGRESSIVE_NANOTECHS:
@@ -1169,20 +922,8 @@ def check_progressive_item(_options: 'RacOptions', item: str) -> str:
         case RAC1POOL.PACKS:
             if _options.progressive_packs.value:
                 new_item = RAC1ITEM.PROGRESSIVE_PACK
-        case RAC1POOL.HELMETS:
-            if _options.progressive_helmets.value:
-                new_item = RAC1ITEM.PROGRESSIVE_HELMET
-        case RAC1POOL.BOOTS:
-            if _options.progressive_boots.value:
-                new_item = RAC1ITEM.PROGRESSIVE_BOOT
         case RAC1POOL.EXTRA_ITEMS:
             match item:
-                case RAC1ITEM.HOVERBOARD | RAC1ITEM.ZOOMERATOR:
-                    if _options.progressive_hoverboard.value:
-                        new_item = RAC1ITEM.PROGRESSIVE_HOVERBOARD
-                case RAC1ITEM.RARITANIUM | RAC1ITEM.PERSUADER:
-                    if _options.progressive_raritanium.value:
-                        new_item = RAC1ITEM.PROGRESSIVE_TRADE
                 case RAC1ITEM.PREMIUM_NANOTECH | RAC1ITEM.ULTRA_NANOTECH:
                     if _options.progressive_nanotech.value:
                         new_item = RAC1ITEM.PROGRESSIVE_NANOTECH

@@ -61,7 +61,6 @@ class RAC1ITEM:
 
     # Progressive items
     PROGRESSIVE_PACK = "Progressive Pack"
-    PROGRESSIVE_HELMET = "Progressive Helmet"
     PROGRESSIVE_SUCK = "Progressive Suck Cannon"
     PROGRESSIVE_BOMB = "Progressive Bomb Glove"
     PROGRESSIVE_DEVASTATOR = "Progressive Devastator"
@@ -72,9 +71,6 @@ class RAC1ITEM:
     PROGRESSIVE_DOOM = "Progressive Glove of Doom"
     PROGRESSIVE_MORPH = "Progressive Morph-o-ray"
     PROGRESSIVE_DECOY = "Progressive Decoy Glove"
-    PROGRESSIVE_BOOT = "Progressive Boots"
-    PROGRESSIVE_HOVERBOARD = "Progressive Hoverboard"
-    PROGRESSIVE_TRADE = "Progressive Raritanium"
     PROGRESSIVE_NANOTECH = "Progressive Nanotech"
 
     # Infobots

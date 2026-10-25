@@ -8,8 +8,7 @@ from rule_builder.options import OptionFilter
 from rule_builder.rules import Rule, Has, True_, HasAny, HasAll, HasAllCounts, False_, Or, HasAnyCount
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.options import RAC1OPTION
-from worlds.rac1.options import VendorOptions, GoldBoltPackSize, PackProgression, HelmetProgression, BootsProgression, \
-    RaritaniumProgression, HoverboardProgression, GoldWeaponProgression
+from worlds.rac1.options import VendorOptions, GoldBoltPackSize, PackProgression, GoldWeaponProgression
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
 rac_logger.setLevel(logging.DEBUG)
@@ -49,15 +48,15 @@ can_heli_high_jump = HasProgressive(RAC1ITEM.HELI_PACK)
 can_glide = HasProgressive(RAC1ITEM.HELI_PACK)
 can_ground_pound = HasProgressive(RAC1ITEM.THRUSTER_PACK)
 has_hydro_pack = HasProgressive(RAC1ITEM.HYDRO_PACK)
-has_sonic = HasProgressive(RAC1ITEM.SONIC_SUMMONER)
-has_o2_mask = HasProgressive(RAC1ITEM.O2_MASK)
-has_pilots_helmet = HasProgressive(RAC1ITEM.PILOTS_HELMET)
+has_sonic = Has(RAC1ITEM.SONIC_SUMMONER)
+has_o2_mask = Has(RAC1ITEM.O2_MASK)
+has_pilots_helmet = Has(RAC1ITEM.PILOTS_HELMET)
 has_morph = HasProgressive(RAC1ITEM.MORPH_O_RAY)
-has_magneboots = HasProgressive(RAC1ITEM.MAGNEBOOTS)
-has_grindboots = HasProgressive(RAC1ITEM.GRINDBOOTS)
-has_hoverboard = HasProgressive(RAC1ITEM.HOVERBOARD)
-has_zoomerator = HasProgressive(RAC1ITEM.ZOOMERATOR)
-has_raritanium = HasProgressive(RAC1ITEM.RARITANIUM)
+has_magneboots = Has(RAC1ITEM.MAGNEBOOTS)
+has_grindboots = Has(RAC1ITEM.GRINDBOOTS)
+has_hoverboard = Has(RAC1ITEM.HOVERBOARD)
+has_zoomerator = Has(RAC1ITEM.ZOOMERATOR)
+has_raritanium = Has(RAC1ITEM.RARITANIUM)
 
 has_explosive_weapon = (HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) |
                         HasProgressive(RAC1ITEM.BOMB_GLOVE) |

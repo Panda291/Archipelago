@@ -259,8 +259,6 @@ class ProgressiveOptions(Choice):
     value: int
     option_vanilla = 0
     option_progressive = 1
-    option_progressive_reversed = 2
-    option_progressive_random = 3
     alias_true = 1
     alias_false = 0
 
@@ -280,8 +278,6 @@ class GoldWeaponProgression(ProgressiveOptions):
     option_vanilla = 0
     option_normal = 1
     option_progressive = 2
-    option_progressive_reversed = 3
-    option_progressive_random = 4
     alias_true = 2
     alias_false = 0
     default = 1
@@ -295,78 +291,6 @@ class PackProgression(ProgressiveOptions):
         progressive_random: Packs are progressive, the order of upgrading is random.
     """
     display_name = RAC1OPTION.PROGRESSIVE_PACKS
-    rich_text_doc = True
-    value: int
-    option_vanilla = 0
-    option_progressive = 1
-    option_progressive_reversed = 2
-    option_progressive_random = 3
-    alias_true = 1
-    alias_false = 0
-
-
-class HelmetProgression(ProgressiveOptions):
-    """
-        vanilla: Helmets are not progressive, each item is independent of other items.
-        progressive: Helmets are progressive, collecting multiple of an item will upgrade it.
-        progressive_reversed: Helmets are progressive, the order of upgrading is reversed.
-        progressive_random: Helmets are progressive, the order of upgrading is random.
-    """
-    display_name = RAC1OPTION.PROGRESSIVE_HELMETS
-    rich_text_doc = True
-    value: int
-    option_vanilla = 0
-    option_progressive = 1
-    option_progressive_reversed = 2
-    option_progressive_random = 3
-    alias_true = 1
-    alias_false = 0
-
-
-class BootsProgression(ProgressiveOptions):
-    """
-        vanilla: Grind and Magneboots are not progressive, each item is independent of other items.
-        progressive: Grind and Magneboots are progressive, collecting multiple of an item will upgrade it.
-        progressive_reversed: Grind and Magneboots are progressive, the order of upgrading is reversed.
-        progressive_random: Grind and Magneboots are progressive, the order of upgrading is random.
-    """
-    display_name = RAC1OPTION.PROGRESSIVE_BOOTS
-    rich_text_doc = True
-    value: int
-    option_vanilla = 0
-    option_progressive = 1
-    option_progressive_reversed = 2
-    option_progressive_random = 3
-    alias_true = 1
-    alias_false = 0
-
-
-class HoverboardProgression(ProgressiveOptions):
-    """
-        vanilla: Hoverboard and Zoomerator are not progressive, each item is independent of other items.
-        progressive: Hoverboard and Zoomerator are progressive, collecting multiple of an item will upgrade it.
-        progressive_reversed: Hoverboard and Zoomerator are progressive, the order of upgrading is reversed.
-        progressive_random: Hoverboard and Zoomerator are progressive, the order of upgrading is random.
-    """
-    display_name = RAC1OPTION.PROGRESSIVE_HOVERBOARD
-    rich_text_doc = True
-    value: int
-    option_vanilla = 0
-    option_progressive = 1
-    option_progressive_reversed = 2
-    option_progressive_random = 3
-    alias_true = 1
-    alias_false = 0
-
-
-class RaritaniumProgression(ProgressiveOptions):
-    """
-        vanilla: Raritanium and Persuader are not progressive, each item is independent of other items.
-        progressive: Raritanium and Persuader are progressive, collecting multiple of an item will upgrade it.
-        progressive_reversed: Raritanium and Persuader are progressive, the order of upgrading is reversed.
-        progressive_random: Raritanium and Persuader are progressive, the order of upgrading is random.
-    """
-    display_name = RAC1OPTION.PROGRESSIVE_RARITANIUM
     rich_text_doc = True
     value: int
     option_vanilla = 0
@@ -418,10 +342,6 @@ class RacOptions(PerGameCommonOptions):
     vendor_logic: VendorOptions
     progressive_weapons: GoldWeaponProgression
     progressive_packs: PackProgression
-    progressive_helmets: HelmetProgression
-    progressive_boots: BootsProgression
-    progressive_hoverboard: HoverboardProgression
-    progressive_raritanium: RaritaniumProgression
     progressive_nanotech: NanotechProgression
 
 
@@ -447,9 +367,5 @@ def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
         RAC1SLOT.VENDOR_LOGIC: options.vendor_logic.value,
         RAC1SLOT.PROGRESSIVE_WEAPONS: options.progressive_weapons.value,
         RAC1SLOT.PROGRESSIVE_PACKS: options.progressive_packs.value,
-        RAC1SLOT.PROGRESSIVE_HELMETS: options.progressive_helmets.value,
-        RAC1SLOT.PROGRESSIVE_BOOTS: options.progressive_boots.value,
-        RAC1SLOT.PROGRESSIVE_HOVERBOARD: options.progressive_hoverboard.value,
-        RAC1SLOT.PROGRESSIVE_TRADE: options.progressive_raritanium.value,
         RAC1SLOT.PROGRESSIVE_NANOTECH: options.progressive_nanotech.value,
     }

@@ -1,18 +1,18 @@
 ﻿"""This module defines data for planets in RAC1"""
 
-from typing import NamedTuple, Sequence
+from typing import NamedTuple
 
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.general import RAC1LOCATION
-from worlds.rac1.data.locations import LocationData, RAC1LocationData
 from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.pools import RAC1POOL
+from worlds.rac1.data.locations import LocationData, RAC1LocationData
 
 
 class PlanetData(NamedTuple):
     name: str
     number: int
-    locations: Sequence[LocationData] = []
+    locations: list[LocationData] = []
 
 
 class RAC1PlanetData:
@@ -230,7 +230,7 @@ PLANET_NAME_TO_ITEM: dict[str, str] = {
     RAC1PLANET.FLEET: RAC1ITEM.FLEET,
 }
 
-LOGIC_PLANETS: Sequence[PlanetData] = [
+LOGIC_PLANETS: list[PlanetData] = [
     RAC1PlanetData.GENERAL,
     RAC1PlanetData.NOVALIS,
     RAC1PlanetData.ARIDIA,
@@ -252,7 +252,7 @@ LOGIC_PLANETS: Sequence[PlanetData] = [
     RAC1PlanetData.VELDIN,
 ]
 
-ALL_LOCATIONS: Sequence[LocationData] = [
+ALL_LOCATIONS: list[LocationData] = [
     location
     for locations in [planet.locations for planet in LOGIC_PLANETS]
     for location in locations

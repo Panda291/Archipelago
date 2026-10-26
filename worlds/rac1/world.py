@@ -1,6 +1,6 @@
 ﻿"""This module defines the world class for the Ratchet and Clank 1 APWorld"""
 import logging
-from typing import Any, Mapping, Optional
+from typing import Any, Counter, Mapping, Optional
 
 from BaseClasses import Item, ItemClassification
 from Fill import FillError
@@ -8,26 +8,21 @@ from Options import OptionError
 from rule_builder.rules import Has
 from worlds.AutoWorld import World
 from worlds.rac1.constants.items import RAC1ITEM
-from worlds.rac1.constants.locations.general import RAC1LOCATION
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.slotdata import RAC1SLOT
-from worlds.rac1.data.items import ALL_ITEMS, BOLT_SIZE_TO_PACK, GADGETS, GOLD_WEAPONS, STARTING_WEAPONS
+from worlds.rac1.data.items import ALL_ITEMS, GADGETS, GOLD_WEAPONS, STARTING_WEAPONS
 from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST
 from worlds.rac1.data.planets import ALL_LOCATIONS, location_groups
-from worlds.rac1.items import (check_progressive_item, from_name, get_item_groups, get_pool, get_starting_planets,
-                               progression_rules)
+from worlds.rac1.items import (check_progressive_item, create_item, from_name, get_item_groups, get_pool,
+                               get_starting_planets, progression_rules)
 from worlds.rac1.options import (get_options_as_dict, GoldWeaponProgression, ItemOptions, RacOptions, ShuffleGadgets,
                                  ShuffleGoldWeapons, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation)
 from worlds.rac1.regions import create_regions
+from worlds.rac1.universal_tracker import setup_options_from_slot_data
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
 rac_logger.setLevel(logging.DEBUG)
-
-
-class RacItem(Item):
-    game: str = RAC1OPTION.GAME_TITLE_FULL
-from worlds.rac1.universal_tracker import setup_options_from_slot_data
 
 
 class RacWorld(World):
@@ -55,6 +50,8 @@ class RacWorld(World):
     useful_pools: list[str] = []
     enabled_pools: list[str] = []
     preplaced_items: list[str] = []
+
+    progressive_convert: dict[str, dict[str, int]] = {}
 
     def generate_early(self) -> None:
         rac_logger.debug(f"--generate_early--")
@@ -231,19 +228,9 @@ class RacWorld(World):
                     raise OptionError(f"Options for 'random_item' are currently disabled")
         return add_items
 
-    def create_item(self, name: str, override: Optional[ItemClassification] = None) -> RacItem:
-        new_name = check_progressive_item(self.options, name)
-        if new_name is not name:
-            rac_logger.warning(f"Item {name} was not initially set to its progressive item: {new_name}")
-        if name == RAC1ITEM.GOLD_BOLT or name == RAC1ITEM.BOLT_PACK_GENERIC:
-            rac_logger.warning(f"{name} should not be in the item pool!!! Please report")
-        if override:
-            return RacItem(new_name, override, self.item_name_to_id[new_name], self.player)
-        item_data = from_name(new_name)
-        return RacItem(new_name, item_data.classification, self.item_name_to_id[new_name], self.player)
 
-    def create_event(self, event: str) -> RacItem:
-        return RacItem(event, ItemClassification.progression, None, self.player)
+    def create_item(self, name: str, override: Optional[ItemClassification] = None) -> Item:
+        return create_item(self, name)
 
     def pre_fill(self) -> None:
         return
@@ -251,44 +238,30 @@ class RacWorld(World):
     def create_items(self) -> None:
         # After this step all locations and items need to be added/removed
         rac_logger.debug(f"_________START ITEM CREATION__________")
-        itempool: list[Item] = [self.create_item(item.name) for item in get_pool(self.options) if
-                                item.name not in self.preplaced_items]
+        exclusion_filler = [self.create_filler() for _ in range(self.get_excluded_count())]
+        self.multiworld.itempool.extend(exclusion_filler)
         own_location_count = len(self.multiworld.get_unfilled_locations(self.player))
-        total_location_count = len(self.multiworld.get_unfilled_locations())
-        existing_item_count = len(self.multiworld.itempool)
-        placement_location_count = total_location_count - existing_item_count if self.multiworld.players > 1 else (
-            own_location_count)
-        excluded_count = self.get_excluded_count()
-        already_placed = len(self.preplaced_items)
-        item_count = len(itempool)
+        itempool = get_pool(self)
+        item_count = len(itempool + exclusion_filler)
         filler_count = own_location_count - item_count
 
-        rac_logger.debug(f"own_location_count: {own_location_count}\n"
-                         f"total_location_count:{total_location_count}\n"
-                         f"existing_item_count:{existing_item_count}\n"
-                         f"item_count:{item_count}\n"
-                         f"placement_location_count:{placement_location_count}\n"
-                         f"excluded_count:{excluded_count}\n"
-                         f"filler_count:{filler_count}\n"
-                         f"already_placed:{already_placed}\n"
-                         f"already_placed:{self.preplaced_items}\n"
-                         f"self.multiworld.itempool: {self.multiworld.itempool}"
-                         f"")
-
-        if item_count > placement_location_count:
-            self.handle_not_enough_locations(item_count - placement_location_count)
+        if filler_count < 0:
+            self.handle_not_enough_locations(-filler_count)
+            self.random.shuffle(itempool)
+            # rac_logger.info(f"Placing {-filler_count} starting items")
+            for item in range(-filler_count):
+                # rac_logger.info(f"Starting with: {itempool[0].name}")
+                self.push_precollected(itempool.pop(0))
+        else:
+            filler = [self.create_filler() for _ in range(filler_count)]
+            self.multiworld.itempool.extend(filler)
 
         self.multiworld.itempool.extend(itempool)
-
-        if excluded_count > filler_count and self.multiworld.players == 1:
-            self.handle_not_enough_locations(excluded_count - filler_count)
-
-        if filler_count >= 0:
-            filler = [self.create_item(BOLT_SIZE_TO_PACK[self.options.pack_size_bolts.value]) for _ in
-                      range(filler_count)]
-            self.multiworld.itempool.extend(filler)
-        elif self.multiworld.players == 1:
-            self.handle_not_enough_locations(-filler_count)
+        player_items = Counter(item.player for item in self.multiworld.itempool)
+        player_locs = Counter(loc.player for loc in self.multiworld.get_locations() if not loc.item)
+        assert player_items[self.player] == player_locs[self.player], (f"Player item count {player_items[self.player]} "
+                                                                       f"and location count {player_locs[self.player]} "
+                                                                       f"do not match")
 
     def get_excluded_count(self) -> int:
         """Get the number of unique excluded locations for this player"""

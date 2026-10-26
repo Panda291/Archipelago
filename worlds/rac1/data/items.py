@@ -339,7 +339,7 @@ PACKS: list[ItemData] = [
 ]
 
 PROGRESSIVE_PACKS: list[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_PACK] * 3,
+    RAC1ItemData.PROGRESSIVE_PACK,
 ]
 
 HELMETS: list[ItemData] = [
@@ -375,7 +375,7 @@ NON_PROGRESSIVE_NANOTECHS: list[ItemData] = [
 ]
 
 PROGRESSIVE_NANOTECHS: list[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_NANOTECH] * 2,
+    RAC1ItemData.PROGRESSIVE_NANOTECH,
 ]
 
 GOLD_BOLTS: list[ItemData] = [

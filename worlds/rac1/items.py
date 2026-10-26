@@ -1,17 +1,26 @@
+import logging
 from typing import TYPE_CHECKING
 
-from BaseClasses import Item
+from BaseClasses import Item, ItemClassification
 from worlds.rac1.constants.items import RAC1ITEM
+from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.progressive_orders import RAC1ORDER
 from worlds.rac1.data.items import (ALL_BOOTS, ALL_EXTRA_ITEMS, ALL_HELMETS, ALL_ITEMS, ALL_PACKS, ALL_WEAPONS, GADGETS,
-                                    GOLD_BOLTS, GOLD_WEAPONS, ITEM_POOL, ItemData, NON_PROGRESSIVE_NANOTECHS,
+                                    GOLD_BOLTS, GOLD_WEAPONS, ItemData, NON_PROGRESSIVE_NANOTECHS,
                                     NON_PROGRESSIVE_WEAPONS, PACKS, PLANETS, PROGRESSIVE_NANOTECHS, PROGRESSIVE_PACKS,
                                     PROGRESSIVE_WEAPONS, RAC1ItemData, STARTING_PLANETS)
 from worlds.rac1.options import GoldWeaponProgression, NanotechProgression, PackProgression, RacOptions, ShuffleInfobots
 
 if TYPE_CHECKING:
     from worlds.rac1 import RacWorld
+
+rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
+rac_logger.setLevel(logging.DEBUG)
+
+
+class RacItem(Item):
+    game: str = RAC1OPTION.GAME_TITLE_FULL
 
 
 def progression_rules(world: "RacWorld"):
@@ -155,76 +164,59 @@ def progression_rules(world: "RacWorld"):
     return
 
 
+def create_item(world: "RacWorld", name: str, override: ItemClassification | None = None) -> RacItem:
+    new_name = check_progressive_item(world.options, name)
+    if new_name is not name:
+        rac_logger.warning(f"Item {name} was not initially set to its progressive item: {new_name}")
+    if name == RAC1ITEM.GOLD_BOLT or name == RAC1ITEM.BOLT_PACK_GENERIC:
+        rac_logger.warning(f"{name} should not be in the item pool!!! Please report")
+    if override:
+        return RacItem(new_name, override, world.item_name_to_id[new_name], world.player)
+    item_data = from_name(new_name)
+    return RacItem(new_name, item_data.classification, world.item_name_to_id[new_name], world.player)
+
+
 def get_pool(world: "RacWorld") -> list[Item]:
     _options = world.options
     pool: list[Item] = []
-    for item in ITEM_POOL:
-        if (item in PROGRESSIVE_WEAPONS and _options.progressive_weapons.value <
-                GoldWeaponProgression.option_progressive):
+    for item in ALL_ITEMS:
+        count = 1
+        if (item.pool in world.disabled_pools or
+                item.classification == ItemClassification.filler or
+                item.name in world.preplaced_items):
             continue
+        if item in PROGRESSIVE_WEAPONS:
+            if _options.progressive_weapons.value < GoldWeaponProgression.option_progressive:
+                continue
+            count = 2
         if (item in NON_PROGRESSIVE_WEAPONS and _options.progressive_weapons.value !=
                 GoldWeaponProgression.option_normal):
-            pool += [item]
-        for item in GOLD_WEAPONS:
-            pool += [item]
-        if _options.progressive_packs.value > PackProgression.option_vanilla:
-            for item in PROGRESSIVE_PACKS:
-                pool += [item]
-        else:
-            for item in PACKS:
-                pool += [item]
-        if _options.progressive_nanotech.value > NanotechProgression.option_vanilla:
-            for item in PROGRESSIVE_NANOTECHS:
-                pool += [item]
-        else:
-            for item in NON_PROGRESSIVE_NANOTECHS:
-                pool += [item]
-        lookup: dict[int, tuple[ItemData, int]] = {
-            1: (RAC1ItemData.GOLD_BOLT_1, 40),
-            2: (RAC1ItemData.GOLD_BOLT_2, 30),
-            3: (RAC1ItemData.GOLD_BOLT_3, 20),
-            4: (RAC1ItemData.GOLD_BOLT_4, 15),
-            5: (RAC1ItemData.GOLD_BOLT_5, 12),
-            6: (RAC1ItemData.GOLD_BOLT_6, 10),
-            7: (RAC1ItemData.GOLD_BOLT_7, 9),
-            8: (RAC1ItemData.GOLD_BOLT_8, 8),
-            9: (RAC1ItemData.GOLD_BOLT_9, 7),
-            10: (RAC1ItemData.GOLD_BOLT_10, 6),
-            11: (RAC1ItemData.GOLD_BOLT_11, 5),
-            12: (RAC1ItemData.GOLD_BOLT_12, 5),
-            13: (RAC1ItemData.GOLD_BOLT_13, 5),
-            14: (RAC1ItemData.GOLD_BOLT_14, 4),
-            15: (RAC1ItemData.GOLD_BOLT_15, 4),
-            16: (RAC1ItemData.GOLD_BOLT_16, 4),
-            17: (RAC1ItemData.GOLD_BOLT_17, 4),
-            18: (RAC1ItemData.GOLD_BOLT_18, 4),
-            19: (RAC1ItemData.GOLD_BOLT_19, 4),
-            20: (RAC1ItemData.GOLD_BOLT_20, 3),
-            21: (RAC1ItemData.GOLD_BOLT_21, 3),
-            22: (RAC1ItemData.GOLD_BOLT_22, 3),
-            23: (RAC1ItemData.GOLD_BOLT_23, 3),
-            24: (RAC1ItemData.GOLD_BOLT_24, 3),
-            25: (RAC1ItemData.GOLD_BOLT_25, 3),
-            26: (RAC1ItemData.GOLD_BOLT_26, 3),
-            27: (RAC1ItemData.GOLD_BOLT_27, 3),
-            28: (RAC1ItemData.GOLD_BOLT_28, 3),
-            29: (RAC1ItemData.GOLD_BOLT_29, 3),
-            30: (RAC1ItemData.GOLD_BOLT_30, 2),
-            31: (RAC1ItemData.GOLD_BOLT_31, 2),
-            32: (RAC1ItemData.GOLD_BOLT_32, 2),
-            33: (RAC1ItemData.GOLD_BOLT_33, 2),
-            34: (RAC1ItemData.GOLD_BOLT_34, 2),
-            35: (RAC1ItemData.GOLD_BOLT_35, 2),
-            36: (RAC1ItemData.GOLD_BOLT_36, 2),
-            37: (RAC1ItemData.GOLD_BOLT_37, 2),
-            38: (RAC1ItemData.GOLD_BOLT_38, 2),
-            39: (RAC1ItemData.GOLD_BOLT_39, 2),
-            40: (RAC1ItemData.GOLD_BOLT_40, 1),
-        }
-        for _ in range(lookup[_options.pack_size_gold_bolts.value][1]):
-            pool += [lookup[_options.pack_size_gold_bolts.value][0]]
-        # [world.create_item(item.name) for item in  if
-        #  item.name not in world.preplaced_items]
+            continue
+        if item in GOLD_WEAPONS and _options.progressive_weapons.value != GoldWeaponProgression.option_normal:
+            continue
+        if item in PROGRESSIVE_PACKS:
+            if _options.progressive_packs.value == PackProgression.option_vanilla:
+                continue
+            count = 3
+        if item in PACKS and _options.progressive_packs.value > PackProgression.option_vanilla:
+            continue
+        if item in PROGRESSIVE_NANOTECHS:
+            if _options.progressive_nanotech.value == NanotechProgression.option_vanilla:
+                continue
+            count = 2
+        if (item in NON_PROGRESSIVE_NANOTECHS and _options.progressive_nanotech.value >
+                NanotechProgression.option_vanilla):
+            continue
+        if item in GOLD_BOLTS:
+            if item.quantity != _options.pack_size_gold_bolts.value:
+                continue
+            bolts = 60
+            for _ in range(40):
+                count += 1
+                bolts -= item.quantity
+                if bolts <= 0:
+                    break
+        pool += [world.create_item(item.name) for _ in range(count)]
     return pool
 
 

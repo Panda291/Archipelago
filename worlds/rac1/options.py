@@ -1,4 +1,6 @@
-﻿from dataclasses import dataclass
+﻿"""This module defines Option classes for RAC1"""
+
+from dataclasses import dataclass
 from typing import Any
 
 from Options import Choice, PerGameCommonOptions, Range, TextChoice, Toggle, StartInventoryPool

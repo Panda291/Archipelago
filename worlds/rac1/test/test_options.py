@@ -1,4 +1,6 @@
-from worlds.rac1 import RAC1SLOT
+"""This module defines UnitTests for RAC1 options"""
+
+from worlds.rac1.constants.slotdata import RAC1SLOT
 from worlds.rac1.options import (GoldBoltPackSize, ShuffleBoots, ShuffleExtraItems, ShuffleGadgets, ShuffleGoldBolts,
                                  ShuffleGoldWeapons, ShuffleHelmets, ShuffleInfobots, ShufflePacks, ShuffleSkillPoints,
                                  ShuffleWeapons)

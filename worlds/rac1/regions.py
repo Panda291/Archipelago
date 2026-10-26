@@ -1,4 +1,6 @@
-﻿import typing
+﻿"""This module defines location regions in RAC1"""
+
+import typing
 
 from BaseClasses import Location, Region
 from rule_builder.rules import Has
@@ -8,7 +10,6 @@ from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.data.items import get_gold_bolts
 from worlds.rac1.data.planets import LOGIC_PLANETS, PLANET_NAME_TO_ITEM
-from .constants.locations.general import RAC1LOCATION
 
 if typing.TYPE_CHECKING:
     from . import RacWorld

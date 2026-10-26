@@ -1,4 +1,6 @@
-﻿from typing import NamedTuple, Sequence
+﻿"""This module defines data for planets in RAC1"""
+
+from typing import NamedTuple, Sequence
 
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.general import RAC1LOCATION

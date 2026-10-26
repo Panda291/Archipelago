@@ -1,27 +1,24 @@
-﻿import logging
-from typing import Optional, Mapping, Any
+﻿"""This module defines the world class for the Ratchet and Clank 1 APWorld"""
+import logging
+from typing import Any, Mapping, Optional
 
-from BaseClasses import Item, ItemClassification, LocationProgressType, Location
+from BaseClasses import Item, ItemClassification
 from Fill import FillError
 from Options import OptionError
 from rule_builder.rules import Has
 from worlds.AutoWorld import World
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.general import RAC1LOCATION
-from worlds.rac1.constants.locations.planets import RAC1PLANET
-from worlds.rac1.constants.locations.skillpoints import RAC1SKILLPOINT
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.slotdata import RAC1SLOT
-from worlds.rac1.data.items import (ALL_ITEMS, get_item_groups, check_progressive_item, from_name, get_pool,
-                                    get_bolt_pack, STARTING_WEAPONS, GADGETS, GOLD_WEAPONS, get_starting_planets,
-                                    progression_rules)
-from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST, RAC1LocationData
+from worlds.rac1.data.items import (ALL_ITEMS, check_progressive_item, from_name, GADGETS, get_bolt_pack,
+                                    get_item_groups, get_pool, get_starting_planets, GOLD_WEAPONS, progression_rules,
+                                    STARTING_WEAPONS)
+from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST
 from worlds.rac1.data.planets import ALL_LOCATIONS, location_groups
-from worlds.rac1.logic import veldin_defeat_drek_rule
-from worlds.rac1.options import (RacOptions, ItemOptions, StartingItem, ShuffleWeapons, ShuffleGadgets,
-                                 GoldWeaponProgression, ShuffleGoldWeapons, ShuffleInfobots, StartingLocation,
-                                 get_options_as_dict)
+from worlds.rac1.options import (get_options_as_dict, GoldWeaponProgression, ItemOptions, RacOptions, ShuffleGadgets,
+                                 ShuffleGoldWeapons, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation)
 from worlds.rac1.regions import create_regions
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
@@ -52,6 +49,11 @@ class RacWorld(World):
 
     starting_item = RAC1ITEM.BOMB_GLOVE
     starting_planet = RAC1ITEM.NOVALIS
+    disabled_pools: list[str] = []
+    restricted_pools: list[str] = []
+    useful_pools: list[str] = []
+    enabled_pools: list[str] = []
+    preplaced_items: list[str] = []
 
     def generate_early(self) -> None:
         rac_logger.debug(f"--generate_early--")
@@ -169,7 +171,7 @@ class RacWorld(World):
             self.multiworld.push_precollected(self.create_item(item))
             self.preplaced_items.append(item)
         for planet in starting_planet_list:
-            rac_logger.debug(f"startingplanet: {planet}")
+            rac_logger.debug(f"Starting planet: {planet}")
             self.multiworld.push_precollected(self.create_item(planet))
             self.preplaced_items.append(planet)
 
@@ -195,10 +197,10 @@ class RacWorld(World):
         boss_location.place_locked_item(self.create_event("Victory"))
         self.set_completion_rule(Has("Victory"))
 
-    def fill_pool(self, pools, scope) -> list:
+    def fill_pool(self, pools, scope) -> list[str]:
         # this step should fill in items that have restricted locations, then also return them so they are removed
         # from the pool
-        add_items: list[Item] = []
+        add_items: list[str] = []
         match scope:
             case 0:  # disabled
                 for pool in pools:

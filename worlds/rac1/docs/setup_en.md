@@ -40,7 +40,7 @@ mod to various degrees:
 ## RPCS3 Settings
 
 - Make sure you enable networking:
-    - Configuration -> System -> Network (in the top bar) -> Network Status to 'Connected'
+    - Configuration → System → Network (in the top bar) → Network Status to 'Connected'
 
 ## Installing the Ratchet & Clank Multiplayer Mod
 
@@ -51,7 +51,7 @@ digital versions:**
 - Have NPEA00385/NPUA80643 installed to either your emulator or PS3 .\
   **Note**: A Ratchet & Clank PAL Trilogy (`BCES01503` or `BCUS98282`) disk should also work. See in the section below.
 - Get the latest release of the [mod](https://github.com/bordplate/rac1-multiplayer/releases)
-- **For Emulator:** Go to Files --> Install Packages/Raps/Edats --> select the downloaded mod from the step before. \
+- **For Emulator:** Go to Files → Install Packages/Raps/Edats → select the downloaded mod from the step before. \
   Then you can launch `Ratchet Multiplayer` from the games list.
 - **For PS3:** This requires a modded PS3, I will not be going into the details here. Look up PS3 HEN if you don't know
   where to start
@@ -59,12 +59,12 @@ digital versions:**
 **For the disc versions:**
 To use the trilogy disc version (BCES01503/BCUS98282),you have to perform the following extra steps:
 
-- Mount the disc on your pc, on windows this is as simple as double-clicking the .iso. If you have a blu-ray reader in
+- Mount the disc on your pc, on Windows this is as simple as double-clicking the .iso. If you have a Blu-ray reader in
   your pc, it's automatically mounted when you insert the disc.
 - From the disc contents, copy the entire PS3_GAME folder to`<rpcs3_folder>/dev_hdd0/game/` and rename it to
   `BCES01503`. **Yes this step is for US and PAL copies as well!**
     - If you are not sure if you're doing it right, refer to the attached image.
-    - ![Disc Filesystem](Disc_filesystem.png "Disc Filesystem")
+    - ![Disc Filesystem](disc_filesystem.png "Disc Filesystem")
 - The setup of the multiplayer mod and the randomizer is the same for all versions from this point on.
 
 The game should now appear in RPCS3, it should launch as a standalone game if everything was done correctly.

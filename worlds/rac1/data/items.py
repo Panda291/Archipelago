@@ -1,17 +1,17 @@
-﻿from dataclasses import dataclass
-from typing import Sequence
+﻿"""This module defines data for items in RAC1"""
 
-from BaseClasses import Item, ItemClassification
+from dataclasses import dataclass
+
+from BaseClasses import ItemClassification
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.progressive_orders import RAC1ORDER
-from worlds.rac1.options import (GoldWeaponProgression,
-                                 NanotechProgression, PackProgression, RacOptions,
-                                 ShuffleExtraItems, ShuffleHelmets, ShuffleInfobots)
+from worlds.rac1.options import (GoldWeaponProgression, NanotechProgression, PackProgression, RacOptions,
+                                 ShuffleInfobots)
 
 
 @dataclass
-class ItemData(Item):
+class ItemData:
     item_id: int
     name: str
     pool: str
@@ -284,7 +284,7 @@ class RAC1ItemData:
                                 ItemClassification.filler, 100000)
 
 
-WEAPONS: Sequence[ItemData] = [
+WEAPONS: list[ItemData] = [
     RAC1ItemData.TAUNTER,
     RAC1ItemData.VISIBOMB,
     RAC1ItemData.WALLOPER,
@@ -292,7 +292,7 @@ WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.DRONE_DEVICE,
 ]
 
-NON_PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
+NON_PROGRESSIVE_WEAPONS: list[ItemData] = [
     RAC1ItemData.SUCK_CANNON,
     RAC1ItemData.BOMB_GLOVE,
     RAC1ItemData.DEVASTATOR,
@@ -305,7 +305,7 @@ NON_PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.DECOY_GLOVE,
 ]
 
-PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
+PROGRESSIVE_WEAPONS: list[ItemData] = [
     RAC1ItemData.PROGRESSIVE_SUCK,
     RAC1ItemData.PROGRESSIVE_BOMB,
     RAC1ItemData.PROGRESSIVE_DEVASTATOR,
@@ -318,7 +318,7 @@ PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.PROGRESSIVE_DECOY,
 ]
 
-GOLD_WEAPONS: Sequence[ItemData] = [
+GOLD_WEAPONS: list[ItemData] = [
     RAC1ItemData.GOLD_SUCK_CANNON,
     RAC1ItemData.GOLD_BOMB_GLOVE,
     RAC1ItemData.GOLD_DEVASTATOR,
@@ -331,7 +331,7 @@ GOLD_WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.GOLD_DECOY_GLOVE,
 ]
 
-PROGRESSIVE_GOLD_WEAPONS: Sequence[ItemData] = [
+PROGRESSIVE_GOLD_WEAPONS: list[ItemData] = [
     RAC1ItemData.GOLD_SUCK_CANNON,
     RAC1ItemData.GOLD_BOMB_GLOVE,
     RAC1ItemData.GOLD_DEVASTATOR,
@@ -344,7 +344,7 @@ PROGRESSIVE_GOLD_WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.GOLD_DECOY_GLOVE,
 ]
 
-GADGETS: Sequence[ItemData] = [
+GADGETS: list[ItemData] = [
     RAC1ItemData.HYDRODISPLACER,
     RAC1ItemData.TRESPASSER,
     RAC1ItemData.METAL_DETECTOR,
@@ -353,53 +353,53 @@ GADGETS: Sequence[ItemData] = [
     RAC1ItemData.SWINGSHOT,
 ]
 
-PACKS: Sequence[ItemData] = [
+PACKS: list[ItemData] = [
     RAC1ItemData.HELI_PACK,
     RAC1ItemData.THRUSTER_PACK,
     RAC1ItemData.HYDRO_PACK,
 ]
 
-PROGRESSIVE_PACKS: Sequence[ItemData] = [
+PROGRESSIVE_PACKS: list[ItemData] = [
     *[RAC1ItemData.PROGRESSIVE_PACK] * 3,
 ]
 
-HELMETS: Sequence[ItemData] = [
+HELMETS: list[ItemData] = [
     RAC1ItemData.SONIC_SUMMONER,
     RAC1ItemData.O2_MASK,
     RAC1ItemData.PILOTS_HELMET,
 ]
 
-BOOTS: Sequence[ItemData] = [
+BOOTS: list[ItemData] = [
     RAC1ItemData.MAGNEBOOTS,
     RAC1ItemData.GRINDBOOTS,
 ]
 
-EXTRA_ITEMS: Sequence[ItemData] = [
+EXTRA_ITEMS: list[ItemData] = [
     RAC1ItemData.MAP_O_MATIC,
     RAC1ItemData.BOLT_GRABBER,
     RAC1ItemData.CODEBOT,
 ]
 
-HOVERBOARDS: Sequence[ItemData] = [
+HOVERBOARDS: list[ItemData] = [
     RAC1ItemData.HOVERBOARD,
     RAC1ItemData.ZOOMERATOR,
 ]
 
-TRADES: Sequence[ItemData] = [
+TRADES: list[ItemData] = [
     RAC1ItemData.PERSUADER,
     RAC1ItemData.RARITANIUM,
 ]
 
-NON_PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
+NON_PROGRESSIVE_NANOTECHS: list[ItemData] = [
     RAC1ItemData.PREMIUM_NANOTECH,
     RAC1ItemData.ULTRA_NANOTECH,
 ]
 
-PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
+PROGRESSIVE_NANOTECHS: list[ItemData] = [
     *[RAC1ItemData.PROGRESSIVE_NANOTECH] * 2,
 ]
 
-GOLD_BOLTS: Sequence[ItemData] = [
+GOLD_BOLTS: list[ItemData] = [
     RAC1ItemData.GOLD_BOLT,
     RAC1ItemData.GOLD_BOLT_1,
     RAC1ItemData.GOLD_BOLT_2,
@@ -443,7 +443,7 @@ GOLD_BOLTS: Sequence[ItemData] = [
     RAC1ItemData.GOLD_BOLT_40,
 ]
 
-BOLT_PACKS: Sequence[ItemData] = [
+BOLT_PACKS: list[ItemData] = [
     RAC1ItemData.BOLT_PACK,
     RAC1ItemData.BOLT_PACK_0,
     RAC1ItemData.BOLT_PACK_1,
@@ -474,7 +474,7 @@ BOLT_PACKS: Sequence[ItemData] = [
     RAC1ItemData.BOLT_PACK_100000,
 ]
 
-PLANETS: Sequence[ItemData] = [
+PLANETS: list[ItemData] = [
     RAC1ItemData.NOVALIS,
     RAC1ItemData.ARIDIA,
     RAC1ItemData.KERWAN,
@@ -495,7 +495,7 @@ PLANETS: Sequence[ItemData] = [
     RAC1ItemData.VELDIN,
 ]
 
-STARTING_PLANETS: Sequence[ItemData] = [
+STARTING_PLANETS: list[ItemData] = [
     RAC1ItemData.NOVALIS,
     RAC1ItemData.KERWAN,
     RAC1ItemData.BLARG,
@@ -503,7 +503,7 @@ STARTING_PLANETS: Sequence[ItemData] = [
     RAC1ItemData.ORXON,
 ]
 
-# SKILLPOINTS: Sequence[ItemData] = [
+# SKILLPOINTS: list[ItemData] = [
 #     RAC1ItemData.TAKE_AIM,
 #     RAC1ItemData.SWING_IT,
 #     RAC1ItemData.TRANSPORTED,
@@ -536,44 +536,44 @@ STARTING_PLANETS: Sequence[ItemData] = [
 #     RAC1ItemData.GOING_COMMANDO,
 # ]
 
-ALL_ITEMS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS, *GADGETS,
-                                 *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *BOOTS,
-                                 *EXTRA_ITEMS, *HOVERBOARDS,
-                                 *TRADES, *NON_PROGRESSIVE_NANOTECHS,
-                                 *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS, *PLANETS, *BOLT_PACKS]
+ALL_ITEMS: list[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS, *GADGETS,
+                             *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *BOOTS,
+                             *EXTRA_ITEMS, *HOVERBOARDS,
+                             *TRADES, *NON_PROGRESSIVE_NANOTECHS,
+                             *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS, *PLANETS, *BOLT_PACKS]
 
-ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *GADGETS, *EXTRA_ITEMS, *HELMETS, *BOOTS, *TRADES, *HOVERBOARDS]
+ITEM_POOL: list[ItemData] = [*PLANETS, *WEAPONS, *GADGETS, *EXTRA_ITEMS, *HELMETS, *BOOTS, *TRADES, *HOVERBOARDS]
 
-STARTING_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS]
-ALL_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS]
-ALL_PACKS: Sequence[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
-ALL_HELMETS: Sequence[ItemData] = [*HELMETS]
-ALL_BOOTS: Sequence[ItemData] = [*BOOTS]
-ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *HOVERBOARDS,
-                                       *TRADES, *NON_PROGRESSIVE_NANOTECHS,
-                                       *PROGRESSIVE_NANOTECHS]
-ALL_HOVERBOARD: Sequence[ItemData] = [*HOVERBOARDS]
-ALL_TRADE: Sequence[ItemData] = [*TRADES]
-ALL_NANOTECH: Sequence[ItemData] = [*NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS]
-ALL_STARTING: Sequence[ItemData] = [*STARTING_WEAPONS, *GADGETS]
+STARTING_WEAPONS: list[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS]
+ALL_WEAPONS: list[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS]
+ALL_PACKS: list[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
+ALL_HELMETS: list[ItemData] = [*HELMETS]
+ALL_BOOTS: list[ItemData] = [*BOOTS]
+ALL_EXTRA_ITEMS: list[ItemData] = [*EXTRA_ITEMS, *HOVERBOARDS,
+                                   *TRADES, *NON_PROGRESSIVE_NANOTECHS,
+                                   *PROGRESSIVE_NANOTECHS]
+ALL_HOVERBOARD: list[ItemData] = [*HOVERBOARDS]
+ALL_TRADE: list[ItemData] = [*TRADES]
+ALL_NANOTECH: list[ItemData] = [*NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS]
+ALL_STARTING: list[ItemData] = [*STARTING_WEAPONS, *GADGETS]
 
-SUCK_GROUP: Sequence[ItemData] = [RAC1ItemData.SUCK_CANNON,
-                                  RAC1ItemData.GOLD_SUCK_CANNON, RAC1ItemData.PROGRESSIVE_SUCK]
-BOMB_GROUP: Sequence[ItemData] = [RAC1ItemData.BOMB_GLOVE, RAC1ItemData.GOLD_BOMB_GLOVE, RAC1ItemData.PROGRESSIVE_BOMB]
-DEVASTATOR_GROUP: Sequence[ItemData] = [RAC1ItemData.DEVASTATOR,
-                                        RAC1ItemData.GOLD_DEVASTATOR, RAC1ItemData.PROGRESSIVE_DEVASTATOR]
-BLASTER_GROUP: Sequence[ItemData] = [RAC1ItemData.BLASTER, RAC1ItemData.GOLD_BLASTER, RAC1ItemData.PROGRESSIVE_BLASTER]
-PYROCITOR_GROUP: Sequence[ItemData] = [RAC1ItemData.PYROCITOR,
-                                       RAC1ItemData.GOLD_PYROCITOR, RAC1ItemData.PROGRESSIVE_PYROCITOR]
-MINE_GROUP: Sequence[ItemData] = [RAC1ItemData.MINE_GLOVE, RAC1ItemData.GOLD_MINE_GLOVE, RAC1ItemData.PROGRESSIVE_MINE]
-TESLA_GROUP: Sequence[ItemData] = [RAC1ItemData.TESLA_CLAW,
-                                   RAC1ItemData.GOLD_TESLA_CLAW, RAC1ItemData.PROGRESSIVE_TESLA]
-DOOM_GROUP: Sequence[ItemData] = [RAC1ItemData.GLOVE_OF_DOOM,
-                                  RAC1ItemData.GOLD_GLOVE_OF_DOOM, RAC1ItemData.PROGRESSIVE_DOOM]
-MORPH_GROUP: Sequence[ItemData] = [RAC1ItemData.MORPH_O_RAY,
-                                   RAC1ItemData.GOLD_MORPH_O_RAY, RAC1ItemData.PROGRESSIVE_MORPH]
-DECOY_GROUP: Sequence[ItemData] = [RAC1ItemData.DECOY_GLOVE,
-                                   RAC1ItemData.GOLD_DECOY_GLOVE, RAC1ItemData.PROGRESSIVE_DECOY]
+SUCK_GROUP: list[ItemData] = [RAC1ItemData.SUCK_CANNON,
+                              RAC1ItemData.GOLD_SUCK_CANNON, RAC1ItemData.PROGRESSIVE_SUCK]
+BOMB_GROUP: list[ItemData] = [RAC1ItemData.BOMB_GLOVE, RAC1ItemData.GOLD_BOMB_GLOVE, RAC1ItemData.PROGRESSIVE_BOMB]
+DEVASTATOR_GROUP: list[ItemData] = [RAC1ItemData.DEVASTATOR,
+                                    RAC1ItemData.GOLD_DEVASTATOR, RAC1ItemData.PROGRESSIVE_DEVASTATOR]
+BLASTER_GROUP: list[ItemData] = [RAC1ItemData.BLASTER, RAC1ItemData.GOLD_BLASTER, RAC1ItemData.PROGRESSIVE_BLASTER]
+PYROCITOR_GROUP: list[ItemData] = [RAC1ItemData.PYROCITOR,
+                                   RAC1ItemData.GOLD_PYROCITOR, RAC1ItemData.PROGRESSIVE_PYROCITOR]
+MINE_GROUP: list[ItemData] = [RAC1ItemData.MINE_GLOVE, RAC1ItemData.GOLD_MINE_GLOVE, RAC1ItemData.PROGRESSIVE_MINE]
+TESLA_GROUP: list[ItemData] = [RAC1ItemData.TESLA_CLAW,
+                               RAC1ItemData.GOLD_TESLA_CLAW, RAC1ItemData.PROGRESSIVE_TESLA]
+DOOM_GROUP: list[ItemData] = [RAC1ItemData.GLOVE_OF_DOOM,
+                              RAC1ItemData.GOLD_GLOVE_OF_DOOM, RAC1ItemData.PROGRESSIVE_DOOM]
+MORPH_GROUP: list[ItemData] = [RAC1ItemData.MORPH_O_RAY,
+                               RAC1ItemData.GOLD_MORPH_O_RAY, RAC1ItemData.PROGRESSIVE_MORPH]
+DECOY_GROUP: list[ItemData] = [RAC1ItemData.DECOY_GLOVE,
+                               RAC1ItemData.GOLD_DECOY_GLOVE, RAC1ItemData.PROGRESSIVE_DECOY]
 
 
 def get_bolt_pack(_options) -> str:
@@ -759,7 +759,7 @@ def get_gold_bolts(_options) -> str:
     return lookup[_options.pack_size_gold_bolts.value]
 
 
-def get_pool(_options) -> Sequence[ItemData]:
+def get_pool(_options) -> list[ItemData]:
     pool = []
     for item in ITEM_POOL:
         pool += [item]
@@ -830,8 +830,8 @@ def get_pool(_options) -> Sequence[ItemData]:
     return pool
 
 
-def get_starting_planets(_options) -> Sequence[ItemData]:
-    planets: Sequence[ItemData] = []
+def get_starting_planets(_options) -> list[ItemData]:
+    planets: list[ItemData] = []
     for item in STARTING_PLANETS:
         planets += [item]
     if _options.shuffle_infobots.value >= ShuffleInfobots.option_unrestricted:

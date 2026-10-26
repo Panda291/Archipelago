@@ -1,6 +1,8 @@
-﻿from dataclasses import dataclass, field
-from typing import Callable, Optional, TYPE_CHECKING
+﻿"""This module defines data for locations in RAC1"""
 
+from dataclasses import dataclass
+
+from rule_builder.rules import Has, Rule, True_
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.general import RAC1LOCATION
 from worlds.rac1.constants.locations.goldbolts import RAC1BOLT
@@ -8,10 +10,27 @@ from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.locations.skillpoints import RAC1SKILLPOINT
 from worlds.rac1.constants.locations.vendors import RAC1VENDOR
 from worlds.rac1.constants.pools import RAC1POOL
-from worlds.rac1.logic import *
-
-if TYPE_CHECKING:
-    from worlds.rac1 import RacWorld
+from worlds.rac1.logic import (aridia_cave_rule, aridia_laser_rule, aridia_trespasser_rule, batalia_eat_lead_rule,
+                               blarg_outside_gold_bolt_rule, can_glide, can_heli_high_jump, can_improved_jump,
+                               eudora_henchman_rule, eudora_skillpoint_rule, eudora_suck_cannon_rule,
+                               fleet_careful_cruise_rule, fleet_infobot_rule, fleet_second_bolt_rule, fleet_sneaky_rule,
+                               fleet_water_rule, gaspar_skillpoint_rule, gemlik_bolt_rule, gemlik_quark_rule,
+                               gemlik_sitting_ducks_rule, has_10k_bolts, has_40k_bolts, has_7500_bolts,
+                               has_explosive_weapon, has_grindboots, has_long_range_weapon, has_magneboots,
+                               has_medium_range_weapon, has_morph, has_o2_mask, has_zoomerator, hoven_infobot_rule,
+                               hoven_raritanium_rule, kalebo_hologuise_rule, kalebo_magician_rule,
+                               kerwan_course_gb_rule, kerwan_train_rule, novalis_cave_gb_rule, novalis_gold_weapon_10k,
+                               novalis_gold_weapon_20k, novalis_gold_weapon_30k, novalis_gold_weapon_60k,
+                               novalis_underwater_caves_rule, oltanis_final_bolt_rule, oltanis_main_bolt_rule,
+                               oltanis_shattered_glass, orxon_hey_over_here_rule, orxon_nanotech_rule,
+                               orxon_ratchet_infobot_rule, orxon_sniper_rule, orxon_ultra_nanotech_rule,
+                               orxon_visibomb_bolt_rule, orxon_visibomb_rule, pokitaru_gold_bolt_rule,
+                               pokitaru_persuader_rule, pokitaru_ship_rule, quartu_bolt_grabber_rule,
+                               quartu_codebot_rule, quartu_infiltrate_rule, rilgar_bouncer_rule, rilgar_hoverboard_rule,
+                               rilgar_ryno_rule, rilgar_underwater_bolt_rule, umbris_jump_bolt_rule,
+                               umbris_pressure_bolt_rule, umbris_snagglebeast_rule, veldin_defeat_drek_rule,
+                               veldin_global_rule, veldin_grind_bolt_rule, veldin_halfway_bolt_rule,
+                               veldin_taunter_bolt_rule)
 
 DEFAULT_LIST = list(
     [RAC1POOL.WEAPONS, RAC1POOL.GADGETS, RAC1POOL.PACKS, RAC1POOL.HELMETS, RAC1POOL.BOOTS, RAC1POOL.EXTRA_ITEMS,

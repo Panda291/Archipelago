@@ -1,3 +1,5 @@
+"""This module defines location logic in RAC1"""
+
 import dataclasses
 import logging
 
@@ -128,9 +130,7 @@ class CanBuy(Rule["RacWorld"], game="My Game"):
                 RAC1ItemData.BOLT_PACK_75000,
                 RAC1ItemData.BOLT_PACK_100000
             ]:
-                if state.prog_items[self.player].get(item.item_id) is not None:
-                    total += (state.prog_items[self.player].get(item.item_id)
-                              * item.quantity * self.bolt_pack_size)
+                total += (state.prog_items[self.player].get(item.item_id, 0) * item.quantity * self.bolt_pack_size)
                 for planet, bolts in {
                     RAC1ITEM.NOVALIS: 4800,
                     RAC1ITEM.KERWAN: 2250,

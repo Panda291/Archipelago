@@ -12,11 +12,11 @@ from worlds.rac1.constants.locations.general import RAC1LOCATION
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.slotdata import RAC1SLOT
-from worlds.rac1.data.items import (ALL_ITEMS, check_progressive_item, from_name, GADGETS, get_bolt_pack,
-                                    get_item_groups, get_pool, get_starting_planets, GOLD_WEAPONS, progression_rules,
-                                    STARTING_WEAPONS)
+from worlds.rac1.data.items import ALL_ITEMS, BOLT_SIZE_TO_PACK, GADGETS, GOLD_WEAPONS, STARTING_WEAPONS
 from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST
 from worlds.rac1.data.planets import ALL_LOCATIONS, location_groups
+from worlds.rac1.items import (check_progressive_item, from_name, get_item_groups, get_pool, get_starting_planets,
+                               progression_rules)
 from worlds.rac1.options import (get_options_as_dict, GoldWeaponProgression, ItemOptions, RacOptions, ShuffleGadgets,
                                  ShuffleGoldWeapons, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation)
 from worlds.rac1.regions import create_regions
@@ -280,7 +280,8 @@ class RacWorld(World):
             self.handle_not_enough_locations(excluded_count - filler_count)
 
         if filler_count >= 0:
-            filler = [self.create_item(get_bolt_pack(self.options)) for _ in range(filler_count)]
+            filler = [self.create_item(BOLT_SIZE_TO_PACK[self.options.pack_size_bolts.value]) for _ in
+                      range(filler_count)]
             self.multiworld.itempool.extend(filler)
         elif self.multiworld.players == 1:
             self.handle_not_enough_locations(-filler_count)

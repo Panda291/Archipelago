@@ -8,7 +8,7 @@ from worlds.generic.Rules import forbid_item
 from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
-from worlds.rac1.data.items import get_gold_bolts
+from worlds.rac1.data.items import GOLD_BOLT_SIZE_TO_PACK
 from worlds.rac1.data.planets import LOGIC_PLANETS, PLANET_NAME_TO_ITEM
 
 if typing.TYPE_CHECKING:
@@ -44,4 +44,5 @@ def create_regions(world: 'RacWorld'):
                 location = world.multiworld.get_location(location_data.name, world.player)
                 world.set_rule(location, location_data.access_rule)
                 if RAC1POOL.GOLD_WEAPONS in location_data.pools:
-                    forbid_item(location, get_gold_bolts(world.options), world.player)
+                    forbid_item(location, GOLD_BOLT_SIZE_TO_PACK[world.options.pack_size_gold_bolts.value],
+                                world.player)

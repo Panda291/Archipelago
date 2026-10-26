@@ -276,6 +276,9 @@ umbris_snagglebeast_rule = can_glide & HasAll(RAC1ITEM.SWINGSHOT, RAC1ITEM.HYDRO
 umbris_pressure_bolt_rule = can_glide & Has(RAC1ITEM.SWINGSHOT)
 umbris_jump_bolt_rule = can_glide & HasAll(RAC1ITEM.SWINGSHOT, RAC1ITEM.HYDRODISPLACER)
 
+# Batalia
+batalia_eat_lead_rule = HasAll(RAC1ITEM.SONIC_SUMMONER, RAC1ITEM.MAGNEBOOTS)
+
 # Gaspar
 gaspar_skillpoint_rule = Has(RAC1ITEM.VISIBOMB) | (has_medium_range_weapon & Has(RAC1ITEM.SWINGSHOT))
 
@@ -285,7 +288,7 @@ orxon_ultra_nanotech_rule = orxon_nanotech_rule & has_30k_bolts
 orxon_visibomb_rule = has_o2_mask & has_15k_bolts
 orxon_ratchet_infobot_rule = has_o2_mask & can_glide & has_magneboots & Has(RAC1ITEM.SWINGSHOT)
 orxon_visibomb_bolt_rule = orxon_ratchet_infobot_rule & Has(RAC1ITEM.VISIBOMB)
-orxon_sniper_rule = has_o2_mask & can_glide & has_medium_range_weapon
+orxon_sniper_rule = has_o2_mask & can_glide & (Has(RAC1ITEM.VISIBOMB) | HasProgressive(RAC1ITEM.DEVASTATOR) | HasProgressive(RAC1ITEM.BLASTER))
 orxon_hey_over_here_rule = has_o2_mask & can_glide & has_magneboots & Has(RAC1ITEM.TAUNTER)
 
 # Pokitaru

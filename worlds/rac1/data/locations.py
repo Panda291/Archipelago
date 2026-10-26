@@ -232,7 +232,7 @@ class RAC1LocationData:
         {RAC1POOL.SKILLPOINT},
         has_magneboots)
     BATALIA_EAT_LEAD = LocationData(
-        118, RAC1PLANET.BATALIA, RAC1SKILLPOINT.BATALIA_EAT_LEAD, None, {RAC1POOL.SKILLPOINT}, has_sonic)
+        118, RAC1PLANET.BATALIA, RAC1SKILLPOINT.BATALIA_EAT_LEAD, None, {RAC1POOL.SKILLPOINT}, batalia_eat_lead_rule)
 
     # Gaspar
     GASPAR_VENDOR_WALLOPER = LocationData(
@@ -359,7 +359,7 @@ class RAC1LocationData:
         {RAC1POOL.SKILLPOINT}, oltanis_shattered_glass)
     OLTANIS_BLAST_EM = LocationData(
         129, RAC1PLANET.OLTANIS, RAC1SKILLPOINT.OLTANIS_BLAST_EM, None,
-        {RAC1POOL.SKILLPOINT}, has_long_range_weapon)
+        {RAC1POOL.SKILLPOINT}, Has(RAC1ITEM.VISIBOMB))
 
     # Quartu
     QUARTU_GIANT_CLANK_INFOBOT = LocationData(

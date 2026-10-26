@@ -206,6 +206,7 @@ class RAC1PlanetData:
         RAC1LocationData.VELDIN_GOING_COMMANDO,
     ])
 
+
 PLANET_NAME_TO_ITEM: dict[str, str] = {
     RAC1PLANET.VELDIN: RAC1ITEM.VELDIN,
     RAC1PLANET.NOVALIS: RAC1ITEM.NOVALIS,
@@ -274,13 +275,17 @@ location_groups: dict[str, set[str]] = {
     RAC1PLANET.QUARTU: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.QUARTU),
     RAC1PLANET.KALEBO: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.KALEBO),
     RAC1PLANET.FLEET: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.FLEET),
-    RAC1PLANET.VELDIN: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.VELDIN and loc.name != RAC1LOCATION.VELDIN_DREK),
-    RAC1POOL.WEAPONS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.WEAPONS}.issubset(loc.pools) and len(loc.pools)),
+    RAC1PLANET.VELDIN: set(loc.name for loc in ALL_LOCATIONS if
+                           loc.planet in RAC1PlanetData.VELDIN and loc.name != RAC1LOCATION.VELDIN_DREK),
+    RAC1POOL.WEAPONS: set(
+        loc.name for loc in ALL_LOCATIONS if {RAC1POOL.WEAPONS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.GOLD_WEAPONS: set(
         loc.name for loc in ALL_LOCATIONS if {RAC1POOL.GOLD_WEAPONS}.issubset(loc.pools) and len(loc.pools)),
-    RAC1POOL.GADGETS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.GADGETS}.issubset(loc.pools) and len(loc.pools)),
+    RAC1POOL.GADGETS: set(
+        loc.name for loc in ALL_LOCATIONS if {RAC1POOL.GADGETS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.PACKS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.PACKS}.issubset(loc.pools) and len(loc.pools)),
-    RAC1POOL.HELMETS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.HELMETS}.issubset(loc.pools) and len(loc.pools)),
+    RAC1POOL.HELMETS: set(
+        loc.name for loc in ALL_LOCATIONS if {RAC1POOL.HELMETS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.BOOTS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.BOOTS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.EXTRA_ITEMS: set(
         loc.name for loc in ALL_LOCATIONS if {RAC1POOL.EXTRA_ITEMS}.issubset(loc.pools) and len(loc.pools)),

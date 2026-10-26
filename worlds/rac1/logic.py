@@ -15,6 +15,7 @@ from worlds.rac1.options import VendorOptions, GoldBoltPackSize, PackProgression
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
 rac_logger.setLevel(logging.DEBUG)
 
+
 # @dataclasses.dataclass()
 # class HasProgressive(Rule["RacWorld"], game="My Game"):
 #     item: str
@@ -44,6 +45,8 @@ class HasProgressive(Rule["RacWorld"], game="My Game"):
     def _instantiate(self, world: "RacWorld") -> Rule.Resolved:
         items = world.progressive_convert.get(self.item, {})
         return (HasAnyCount(items)).resolve(world)
+
+
 @dataclasses.dataclass()
 class CanBuy(Rule["RacWorld"], game="My Game"):
     cost: int
@@ -96,7 +99,6 @@ class CanBuy(Rule["RacWorld"], game="My Game"):
                 else:
                     last = price
 
-
             total = 0
             for item in [
                 RAC1ItemData.BOLT_PACK_1,
@@ -145,6 +147,7 @@ class CanBuy(Rule["RacWorld"], game="My Game"):
                     total += state.has(planet, self.player) * bolts * self.bolt_pack_size
             return total >= lookup[rounded_cost]
 
+
 can_improved_jump = HasProgressive(RAC1ITEM.HELI_PACK) | HasProgressive(RAC1ITEM.THRUSTER_PACK)
 can_heli_high_jump = HasProgressive(RAC1ITEM.HELI_PACK)
 can_glide = HasProgressive(RAC1ITEM.HELI_PACK)
@@ -166,46 +169,51 @@ has_explosive_weapon = (HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) |
                         HasProgressive(RAC1ITEM.DEVASTATOR))
 has_long_range_weapon = Has(RAC1ITEM.VISIBOMB) | HasProgressive(RAC1ITEM.DEVASTATOR)
 has_medium_range_weapon = (HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) |
-                        HasProgressive(RAC1ITEM.DEVASTATOR) |
-                        HasProgressive(RAC1ITEM.BLASTER))
+                           HasProgressive(RAC1ITEM.DEVASTATOR) |
+                           HasProgressive(RAC1ITEM.BLASTER))
 has_short_range_weapon = (HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) |
-                        HasProgressive(RAC1ITEM.PYROCITOR) |
-                        HasProgressive(RAC1ITEM.BLASTER) |
-                        HasProgressive(RAC1ITEM.SUCK_CANNON) |
-                        HasProgressive(RAC1ITEM.DEVASTATOR) |
-                        HasProgressive(RAC1ITEM.TESLA_CLAW))
+                          HasProgressive(RAC1ITEM.PYROCITOR) |
+                          HasProgressive(RAC1ITEM.BLASTER) |
+                          HasProgressive(RAC1ITEM.SUCK_CANNON) |
+                          HasProgressive(RAC1ITEM.DEVASTATOR) |
+                          HasProgressive(RAC1ITEM.TESLA_CLAW))
 
 early_metal_spots = HasAny(RAC1ITEM.NOVALIS,
-        RAC1ITEM.KERWAN,
-        RAC1ITEM.ARIDIA,
-        RAC1ITEM.EUDORA,
-        RAC1ITEM.BATALIA,
-        RAC1ITEM.POKITARU,
-        RAC1ITEM.HOVEN,
-        RAC1ITEM.QUARTU)
+                           RAC1ITEM.KERWAN,
+                           RAC1ITEM.ARIDIA,
+                           RAC1ITEM.EUDORA,
+                           RAC1ITEM.BATALIA,
+                           RAC1ITEM.POKITARU,
+                           RAC1ITEM.HOVEN,
+                           RAC1ITEM.QUARTU)
 rilgar_metal_spots = can_improved_jump & Has(RAC1ITEM.RILGAR)
 blarg_metal_spots = Has(RAC1ITEM.BLARG) & (Has(RAC1ITEM.SWINGSHOT) | has_o2_mask & Has(RAC1ITEM.TRESPASSER))
 umbris_metal_spots = can_glide & Has(RAC1ITEM.SWINGSHOT) & Has(RAC1ITEM.UMBRIS)
 gaspar_metal_spots = Has(RAC1ITEM.GASPAR) & (can_improved_jump | Has(RAC1ITEM.SWINGSHOT))
 orxon_metal_spots = has_o2_mask & Has(RAC1ITEM.ORXON)
-gemlik_metal_spots = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT, RAC1ITEM.TRESPASSER) & Has(RAC1ITEM.GEMLIK)
+gemlik_metal_spots = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT,
+                                                                                         RAC1ITEM.TRESPASSER) & Has(
+    RAC1ITEM.GEMLIK)
 oltanis_metal_spots = Has(RAC1ITEM.OLTANIS) & (has_magneboots | Has(RAC1ITEM.SWINGSHOT))
-kalebo_metal_spots = (has_medium_range_weapon | HasProgressive(RAC1ITEM.BOMB_GLOVE) | HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO)) & Has(RAC1ITEM.KALEBO) & (can_improved_jump | Has(RAC1ITEM.SWINGSHOT))
+kalebo_metal_spots = (has_medium_range_weapon | HasProgressive(RAC1ITEM.BOMB_GLOVE) | HasAny(RAC1ITEM.VISIBOMB,
+                                                                                             RAC1ITEM.RYNO)) & Has(
+    RAC1ITEM.KALEBO) & (can_improved_jump | Has(RAC1ITEM.SWINGSHOT))
 fleet_metal_spots = Has(RAC1ITEM.FLEET) & ((has_o2_mask & has_hydro_pack) | Has(RAC1ITEM.HOLOGUISE))
-veldin_metal_spots = (has_magneboots & can_ground_pound & HasAll(RAC1ITEM.TRESPASSER, RAC1ITEM.HYDRODISPLACER)) & Has(RAC1ITEM.VELDIN) & Has(RAC1ITEM.SWINGSHOT)
+veldin_metal_spots = (has_magneboots & can_ground_pound & HasAll(RAC1ITEM.TRESPASSER, RAC1ITEM.HYDRODISPLACER)) & Has(
+    RAC1ITEM.VELDIN) & Has(RAC1ITEM.SWINGSHOT)
 can_farm_bolts = (Has(RAC1ITEM.METAL_DETECTOR) &
-                     (early_metal_spots
-                    | blarg_metal_spots
-                    | rilgar_metal_spots
-                    | umbris_metal_spots
-                    | gaspar_metal_spots
-                    | orxon_metal_spots
-                    | gemlik_metal_spots
-                    | oltanis_metal_spots
-                    | kalebo_metal_spots
-                    | fleet_metal_spots
-                    | veldin_metal_spots)
-                 )
+                  (early_metal_spots
+                   | blarg_metal_spots
+                   | rilgar_metal_spots
+                   | umbris_metal_spots
+                   | gaspar_metal_spots
+                   | orxon_metal_spots
+                   | gemlik_metal_spots
+                   | oltanis_metal_spots
+                   | kalebo_metal_spots
+                   | fleet_metal_spots
+                   | veldin_metal_spots)
+                  )
 
 has_7500_bolts = CanBuy(7500)
 has_10k_bolts = CanBuy(10000)
@@ -308,7 +316,8 @@ orxon_ultra_nanotech_rule = orxon_nanotech_rule & has_30k_bolts
 orxon_visibomb_rule = has_o2_mask & has_15k_bolts
 orxon_ratchet_infobot_rule = has_o2_mask & can_glide & has_magneboots & Has(RAC1ITEM.SWINGSHOT)
 orxon_visibomb_bolt_rule = orxon_ratchet_infobot_rule & Has(RAC1ITEM.VISIBOMB)
-orxon_sniper_rule = has_o2_mask & can_glide & (Has(RAC1ITEM.VISIBOMB) | HasProgressive(RAC1ITEM.DEVASTATOR) | HasProgressive(RAC1ITEM.BLASTER))
+orxon_sniper_rule = has_o2_mask & can_glide & (
+            Has(RAC1ITEM.VISIBOMB) | HasProgressive(RAC1ITEM.DEVASTATOR) | HasProgressive(RAC1ITEM.BLASTER))
 orxon_hey_over_here_rule = has_o2_mask & can_glide & has_magneboots & Has(RAC1ITEM.TAUNTER)
 
 # Pokitaru
@@ -321,10 +330,11 @@ hoven_infobot_rule = has_short_range_weapon & can_improved_jump
 hoven_raritanium_rule = can_improved_jump & Has(RAC1ITEM.SWINGSHOT)
 
 # Gemlik
-gemlik_quark_rule = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT, RAC1ITEM.TRESPASSER)
+gemlik_quark_rule = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT,
+                                                                                        RAC1ITEM.TRESPASSER)
 gemlik_bolt_rule = can_improved_jump & HasAll(RAC1ITEM.VISIBOMB, RAC1ITEM.TRESPASSER)
 gemlik_sitting_ducks_rule = gemlik_quark_rule & Has(RAC1ITEM.VISIBOMB)
-#gemlik_gold_weapon_rule = gemlik_quark_rule & has_40_gold_bolts & has_bolts
+# gemlik_gold_weapon_rule = gemlik_quark_rule & has_40_gold_bolts & has_bolts
 
 # Oltanis
 oltanis_main_bolt_rule = has_grindboots & Has(RAC1ITEM.SWINGSHOT)
@@ -337,7 +347,8 @@ quartu_codebot_rule = HasAll(RAC1ITEM.CODEBOT, RAC1ITEM.SWINGSHOT)
 quartu_bolt_grabber_rule = has_o2_mask & has_hydro_pack
 
 # Kalebo III
-kalebo_switch_rule = has_medium_range_weapon | HasProgressive(RAC1ITEM.BOMB_GLOVE) | HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO)
+kalebo_switch_rule = has_medium_range_weapon | HasProgressive(RAC1ITEM.BOMB_GLOVE) | HasAny(RAC1ITEM.VISIBOMB,
+                                                                                            RAC1ITEM.RYNO)
 kalebo_hologuise_rule = has_hoverboard & has_grindboots & kalebo_switch_rule & Has(RAC1ITEM.SWINGSHOT)
 kalebo_magician_rule = kalebo_hologuise_rule & Has(RAC1ITEM.ZOOMERATOR)
 

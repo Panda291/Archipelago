@@ -13,20 +13,24 @@ from worlds.rac1.constants.locations.skillpoints import RAC1SKILLPOINT
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.slotdata import RAC1SLOT
-from worlds.rac1.data.items import ALL_ITEMS, get_item_groups, check_progressive_item, from_name, get_pool, \
-    get_bolt_pack, STARTING_WEAPONS, GADGETS, GOLD_WEAPONS, get_starting_planets, progression_rules
+from worlds.rac1.data.items import (ALL_ITEMS, get_item_groups, check_progressive_item, from_name, get_pool,
+                                    get_bolt_pack, STARTING_WEAPONS, GADGETS, GOLD_WEAPONS, get_starting_planets,
+                                    progression_rules)
 from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST, RAC1LocationData
 from worlds.rac1.data.planets import ALL_LOCATIONS, location_groups
 from worlds.rac1.logic import veldin_defeat_drek_rule
-from worlds.rac1.options import RacOptions, ItemOptions, StartingItem, ShuffleWeapons, ShuffleGadgets, \
-    GoldWeaponProgression, ShuffleGoldWeapons, ShuffleInfobots, StartingLocation, get_options_as_dict
+from worlds.rac1.options import (RacOptions, ItemOptions, StartingItem, ShuffleWeapons, ShuffleGadgets,
+                                 GoldWeaponProgression, ShuffleGoldWeapons, ShuffleInfobots, StartingLocation,
+                                 get_options_as_dict)
 from worlds.rac1.regions import create_regions
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
 rac_logger.setLevel(logging.DEBUG)
 
+
 class RacItem(Item):
     game: str = RAC1OPTION.GAME_TITLE_FULL
+
 
 class RacWorld(World):
     """
@@ -107,7 +111,7 @@ class RacWorld(World):
         rac_logger.debug(f"--end generate_early--")
 
     def process_options(self):
-        match self.options.shuffle_gold_bolts.value :
+        match self.options.shuffle_gold_bolts.value:
             case 1:
                 self.enabled_pools += [RAC1POOL.GOLD_BOLTS]
             case 0:
@@ -120,7 +124,8 @@ class RacWorld(World):
                 self.disabled_pools += [RAC1POOL.SKILLPOINT]
 
         if self.options.shuffle_infobots.value == 0:
-            self.options.starting_location.value = 0 # if all planets in vanilla locations, we can never start anywhere other than novalis
+            self.options.starting_location.value = 0  # if all planets in vanilla locations, we can never start
+            # anywhere other than novalis
 
         rac_logger.debug(f"options: {self.options}")
 
@@ -137,14 +142,14 @@ class RacWorld(World):
             if (self.options.progressive_weapons.value is GoldWeaponProgression.option_normal and
                     self.options.shuffle_gold_weapons.value is not ShuffleGoldWeapons.option_vanilla):
                 starting_item += [item.name for item in GOLD_WEAPONS]
-            starting_item = [item for item in starting_item if item not in [RAC1ITEM.DRONE_DEVICE]] # only items that can be held in hand
+            starting_item = [item for item in starting_item if
+                             item not in [RAC1ITEM.DRONE_DEVICE]]  # only items that can be held in hand
 
         self.random.shuffle(starting_item)
         self.starting_item = starting_item[0]
         if self.starting_item in self.progressive_convert.keys():
             if self.progressive_convert[self.starting_item] is not {}:
                 self.starting_item = list(self.progressive_convert[self.starting_item].keys())[0]
-
 
         if (self.options.shuffle_infobots == ShuffleInfobots.option_vanilla
                 or self.options.starting_location == StartingLocation.option_false):
@@ -153,7 +158,6 @@ class RacWorld(World):
             starting_planet = [planet.name for planet in get_starting_planets(self.options)]
         self.random.shuffle(starting_planet)
         self.starting_planet = starting_planet[0]
-
 
         # maybe also handle disabled pools here?
 
@@ -191,12 +195,12 @@ class RacWorld(World):
         boss_location.place_locked_item(self.create_event("Victory"))
         self.set_completion_rule(Has("Victory"))
 
-
     def fill_pool(self, pools, scope) -> list:
-        # this step should fill in items that have restricted locations, then also return them so they are removed from the pool
+        # this step should fill in items that have restricted locations, then also return them so they are removed
+        # from the pool
         add_items: list[Item] = []
         match scope:
-            case 0: # disabled
+            case 0:  # disabled
                 for pool in pools:
                     rac_logger.debug(f"Disable Pool: {pool}")
                     # if pool == RAC1POOL.SKILLPOINT:
@@ -211,11 +215,11 @@ class RacWorld(World):
                             self.get_location(loc.name).place_locked_item(self.create_item(vanilla_item.name))
                             add_items += [vanilla_item.name]
                             rac_logger.debug(f"vanilla: {loc.name}, item: {vanilla_item.name}")
-            case 1: # restricted
+            case 1:  # restricted
                 rac_logger.debug(f"Restricted Pools: {pools}")
                 if pools:
                     raise OptionError(f"Options for 'random_same' are currently disabled")
-            case 2: # useful
+            case 2:  # useful
                 rac_logger.debug(f"Useful Pools: {pools}")
                 if pools:
                     raise OptionError(f"Options for 'random_item' are currently disabled")
@@ -241,11 +245,13 @@ class RacWorld(World):
     def create_items(self) -> None:
         # After this step all locations and items need to be added/removed
         rac_logger.debug(f"_________START ITEM CREATION__________")
-        itempool: list[Item] = [self.create_item(item.name) for item in get_pool(self.options) if item.name not in self.preplaced_items]
+        itempool: list[Item] = [self.create_item(item.name) for item in get_pool(self.options) if
+                                item.name not in self.preplaced_items]
         own_location_count = len(self.multiworld.get_unfilled_locations(self.player))
         total_location_count = len(self.multiworld.get_unfilled_locations())
         existing_item_count = len(self.multiworld.itempool)
-        placement_location_count = total_location_count - existing_item_count if self.multiworld.players > 1 else own_location_count
+        placement_location_count = total_location_count - existing_item_count if self.multiworld.players > 1 else (
+            own_location_count)
         excluded_count = self.get_excluded_count()
         already_placed = len(self.preplaced_items)
         item_count = len(itempool)

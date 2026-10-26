@@ -608,6 +608,7 @@ def get_bolt_pack(_options) -> str:
     }
     return lookup[_options.pack_size_bolts.value]
 
+
 def progression_rules(world):
     world.orders = {
         RAC1ORDER.SUCK_CANNON: [RAC1ItemData.SUCK_CANNON.item_id, RAC1ItemData.GOLD_SUCK_CANNON.item_id],
@@ -747,6 +748,7 @@ def progression_rules(world):
         case _:
             pass
     return
+
 
 def get_gold_bolts(_options) -> str:
     lookup: dict[int, str] = {}

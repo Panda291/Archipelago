@@ -4,10 +4,12 @@ import logging
 from typing_extensions import override
 
 from BaseClasses import CollectionState
+from Options import OptionError
 from rule_builder.options import OptionFilter
 from rule_builder.rules import Rule, Has, True_, HasAny, HasAll, HasAllCounts, False_, Or, HasAnyCount
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.options import RAC1OPTION
+from worlds.rac1.data.items import RAC1ItemData
 from worlds.rac1.options import VendorOptions, GoldBoltPackSize, PackProgression, GoldWeaponProgression
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
@@ -42,6 +44,106 @@ class HasProgressive(Rule["RacWorld"], game="My Game"):
     def _instantiate(self, world: "RacWorld") -> Rule.Resolved:
         items = world.progressive_convert.get(self.item, {})
         return (HasAnyCount(items)).resolve(world)
+@dataclasses.dataclass()
+class CanBuy(Rule["RacWorld"], game="My Game"):
+    cost: int
+
+    @override
+    def _instantiate(self, world: "RacWorld") -> Rule.Resolved:
+        match world.options.vendor_logic.value:
+            case VendorOptions.option_no_bolt_logic:
+                return True_().resolve(world)
+            case VendorOptions.option_only_metal_detector:
+                return can_farm_bolts.resolve(world)
+            case VendorOptions.option_all_bolts:
+                return self.Resolved(cost=self.cost, bolt_pack_size=world.options.pack_size_bolts.value,
+                                     can_farm_bolts=can_farm_bolts.resolve(world), player=world.player)
+            case _:
+                raise OptionError
+
+    class Resolved(Rule.Resolved):
+        cost: int
+        bolt_pack_size: int
+        can_farm_bolts: Rule.Resolved
+
+        @override
+        def _evaluate(self, state: CollectionState) -> bool:
+            if self.can_farm_bolts(state):
+                return True
+
+            lookup: dict[int, int] = {
+                500: 500,
+                1000: 1500,
+                2000: 5500,
+                2500: 16000,
+                4000: 25000,
+                7500: 36500,
+                10000: 75000,
+                15000: 130000,
+                20000: 150000,
+                30000: 220000,
+                40000: 290000,
+                60000: 350000,
+                150000: 560000,
+            }
+
+            last = 500
+            rounded_cost = 150000
+            for price in lookup.keys():
+                if price > self.cost:
+                    rounded_cost = last
+                    break
+                else:
+                    last = price
+
+
+            total = 0
+            for item in [
+                RAC1ItemData.BOLT_PACK_1,
+                RAC1ItemData.BOLT_PACK_10,
+                RAC1ItemData.BOLT_PACK_100,
+                RAC1ItemData.BOLT_PACK_250,
+                RAC1ItemData.BOLT_PACK_500,
+                RAC1ItemData.BOLT_PACK_750,
+                RAC1ItemData.BOLT_PACK_1000,
+                RAC1ItemData.BOLT_PACK_2000,
+                RAC1ItemData.BOLT_PACK_3000,
+                RAC1ItemData.BOLT_PACK_4000,
+                RAC1ItemData.BOLT_PACK_5000,
+                RAC1ItemData.BOLT_PACK_6000,
+                RAC1ItemData.BOLT_PACK_7000,
+                RAC1ItemData.BOLT_PACK_8000,
+                RAC1ItemData.BOLT_PACK_9000,
+                RAC1ItemData.BOLT_PACK_10000,
+                RAC1ItemData.BOLT_PACK_12500,
+                RAC1ItemData.BOLT_PACK_15000,
+                RAC1ItemData.BOLT_PACK_17500,
+                RAC1ItemData.BOLT_PACK_20000,
+                RAC1ItemData.BOLT_PACK_25000,
+                RAC1ItemData.BOLT_PACK_30000,
+                RAC1ItemData.BOLT_PACK_40000,
+                RAC1ItemData.BOLT_PACK_50000,
+                RAC1ItemData.BOLT_PACK_75000,
+                RAC1ItemData.BOLT_PACK_100000
+            ]:
+                if state.prog_items[self.player].get(item.item_id) is not None:
+                    total += (state.prog_items[self.player].get(item.item_id)
+                              * item.quantity * self.bolt_pack_size)
+                for planet, bolts in {
+                    RAC1ITEM.NOVALIS: 4800,
+                    RAC1ITEM.KERWAN: 2250,
+                    RAC1ITEM.EUDORA: 4500,
+                    RAC1ITEM.BLARG: 2250,
+                    RAC1ITEM.RILGAR: 325,
+                    RAC1ITEM.BATALIA: 3000,
+                    RAC1ITEM.GASPAR: 7850,
+                    RAC1ITEM.ORXON: 4750,
+                    RAC1ITEM.POKITARU: 2430,
+                    RAC1ITEM.HOVEN: 2600,
+                    RAC1ITEM.OLTANIS: 4150,
+                }.items():
+                    total += state.has(planet, self.player) * bolts * self.bolt_pack_size
+            return total >= lookup[rounded_cost]
 
 can_improved_jump = HasProgressive(RAC1ITEM.HELI_PACK) | HasProgressive(RAC1ITEM.THRUSTER_PACK)
 can_heli_high_jump = HasProgressive(RAC1ITEM.HELI_PACK)
@@ -105,96 +207,14 @@ can_farm_bolts = (Has(RAC1ITEM.METAL_DETECTOR) &
                     | veldin_metal_spots)
                  )
 
-can_buy = (True_(options=[OptionFilter(VendorOptions, VendorOptions.option_no_bolt_logic)])
-         | Has(RAC1ITEM.METAL_DETECTOR, options=[OptionFilter(VendorOptions, VendorOptions.option_all_bolts)]) # | has_bolts
-         | Has(RAC1ITEM.METAL_DETECTOR))
-
-has_7500_bolts = can_farm_bolts # | has_bolts...
-has_10k_bolts = can_farm_bolts # | has_bolts...
-has_15k_bolts = can_farm_bolts # | has_bolts...
-has_20k_bolts = can_farm_bolts # | has_bolts...
-has_30k_bolts = can_farm_bolts # | has_bolts...
-has_40k_bolts = can_farm_bolts # | has_bolts...
-has_60k_bolts = can_farm_bolts # | has_bolts...
-has_150k_bolts = can_farm_bolts # | has_bolts...
-
-# def has_bolts(state: CollectionState, world: 'RacWorld', count: int) -> bool:
-#     # 500,
-#     # 1000 * 3,
-#     # 2000 * 5,
-#     # 2500 * 3,
-#     # 4000 * 2,
-#     # 7500 * 5,
-#     # 10000 * 5,
-#     # 15000,
-#     # 20000 * 3
-#     # 30000 * 2,
-#     # 40000,
-#     # 60000 * 2,
-#     # 150000
-#     lookup: dict[int, int] = {
-#         500: 500,
-#         1000: 1500,
-#         2000: 5500,
-#         2500: 16000,
-#         4000: 25000,
-#         7500: 36500,
-#         10000: 75000,
-#         15000: 130000,
-#         20000: 150000,
-#         30000: 220000,
-#         40000: 290000,
-#         60000: 350000,
-#         150000: 560000,
-#     }
-#
-#     total = 0
-#     for item in [
-#         RAC1ItemData.BOLT_PACK_1,
-#         RAC1ItemData.BOLT_PACK_10,
-#         RAC1ItemData.BOLT_PACK_100,
-#         RAC1ItemData.BOLT_PACK_250,
-#         RAC1ItemData.BOLT_PACK_500,
-#         RAC1ItemData.BOLT_PACK_750,
-#         RAC1ItemData.BOLT_PACK_1000,
-#         RAC1ItemData.BOLT_PACK_2000,
-#         RAC1ItemData.BOLT_PACK_3000,
-#         RAC1ItemData.BOLT_PACK_4000,
-#         RAC1ItemData.BOLT_PACK_5000,
-#         RAC1ItemData.BOLT_PACK_6000,
-#         RAC1ItemData.BOLT_PACK_7000,
-#         RAC1ItemData.BOLT_PACK_8000,
-#         RAC1ItemData.BOLT_PACK_9000,
-#         RAC1ItemData.BOLT_PACK_10000,
-#         RAC1ItemData.BOLT_PACK_12500,
-#         RAC1ItemData.BOLT_PACK_15000,
-#         RAC1ItemData.BOLT_PACK_17500,
-#         RAC1ItemData.BOLT_PACK_20000,
-#         RAC1ItemData.BOLT_PACK_25000,
-#         RAC1ItemData.BOLT_PACK_30000,
-#         RAC1ItemData.BOLT_PACK_40000,
-#         RAC1ItemData.BOLT_PACK_50000,
-#         RAC1ItemData.BOLT_PACK_75000,
-#         RAC1ItemData.BOLT_PACK_100000
-#     ]:
-#         if state.prog_items[world.player].get(item.item_id) is not None:
-#             total += (state.prog_items[world.player].get(item.item_id)
-#                       * item.quantity * world.options.pack_size_bolts.value)
-#         for planet, bolts in {
-#             RAC1ITEM.NOVALIS: 4800,
-#             RAC1ITEM.KERWAN: 2250,
-#             RAC1ITEM.EUDORA: 4500,
-#             RAC1ITEM.BLARG: 2250,
-#             RAC1ITEM.RILGAR: 325,
-#             RAC1ITEM.BATALIA: 3000,
-#             RAC1ITEM.GASPAR: 7850,
-#             RAC1ITEM.ORXON: 4750,
-#             RAC1ITEM.POKITARU: 2430,
-#             RAC1ITEM.HOVEN: 2600,
-#             RAC1ITEM.OLTANIS: 4150,
-#         }.items():
-#             total += state.has(planet, world.player) * bolts * world.options.pack_size_bolts.value
-#     return total >= lookup[count]
+has_7500_bolts = CanBuy(7500)
+has_10k_bolts = CanBuy(10000)
+has_15k_bolts = CanBuy(15000)
+has_20k_bolts = CanBuy(20000)
+has_30k_bolts = CanBuy(30000)
+has_40k_bolts = CanBuy(40000)
+has_60k_bolts = CanBuy(60000)
+has_150k_bolts = CanBuy(150000)
 
 has_40_gold_bolts = (Has(RAC1ITEM.GOLD_BOLT_1, count=40, options=[OptionFilter(GoldBoltPackSize, 1)]) |
                      Has(RAC1ITEM.GOLD_BOLT_2, count=20, options=[OptionFilter(GoldBoltPackSize, 2)]) |

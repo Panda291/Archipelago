@@ -17,11 +17,21 @@ class ItemData:
     pool: str
     classification: ItemClassification
     quantity: int = 1
+    max_capacity: int = 1
 
-
-@dataclass
-class CollectableData(ItemData):
-    max_capacity: int = 0x7F
+    def __init__(self,
+                 item_id: int,
+                 name: str,
+                 pool: str = RAC1POOL.FILLER,
+                 classification: ItemClassification = ItemClassification.filler,
+                 quantity: int = 1,
+                 max_capacity: int = 1):
+        self.item_id = item_id
+        self.name = name
+        self.pool = pool
+        self.classification = classification
+        self.quantity = quantity
+        self.max_capacity = max_capacity
 
 
 class RAC1ItemData:
@@ -80,11 +90,11 @@ class RAC1ItemData:
     PROGRESSIVE_PACK = ItemData(80, RAC1ITEM.PROGRESSIVE_PACK, RAC1POOL.PACKS, ItemClassification.progression)
     PROGRESSIVE_SUCK = ItemData(82, RAC1ITEM.PROGRESSIVE_SUCK, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_BOMB = ItemData(83, RAC1ITEM.PROGRESSIVE_BOMB, RAC1POOL.WEAPONS, ItemClassification.progression)
-    PROGRESSIVE_DEVASTATOR = ItemData(84, RAC1ITEM.PROGRESSIVE_DEVASTATOR,
-                                      RAC1POOL.WEAPONS, ItemClassification.progression)
+    PROGRESSIVE_DEVASTATOR = ItemData(84, RAC1ITEM.PROGRESSIVE_DEVASTATOR, RAC1POOL.WEAPONS,
+                                      ItemClassification.progression)
     PROGRESSIVE_BLASTER = ItemData(85, RAC1ITEM.PROGRESSIVE_BLASTER, RAC1POOL.WEAPONS, ItemClassification.progression)
-    PROGRESSIVE_PYROCITOR = ItemData(86, RAC1ITEM.PROGRESSIVE_PYROCITOR,
-                                     RAC1POOL.WEAPONS, ItemClassification.progression)
+    PROGRESSIVE_PYROCITOR = ItemData(86, RAC1ITEM.PROGRESSIVE_PYROCITOR, RAC1POOL.WEAPONS,
+                                     ItemClassification.progression)
     PROGRESSIVE_MINE = ItemData(87, RAC1ITEM.PROGRESSIVE_MINE, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_TESLA = ItemData(88, RAC1ITEM.PROGRESSIVE_TESLA, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_DOOM = ItemData(89, RAC1ITEM.PROGRESSIVE_DOOM, RAC1POOL.WEAPONS, ItemClassification.useful)
@@ -226,62 +236,34 @@ class RAC1ItemData:
     GOLD_BOLT_40 = ItemData(301, RAC1ITEM.GOLD_BOLT_40, RAC1POOL.GOLD_BOLTS,
                             ItemClassification.progression_deprioritized_skip_balancing, 40)
 
-    BOLT_PACK = ItemData(302, RAC1ITEM.BOLT_PACK_GENERIC, RAC1POOL.FILLER,
-                         ItemClassification.filler)
-    BOLT_PACK_0 = ItemData(400, RAC1ITEM.BOLT_PACK_0, RAC1POOL.FILLER,
-                           ItemClassification.filler, 0)
-    BOLT_PACK_1 = ItemData(401, RAC1ITEM.BOLT_PACK_1, RAC1POOL.FILLER,
-                           ItemClassification.filler)
-    BOLT_PACK_10 = ItemData(402, RAC1ITEM.BOLT_PACK_10, RAC1POOL.FILLER,
-                            ItemClassification.filler, 10)
-    BOLT_PACK_100 = ItemData(403, RAC1ITEM.BOLT_PACK_100, RAC1POOL.FILLER,
-                             ItemClassification.filler, 100)
-    BOLT_PACK_250 = ItemData(404, RAC1ITEM.BOLT_PACK_250, RAC1POOL.FILLER,
-                             ItemClassification.filler, 250)
-    BOLT_PACK_500 = ItemData(405, RAC1ITEM.BOLT_PACK_500, RAC1POOL.FILLER,
-                             ItemClassification.filler, 500)
-    BOLT_PACK_750 = ItemData(406, RAC1ITEM.BOLT_PACK_750, RAC1POOL.FILLER,
-                             ItemClassification.filler, 750)
-    BOLT_PACK_1000 = ItemData(407, RAC1ITEM.BOLT_PACK_1000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 1000)
-    BOLT_PACK_2000 = ItemData(408, RAC1ITEM.BOLT_PACK_2000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 2000)
-    BOLT_PACK_3000 = ItemData(409, RAC1ITEM.BOLT_PACK_3000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 3000)
-    BOLT_PACK_4000 = ItemData(410, RAC1ITEM.BOLT_PACK_4000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 4000)
-    BOLT_PACK_5000 = ItemData(411, RAC1ITEM.BOLT_PACK_5000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 5000)
-    BOLT_PACK_6000 = ItemData(412, RAC1ITEM.BOLT_PACK_6000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 6000)
-    BOLT_PACK_7000 = ItemData(413, RAC1ITEM.BOLT_PACK_7000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 7000)
-    BOLT_PACK_8000 = ItemData(414, RAC1ITEM.BOLT_PACK_8000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 8000)
-    BOLT_PACK_9000 = ItemData(415, RAC1ITEM.BOLT_PACK_9000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 9000)
-    BOLT_PACK_10000 = ItemData(416, RAC1ITEM.BOLT_PACK_10000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 10000)
-    BOLT_PACK_12500 = ItemData(417, RAC1ITEM.BOLT_PACK_12500, RAC1POOL.FILLER,
-                               ItemClassification.filler, 12500)
-    BOLT_PACK_15000 = ItemData(418, RAC1ITEM.BOLT_PACK_15000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 15000)
-    BOLT_PACK_17500 = ItemData(419, RAC1ITEM.BOLT_PACK_17500, RAC1POOL.FILLER,
-                               ItemClassification.filler, 17500)
-    BOLT_PACK_20000 = ItemData(420, RAC1ITEM.BOLT_PACK_20000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 20000)
-    BOLT_PACK_25000 = ItemData(421, RAC1ITEM.BOLT_PACK_25000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 25000)
-    BOLT_PACK_30000 = ItemData(422, RAC1ITEM.BOLT_PACK_30000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 30000)
-    BOLT_PACK_40000 = ItemData(423, RAC1ITEM.BOLT_PACK_40000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 40000)
-    BOLT_PACK_50000 = ItemData(424, RAC1ITEM.BOLT_PACK_50000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 50000)
-    BOLT_PACK_75000 = ItemData(425, RAC1ITEM.BOLT_PACK_75000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 75000)
-    BOLT_PACK_100000 = ItemData(426, RAC1ITEM.BOLT_PACK_100000, RAC1POOL.FILLER,
-                                ItemClassification.filler, 100000)
+    BOLT_PACK = ItemData(302, RAC1ITEM.BOLT_PACK_GENERIC)
+    BOLT_PACK_0 = ItemData(400, RAC1ITEM.BOLT_PACK_0, quantity=0)
+    BOLT_PACK_1 = ItemData(401, RAC1ITEM.BOLT_PACK_1)
+    BOLT_PACK_10 = ItemData(402, RAC1ITEM.BOLT_PACK_10, quantity=10)
+    BOLT_PACK_100 = ItemData(403, RAC1ITEM.BOLT_PACK_100, quantity=100)
+    BOLT_PACK_250 = ItemData(404, RAC1ITEM.BOLT_PACK_250, quantity=250)
+    BOLT_PACK_500 = ItemData(405, RAC1ITEM.BOLT_PACK_500, quantity=500)
+    BOLT_PACK_750 = ItemData(406, RAC1ITEM.BOLT_PACK_750, quantity=750)
+    BOLT_PACK_1000 = ItemData(407, RAC1ITEM.BOLT_PACK_1000, quantity=1000)
+    BOLT_PACK_2000 = ItemData(408, RAC1ITEM.BOLT_PACK_2000, quantity=2000)
+    BOLT_PACK_3000 = ItemData(409, RAC1ITEM.BOLT_PACK_3000, quantity=3000)
+    BOLT_PACK_4000 = ItemData(410, RAC1ITEM.BOLT_PACK_4000, quantity=4000)
+    BOLT_PACK_5000 = ItemData(411, RAC1ITEM.BOLT_PACK_5000, quantity=5000)
+    BOLT_PACK_6000 = ItemData(412, RAC1ITEM.BOLT_PACK_6000, quantity=6000)
+    BOLT_PACK_7000 = ItemData(413, RAC1ITEM.BOLT_PACK_7000, quantity=7000)
+    BOLT_PACK_8000 = ItemData(414, RAC1ITEM.BOLT_PACK_8000, quantity=8000)
+    BOLT_PACK_9000 = ItemData(415, RAC1ITEM.BOLT_PACK_9000, quantity=9000)
+    BOLT_PACK_10000 = ItemData(416, RAC1ITEM.BOLT_PACK_10000, quantity=10000)
+    BOLT_PACK_12500 = ItemData(417, RAC1ITEM.BOLT_PACK_12500, quantity=12500)
+    BOLT_PACK_15000 = ItemData(418, RAC1ITEM.BOLT_PACK_15000, quantity=15000)
+    BOLT_PACK_17500 = ItemData(419, RAC1ITEM.BOLT_PACK_17500, quantity=17500)
+    BOLT_PACK_20000 = ItemData(420, RAC1ITEM.BOLT_PACK_20000, quantity=20000)
+    BOLT_PACK_25000 = ItemData(421, RAC1ITEM.BOLT_PACK_25000, quantity=25000)
+    BOLT_PACK_30000 = ItemData(422, RAC1ITEM.BOLT_PACK_30000, quantity=30000)
+    BOLT_PACK_40000 = ItemData(423, RAC1ITEM.BOLT_PACK_40000, quantity=40000)
+    BOLT_PACK_50000 = ItemData(424, RAC1ITEM.BOLT_PACK_50000, quantity=50000)
+    BOLT_PACK_75000 = ItemData(425, RAC1ITEM.BOLT_PACK_75000, quantity=75000)
+    BOLT_PACK_100000 = ItemData(426, RAC1ITEM.BOLT_PACK_100000, quantity=100000)
 
 
 WEAPONS: list[ItemData] = [

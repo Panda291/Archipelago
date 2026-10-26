@@ -44,13 +44,34 @@ ALL_POOLS = list(
 # noinspection PyCompatibility
 @dataclass
 class LocationData:
-    location_id: Optional[int]
+    location_id: int | None
     planet: str
     name: str
-    vanilla_item: Optional[str]
-    pools: set[str] = frozenset()
-    """All of these must be enabled for this spot to be randomized"""
-    access_rule: Rule = field(default_factory=True_)
+    vanilla_item: str | None
+    pools: set[str]
+    access_rule: Rule
+
+    def __init__(self,
+                 location_id: int | None = None,
+                 planet: str = "Unknown Planet",
+                 name: str = "Generic Location",
+                 vanilla_item: str | None = RAC1ITEM.BOLT_PACK_GENERIC,
+                 pools: set[str] | None = None,
+                 access_rule: Rule | None = None):
+        """
+        :param location_id:
+        :param planet:
+        :param name:
+        :param vanilla_item:
+        :param pools:
+        :param access_rule: All these must be enabled for this spot to be randomized
+        """
+        self.location_id = location_id
+        self.planet = planet
+        self.name = name
+        self.vanilla_item = vanilla_item
+        self.pools = pools if pools else set()
+        self.access_rule = access_rule if access_rule is not None else True_()
 
 
 class RAC1LocationData:
@@ -455,5 +476,5 @@ class RAC1LocationData:
     VELDIN_GOING_COMMANDO = LocationData(
         134, RAC1PLANET.VELDIN, RAC1SKILLPOINT.VELDIN_GOING_COMMANDO, None, {RAC1POOL.SKILLPOINT},
         veldin_global_rule)
-    VELDIN_DREK = LocationData(None, RAC1PLANET.VELDIN, RAC1LOCATION.VELDIN_DREK, None,
+    VELDIN_DREK = LocationData(planet=RAC1PLANET.VELDIN, name=RAC1LOCATION.VELDIN_DREK,
                                access_rule=veldin_defeat_drek_rule)

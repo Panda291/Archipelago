@@ -227,12 +227,12 @@ class RacWorld(World):
                     raise OptionError(f"Options for 'random_item' are currently disabled")
         return add_items
 
-    def create_item(self, item: str, override: Optional[ItemClassification] = None) -> RacItem:
-        new_name = check_progressive_item(self.options, item)
-        if new_name is not item:
-            rac_logger.warning(f"Item {item} was not initially set to its progressive item: {new_name}")
-        if item == RAC1ITEM.GOLD_BOLT or item == RAC1ITEM.BOLT_PACK_GENERIC:
-            rac_logger.warning(f"{item} should not be in the item pool!!! Please report")
+    def create_item(self, name: str, override: Optional[ItemClassification] = None) -> RacItem:
+        new_name = check_progressive_item(self.options, name)
+        if new_name is not name:
+            rac_logger.warning(f"Item {name} was not initially set to its progressive item: {new_name}")
+        if name == RAC1ITEM.GOLD_BOLT or name == RAC1ITEM.BOLT_PACK_GENERIC:
+            rac_logger.warning(f"{name} should not be in the item pool!!! Please report")
         if override:
             return RacItem(new_name, override, self.item_name_to_id[new_name], self.player)
         item_data = from_name(new_name)

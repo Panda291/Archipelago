@@ -27,6 +27,7 @@ rac_logger.setLevel(logging.DEBUG)
 
 class RacItem(Item):
     game: str = RAC1OPTION.GAME_TITLE_FULL
+from worlds.rac1.universal_tracker import setup_options_from_slot_data
 
 
 class RacWorld(World):
@@ -67,6 +68,9 @@ class RacWorld(World):
         self.preplaced_items = []
 
         self.process_options()
+
+        # implement .yaml-less Universal Tracker support
+        setup_options_from_slot_data(self)
 
         progression_rules(self)
         create_regions(self)
@@ -341,4 +345,10 @@ class RacWorld(World):
         slot_data |= get_options_as_dict(self.options)
         slot_data |= self.orders
         slot_data[RAC1SLOT.STARTING_PLANET] = self.item_name_to_id[self.starting_planet]
+        return slot_data
+
+    # For Universal Tracker integration
+    @staticmethod
+    def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
+        """Trigger a regen in UT"""
         return slot_data

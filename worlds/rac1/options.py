@@ -350,6 +350,7 @@ class RacOptions(PerGameCommonOptions):
 def get_options_as_dict(options: RacOptions) -> dict[str, Any]:
     return {
         # RAC1SLOT.DEATHLINK,
+        RAC1SLOT.START_INVENTORY_FROM_POOL: options.start_inventory_from_pool.value,
         RAC1SLOT.STARTING_ITEM: options.starting_item.value,
         RAC1SLOT.STARTING_LOCATION: options.starting_location.value,
         RAC1SLOT.SHUFFLE_WEAPONS: options.shuffle_weapons.value,

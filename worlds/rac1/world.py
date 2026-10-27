@@ -1,5 +1,6 @@
 ﻿"""This module defines the world class for the Ratchet and Clank 1 APWorld"""
 import logging
+from enum import Enum
 from typing import Any, Counter, Mapping, Optional
 
 from BaseClasses import Item, ItemClassification
@@ -11,13 +12,14 @@ from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
 from worlds.rac1.constants.slotdata import RAC1SLOT
-from worlds.rac1.data.items import ALL_ITEMS, GADGETS, GOLD_WEAPONS, STARTING_WEAPONS
+from worlds.rac1.data.items import ALL_ITEMS, BOLT_SIZE_TO_PACK, GADGETS, GOLD_WEAPONS, STARTING_WEAPONS
 from worlds.rac1.data.locations import ALL_POOLS, DEFAULT_LIST
 from worlds.rac1.data.planets import ALL_LOCATIONS, location_groups
 from worlds.rac1.items import (check_progressive_item, create_item, from_name, get_item_groups, get_pool,
                                get_starting_planets, progression_rules)
 from worlds.rac1.options import (get_options_as_dict, GoldWeaponProgression, ItemOptions, RacOptions, ShuffleGadgets,
-                                 ShuffleGoldWeapons, ShuffleInfobots, ShuffleWeapons, StartingItem, StartingLocation)
+                                 ShuffleGoldBolts, ShuffleGoldWeapons, ShuffleInfobots, ShuffleSkillPoints,
+                                 ShuffleWeapons, StartingItem, StartingLocation)
 from worlds.rac1.regions import create_regions
 from worlds.rac1.universal_tracker import setup_options_from_slot_data
 
@@ -53,6 +55,12 @@ class RacWorld(World):
 
     progressive_convert: dict[str, dict[str, int]] = {}
 
+    class Scope(Enum):
+        Disabled = 0
+        Restricted = 1
+        Useful = 2
+        Enabled = 3
+
     def generate_early(self) -> None:
         rac_logger.debug(f"--generate_early--")
         rac_logger.debug(f"--start decide item pools--")
@@ -70,7 +78,7 @@ class RacWorld(World):
         setup_options_from_slot_data(self)
 
         progression_rules(self)
-        create_regions(self)
+        self.generate_starting_items()
 
         shuffle_pools: list = [
             self.options.shuffle_infobots,
@@ -89,9 +97,11 @@ class RacWorld(World):
                 case ItemOptions.option_vanilla:
                     self.disabled_pools += [pool.pool]
                 case ItemOptions.option_random_same:
-                    self.restricted_pools += [pool.pool]
+                    # self.restricted_pools += [pool.pool]
+                    self.enabled_pools += [pool.pool]  # temporary force full random
                 case ItemOptions.option_random_item:
-                    self.useful_pools += [pool.pool]
+                    # self.useful_pools += [pool.pool]
+                    self.enabled_pools += [pool.pool]  # temporary force full random
                 case ItemOptions.option_unrestricted:
                     self.enabled_pools += [pool.pool]
 
@@ -107,28 +117,25 @@ class RacWorld(World):
         rac_logger.debug(f"Useful Pools: {self.useful_pools}")
         rac_logger.debug(f"Enabled Pools: {self.enabled_pools}")
 
-        starting_items, starting_planets = self.generate_starting_items()
-        self.place_starting_items(starting_planets, starting_items)
-
         rac_logger.debug(f"--end decide item pools--")
         rac_logger.debug(f"--end generate_early--")
 
     def process_options(self):
         match self.options.shuffle_gold_bolts.value:
-            case 1:
+            case ShuffleGoldBolts.option_true:
                 self.enabled_pools += [RAC1POOL.GOLD_BOLTS]
-            case 0:
+            case ShuffleGoldBolts.option_false:
                 self.disabled_pools += [RAC1POOL.GOLD_BOLTS]
                 self.options.pack_size_gold_bolts.value = 1
         match self.options.shuffle_skill_points.value:
-            case 1:
+            case ShuffleSkillPoints.option_true:
                 self.enabled_pools += [RAC1POOL.SKILLPOINT]
-            case 0:
+            case ShuffleSkillPoints.option_false:
                 self.disabled_pools += [RAC1POOL.SKILLPOINT]
 
-        if self.options.shuffle_infobots.value == 0:
-            self.options.starting_location.value = 0  # if all planets in vanilla locations, we can never start
-            # anywhere other than novalis
+        if self.options.shuffle_infobots.value == ShuffleInfobots.option_vanilla:
+            self.options.starting_location.value = StartingLocation.option_false
+            # if all planets in vanilla locations, we can never start anywhere other than novalis
 
         rac_logger.debug(f"options: {self.options}")
 
@@ -164,42 +171,42 @@ class RacWorld(World):
 
         # maybe also handle disabled pools here?
 
-        return [self.starting_item], [self.starting_planet]
+    def create_regions(self):
+        create_regions(self)
+        self.place_starting_items()
 
-    def place_starting_items(self, starting_planet_list: list[str], starting_item_list: list[str]):
+    def place_starting_items(self):
         """Take the list of starting planets and starting weapons and place them on locations or as precollected"""
-        for item in starting_item_list:
-            self.multiworld.push_precollected(self.create_item(item))
-            self.preplaced_items.append(item)
-        for planet in starting_planet_list:
-            rac_logger.debug(f"Starting planet: {planet}")
-            self.multiworld.push_precollected(self.create_item(planet))
-            self.preplaced_items.append(planet)
+        self.multiworld.push_precollected(self.create_item(self.starting_item))
+        self.preplaced_items.append(self.starting_item)
+        rac_logger.debug(f"Starting planet: {self.starting_planet}")
+        self.multiworld.push_precollected(self.create_item(self.starting_planet))
+        self.preplaced_items.append(self.starting_planet)
 
-        for name, count in self.options.start_inventory.items():
-            item = from_name(name)
-            if item.classification != ItemClassification.filler:
-                self.preplaced_items += item.name
-
-            for _ in range(count):
-                self.multiworld.push_precollected(self.create_item(item.name))
+        # for name, count in self.options.start_inventory.items():
+        #     item = from_name(name)
+        #     if item.classification != ItemClassification.filler:
+        #         self.preplaced_items += item.name
+        #
+        #     for _ in range(count):
+        #         self.multiworld.push_precollected(self.create_item(item.name))
 
         disabled_pools = self.disabled_pools
         restricted_pools = self.restricted_pools
         useful_pools = self.useful_pools
         rac_logger.debug(f"Disabled Shuffled Pools___")
-        self.preplaced_items += self.fill_pool(disabled_pools, 0)
+        self.preplaced_items += self.fill_pool(disabled_pools, self.Scope.Disabled)
         rac_logger.debug(f"___Internal Shuffled Pools___")
-        self.preplaced_items += self.fill_pool(restricted_pools, 1)
+        self.preplaced_items += self.fill_pool(restricted_pools, self.Scope.Restricted)
         rac_logger.debug(f"___Group Shuffled Pools___")
-        self.preplaced_items += self.fill_pool(useful_pools, 2)
+        self.preplaced_items += self.fill_pool(useful_pools, self.Scope.Useful)
 
     def fill_pool(self, pools: list[str], scope: Scope) -> list[str]:
         # this step should fill in items that have restricted locations, then also return them so they are removed
         # from the pool
         add_items: list[str] = []
         match scope:
-            case 0:  # disabled
+            case self.Scope.Disabled:
                 for pool in pools:
                     rac_logger.debug(f"Disable Pool: {pool}")
                     # if pool == RAC1POOL.SKILLPOINT:
@@ -214,11 +221,11 @@ class RacWorld(World):
                             self.get_location(loc.name).place_locked_item(self.create_item(vanilla_item.name))
                             add_items += [vanilla_item.name]
                             rac_logger.debug(f"vanilla: {loc.name}, item: {vanilla_item.name}")
-            case 1:  # restricted
+            case self.Scope.Restricted:
                 rac_logger.debug(f"Restricted Pools: {pools}")
                 if pools:
                     raise OptionError(f"Options for 'random_same' are currently disabled")
-            case 2:  # useful
+            case self.Scope.Useful:
                 rac_logger.debug(f"Useful Pools: {pools}")
                 if pools:
                     raise OptionError(f"Options for 'random_item' are currently disabled")
@@ -260,6 +267,9 @@ class RacWorld(World):
         assert player_items[self.player] == player_locs[self.player], (f"Player item count {player_items[self.player]} "
                                                                        f"and location count {player_locs[self.player]} "
                                                                        f"do not match")
+
+    def get_filler_item_name(self) -> str:
+        return BOLT_SIZE_TO_PACK[self.options.pack_size_bolts.value]
 
     def get_excluded_count(self) -> int:
         """Get the number of unique excluded locations for this player"""

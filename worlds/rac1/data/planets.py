@@ -1,16 +1,18 @@
-﻿from typing import NamedTuple, Sequence
+﻿"""This module defines data for planets in RAC1"""
+
+from typing import NamedTuple
 
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.general import RAC1LOCATION
-from worlds.rac1.data.locations import LocationData, RAC1LocationData
 from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.pools import RAC1POOL
+from worlds.rac1.data.locations import LocationData, RAC1LocationData
 
 
 class PlanetData(NamedTuple):
     name: str
     number: int
-    locations: Sequence[LocationData] = []
+    locations: list[LocationData] = []
 
 
 class RAC1PlanetData:
@@ -206,6 +208,7 @@ class RAC1PlanetData:
         RAC1LocationData.VELDIN_GOING_COMMANDO,
     ])
 
+
 PLANET_NAME_TO_ITEM: dict[str, str] = {
     RAC1PLANET.VELDIN: RAC1ITEM.VELDIN,
     RAC1PLANET.NOVALIS: RAC1ITEM.NOVALIS,
@@ -227,7 +230,7 @@ PLANET_NAME_TO_ITEM: dict[str, str] = {
     RAC1PLANET.FLEET: RAC1ITEM.FLEET,
 }
 
-LOGIC_PLANETS: Sequence[PlanetData] = [
+LOGIC_PLANETS: list[PlanetData] = [
     RAC1PlanetData.GENERAL,
     RAC1PlanetData.NOVALIS,
     RAC1PlanetData.ARIDIA,
@@ -249,7 +252,7 @@ LOGIC_PLANETS: Sequence[PlanetData] = [
     RAC1PlanetData.VELDIN,
 ]
 
-ALL_LOCATIONS: Sequence[LocationData] = [
+ALL_LOCATIONS: list[LocationData] = [
     location
     for locations in [planet.locations for planet in LOGIC_PLANETS]
     for location in locations
@@ -274,13 +277,17 @@ location_groups: dict[str, set[str]] = {
     RAC1PLANET.QUARTU: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.QUARTU),
     RAC1PLANET.KALEBO: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.KALEBO),
     RAC1PLANET.FLEET: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.FLEET),
-    RAC1PLANET.VELDIN: set(loc.name for loc in ALL_LOCATIONS if loc.planet in RAC1PlanetData.VELDIN and loc.name != RAC1LOCATION.VELDIN_DREK),
-    RAC1POOL.WEAPONS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.WEAPONS}.issubset(loc.pools) and len(loc.pools)),
+    RAC1PLANET.VELDIN: set(loc.name for loc in ALL_LOCATIONS if
+                           loc.planet in RAC1PlanetData.VELDIN and loc.name != RAC1LOCATION.VELDIN_DREK),
+    RAC1POOL.WEAPONS: set(
+        loc.name for loc in ALL_LOCATIONS if {RAC1POOL.WEAPONS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.GOLD_WEAPONS: set(
         loc.name for loc in ALL_LOCATIONS if {RAC1POOL.GOLD_WEAPONS}.issubset(loc.pools) and len(loc.pools)),
-    RAC1POOL.GADGETS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.GADGETS}.issubset(loc.pools) and len(loc.pools)),
+    RAC1POOL.GADGETS: set(
+        loc.name for loc in ALL_LOCATIONS if {RAC1POOL.GADGETS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.PACKS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.PACKS}.issubset(loc.pools) and len(loc.pools)),
-    RAC1POOL.HELMETS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.HELMETS}.issubset(loc.pools) and len(loc.pools)),
+    RAC1POOL.HELMETS: set(
+        loc.name for loc in ALL_LOCATIONS if {RAC1POOL.HELMETS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.BOOTS: set(loc.name for loc in ALL_LOCATIONS if {RAC1POOL.BOOTS}.issubset(loc.pools) and len(loc.pools)),
     RAC1POOL.EXTRA_ITEMS: set(
         loc.name for loc in ALL_LOCATIONS if {RAC1POOL.EXTRA_ITEMS}.issubset(loc.pools) and len(loc.pools)),

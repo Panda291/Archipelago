@@ -1,17 +1,19 @@
-﻿import typing
+﻿"""This module defines location regions in RAC1"""
+
+import typing
 
 from BaseClasses import Location, Region
 from rule_builder.rules import Has
 from worlds.generic.Rules import forbid_item
+from worlds.rac1.constants.locations.general import RAC1LOCATION
 from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
-from worlds.rac1.data.items import get_gold_bolts
+from worlds.rac1.data.items import GOLD_BOLT_SIZE_TO_PACK
 from worlds.rac1.data.planets import LOGIC_PLANETS, PLANET_NAME_TO_ITEM
-from .constants.locations.general import RAC1LOCATION
 
 if typing.TYPE_CHECKING:
-    from . import RacWorld
+    from worlds.rac1.world import RacWorld
 
 
 class RacLocation(Location):
@@ -39,8 +41,12 @@ def create_regions(world: 'RacWorld'):
             for location_data in planet_data.locations:
                 if world.options.shuffle_skill_points == 0 and RAC1POOL.SKILLPOINT in location_data.pools:
                     continue
+                if location_data.name == RAC1LOCATION.VELDIN_DREK:
+                    region.add_event(location_data.name, "Victory", location_data.access_rule)
+                    continue
                 region.add_locations({location_data.name: location_data.location_id}, RacLocation)
                 location = world.multiworld.get_location(location_data.name, world.player)
                 world.set_rule(location, location_data.access_rule)
                 if RAC1POOL.GOLD_WEAPONS in location_data.pools:
-                    forbid_item(location, get_gold_bolts(world.options), world.player)
+                    forbid_item(location, GOLD_BOLT_SIZE_TO_PACK[world.options.pack_size_gold_bolts.value],
+                                world.player)

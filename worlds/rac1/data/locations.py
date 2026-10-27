@@ -1,6 +1,8 @@
-﻿from dataclasses import dataclass, field
-from typing import Callable, Optional, TYPE_CHECKING
+﻿"""This module defines data for locations in RAC1"""
 
+from dataclasses import dataclass
+
+from rule_builder.rules import Has, Rule, True_
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.general import RAC1LOCATION
 from worlds.rac1.constants.locations.goldbolts import RAC1BOLT
@@ -8,10 +10,27 @@ from worlds.rac1.constants.locations.planets import RAC1PLANET
 from worlds.rac1.constants.locations.skillpoints import RAC1SKILLPOINT
 from worlds.rac1.constants.locations.vendors import RAC1VENDOR
 from worlds.rac1.constants.pools import RAC1POOL
-from worlds.rac1.logic import *
-
-if TYPE_CHECKING:
-    from worlds.rac1 import RacWorld
+from worlds.rac1.logic import (aridia_cave_rule, aridia_laser_rule, aridia_trespasser_rule, batalia_eat_lead_rule,
+                               blarg_outside_gold_bolt_rule, can_glide, can_heli_high_jump, can_improved_jump,
+                               eudora_henchman_rule, eudora_skillpoint_rule, eudora_suck_cannon_rule,
+                               fleet_careful_cruise_rule, fleet_infobot_rule, fleet_second_bolt_rule, fleet_sneaky_rule,
+                               fleet_water_rule, gaspar_skillpoint_rule, gemlik_bolt_rule, gemlik_quark_rule,
+                               gemlik_sitting_ducks_rule, has_10k_bolts, has_40k_bolts, has_7500_bolts,
+                               has_explosive_weapon, has_grindboots, has_long_range_weapon, has_magneboots,
+                               has_medium_range_weapon, has_morph, has_o2_mask, has_zoomerator, hoven_infobot_rule,
+                               hoven_raritanium_rule, kalebo_hologuise_rule, kalebo_magician_rule,
+                               kerwan_course_gb_rule, kerwan_train_rule, novalis_cave_gb_rule, novalis_gold_weapon_10k,
+                               novalis_gold_weapon_20k, novalis_gold_weapon_30k, novalis_gold_weapon_60k,
+                               novalis_underwater_caves_rule, oltanis_final_bolt_rule, oltanis_main_bolt_rule,
+                               oltanis_shattered_glass, orxon_hey_over_here_rule, orxon_nanotech_rule,
+                               orxon_ratchet_infobot_rule, orxon_sniper_rule, orxon_ultra_nanotech_rule,
+                               orxon_visibomb_bolt_rule, orxon_visibomb_rule, pokitaru_gold_bolt_rule,
+                               pokitaru_persuader_rule, pokitaru_ship_rule, quartu_bolt_grabber_rule,
+                               quartu_codebot_rule, quartu_infiltrate_rule, rilgar_bouncer_rule, rilgar_hoverboard_rule,
+                               rilgar_ryno_rule, rilgar_underwater_bolt_rule, umbris_jump_bolt_rule,
+                               umbris_pressure_bolt_rule, umbris_snagglebeast_rule, veldin_defeat_drek_rule,
+                               veldin_global_rule, veldin_grind_bolt_rule, veldin_halfway_bolt_rule,
+                               veldin_taunter_bolt_rule)
 
 DEFAULT_LIST = list(
     [RAC1POOL.WEAPONS, RAC1POOL.GADGETS, RAC1POOL.PACKS, RAC1POOL.HELMETS, RAC1POOL.BOOTS, RAC1POOL.EXTRA_ITEMS,
@@ -25,13 +44,34 @@ ALL_POOLS = list(
 # noinspection PyCompatibility
 @dataclass
 class LocationData:
-    location_id: Optional[int]
+    location_id: int | None
     planet: str
     name: str
-    vanilla_item: Optional[str]
-    pools: set[str] = frozenset()
-    """All of these must be enabled for this spot to be randomized"""
-    access_rule: Rule = field(default_factory=True_)
+    vanilla_item: str | None
+    pools: set[str]
+    access_rule: Rule
+
+    def __init__(self,
+                 location_id: int | None = None,
+                 planet: str = "Unknown Planet",
+                 name: str = "Generic Location",
+                 vanilla_item: str | None = RAC1ITEM.BOLT_PACK_GENERIC,
+                 pools: set[str] | None = None,
+                 access_rule: Rule | None = None):
+        """
+        :param location_id:
+        :param planet:
+        :param name:
+        :param vanilla_item:
+        :param pools:
+        :param access_rule: All these must be enabled for this spot to be randomized
+        """
+        self.location_id = location_id
+        self.planet = planet
+        self.name = name
+        self.vanilla_item = vanilla_item
+        self.pools = pools if pools else set()
+        self.access_rule = access_rule if access_rule is not None else True_()
 
 
 class RAC1LocationData:
@@ -49,7 +89,8 @@ class RAC1LocationData:
     NOVALIS_SEWER_GOLD_BOLT = LocationData(
         4, RAC1PLANET.NOVALIS, RAC1BOLT.NOVALIS_WATERWORKS, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS})
     NOVALIS_CAVES_GOLD_BOLT = LocationData(
-        5, RAC1PLANET.NOVALIS, RAC1BOLT.NOVALIS_CAVES, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, novalis_cave_gb_rule)
+        5, RAC1PLANET.NOVALIS, RAC1BOLT.NOVALIS_CAVES, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
+        novalis_cave_gb_rule)
     NOVALIS_UNDERWATER_CAVES_GOLD_BOLT = LocationData(
         6, RAC1PLANET.NOVALIS, RAC1BOLT.NOVALIS_AMOEBOID, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         novalis_underwater_caves_rule)
@@ -103,7 +144,8 @@ class RAC1LocationData:
     ARIDIA_ISLAND_GOLD_BOLT = LocationData(
         11, RAC1PLANET.ARIDIA, RAC1BOLT.ARIDIA_ISLAND, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS})
     ARIDIA_MAGNEBOOTS_GOLD_BOLT = LocationData(
-        12, RAC1PLANET.ARIDIA, RAC1BOLT.ARIDIA_MAGNEBOOTS, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, aridia_laser_rule)
+        12, RAC1PLANET.ARIDIA, RAC1BOLT.ARIDIA_MAGNEBOOTS, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
+        aridia_laser_rule)
     ARIDIA_SANDSHARK_GOLD_BOLT = LocationData(
         13, RAC1PLANET.ARIDIA, RAC1BOLT.ARIDIA_SANDSHARK, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, aridia_cave_rule)
     ARIDIA_SWING_IT = LocationData(
@@ -186,14 +228,16 @@ class RAC1LocationData:
     BLARG_EXPLOSION_INFOBOT = LocationData(
         32, RAC1PLANET.BLARG, RAC1LOCATION.BLARG_EXPLOSION_INFOBOT, RAC1ITEM.RILGAR, {RAC1POOL.INFOBOTS})
     BLARG_GRINDBOOTS = LocationData(
-        33, RAC1PLANET.BLARG, RAC1LOCATION.BLARG_GRINDBOOTS, RAC1ITEM.GRINDBOOTS, {RAC1POOL.BOOTS}, Has(RAC1ITEM.SWINGSHOT))
+        33, RAC1PLANET.BLARG, RAC1LOCATION.BLARG_GRINDBOOTS, RAC1ITEM.GRINDBOOTS, {RAC1POOL.BOOTS},
+        Has(RAC1ITEM.SWINGSHOT))
     BLARG_VENDOR_TAUNTER = LocationData(
         34, RAC1PLANET.BLARG, RAC1VENDOR.BLARG_TAUNTER, RAC1ITEM.TAUNTER, {RAC1POOL.WEAPONS})
     BLARG_OUTSIDE_GOLD_BOLT = LocationData(
         35, RAC1PLANET.BLARG, RAC1BOLT.BLARG_OUTSIDE, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         blarg_outside_gold_bolt_rule)
     BLARG_SWARMER_GOLD_BOLT = LocationData(
-        36, RAC1PLANET.BLARG, RAC1BOLT.BLARG_SWARMER, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, Has(RAC1ITEM.SWINGSHOT))
+        36, RAC1PLANET.BLARG, RAC1BOLT.BLARG_SWARMER, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
+        Has(RAC1ITEM.SWINGSHOT))
     BLARG_GIRL_TROUBLE = LocationData(
         115, RAC1PLANET.BLARG, RAC1SKILLPOINT.BLARG_GIRL_TROUBLE, None, {RAC1POOL.SKILLPOINT},
         Has(RAC1ITEM.SWINGSHOT))
@@ -240,7 +284,8 @@ class RAC1LocationData:
     GASPAR_PILOT_HELMET = LocationData(
         47, RAC1PLANET.GASPAR, RAC1LOCATION.GASPAR_PILOT_HELMET, RAC1ITEM.PILOTS_HELMET, {RAC1POOL.HELMETS})
     GASPAR_SWINGSHOT_GOLD_BOLT = LocationData(
-        48, RAC1PLANET.GASPAR, RAC1BOLT.GASPAR_SWINGSHOT, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, Has(RAC1ITEM.SWINGSHOT))
+        48, RAC1PLANET.GASPAR, RAC1BOLT.GASPAR_SWINGSHOT, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
+        Has(RAC1ITEM.SWINGSHOT))
     GASPAR_VOLCANO_GOLD_BOLT = LocationData(
         49, RAC1PLANET.GASPAR, RAC1BOLT.GASPAR_VOLCANO, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, can_improved_jump)
     GASPAR_DESTROYED = LocationData(
@@ -305,12 +350,14 @@ class RAC1LocationData:
         64, RAC1PLANET.HOVEN, RAC1LOCATION.HOVEN_TURRET_INFOBOT, RAC1ITEM.GEMLIK, {RAC1POOL.INFOBOTS},
         hoven_infobot_rule)
     HOVEN_HYDRO_PACK = LocationData(
-        65, RAC1PLANET.HOVEN, RAC1LOCATION.HOVEN_HYDRO_PACK, RAC1ITEM.HYDRO_PACK, {RAC1POOL.PACKS}, Has(RAC1ITEM.HYDRODISPLACER))
+        65, RAC1PLANET.HOVEN, RAC1LOCATION.HOVEN_HYDRO_PACK, RAC1ITEM.HYDRO_PACK, {RAC1POOL.PACKS},
+        Has(RAC1ITEM.HYDRODISPLACER))
     HOVEN_RARITANIUM = LocationData(
         66, RAC1PLANET.HOVEN, RAC1LOCATION.HOVEN_RARITANIUM, RAC1ITEM.RARITANIUM, {RAC1POOL.EXTRA_ITEMS},
         hoven_raritanium_rule)
     HOVEN_WATER_GOLD_BOLT = LocationData(
-        67, RAC1PLANET.HOVEN, RAC1BOLT.HOVEN_WATER, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, Has(RAC1ITEM.HYDRODISPLACER))
+        67, RAC1PLANET.HOVEN, RAC1BOLT.HOVEN_WATER, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
+        Has(RAC1ITEM.HYDRODISPLACER))
     HOVEN_WALLJUMP_GOLD_BOLT = LocationData(
         68, RAC1PLANET.HOVEN, RAC1BOLT.HOVEN_WALLJUMP, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS})
     HOVEN_PEST_CONTROL = LocationData(
@@ -328,7 +375,8 @@ class RAC1LocationData:
         70, RAC1PLANET.GEMLIK, RAC1BOLT.GEMLIK, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         gemlik_bolt_rule)
     GEMLIK_SITTING_DUCKS = LocationData(
-        127, RAC1PLANET.GEMLIK, RAC1SKILLPOINT.GEMLIK_SITTING_DUCKS, None, {RAC1POOL.SKILLPOINT}, gemlik_sitting_ducks_rule)
+        127, RAC1PLANET.GEMLIK, RAC1SKILLPOINT.GEMLIK_SITTING_DUCKS, None, {RAC1POOL.SKILLPOINT},
+        gemlik_sitting_ducks_rule)
 
     # Oltanis
     OLTANIS_VENDOR_TESLA_CLAW = LocationData(
@@ -375,7 +423,8 @@ class RAC1LocationData:
         82, RAC1PLANET.QUARTU, RAC1BOLT.QUARTU_MOM, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         quartu_infiltrate_rule)
     QUARTU_CODEBOT_GOLD_BOLT = LocationData(
-        83, RAC1PLANET.QUARTU, RAC1BOLT.QUARTU_CODEBOT, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS}, quartu_codebot_rule)
+        83, RAC1PLANET.QUARTU, RAC1BOLT.QUARTU_CODEBOT, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
+        quartu_codebot_rule)
 
     # Kalebo III
     KALEBO_HOLOGUISE = LocationData(
@@ -411,7 +460,8 @@ class RAC1LocationData:
     FLEET_SNEAKY = LocationData(
         132, RAC1PLANET.FLEET, RAC1SKILLPOINT.FLEET_SNEAKY, None, {RAC1POOL.SKILLPOINT}, fleet_sneaky_rule)
     FLEET_CAREFUL_CRUISE = LocationData(
-        133, RAC1PLANET.FLEET, RAC1SKILLPOINT.FLEET_CAREFUL_CRUISE, None, {RAC1POOL.SKILLPOINT}, fleet_careful_cruise_rule)
+        133, RAC1PLANET.FLEET, RAC1SKILLPOINT.FLEET_CAREFUL_CRUISE, None, {RAC1POOL.SKILLPOINT},
+        fleet_careful_cruise_rule)
 
     # Veldin
     VELDIN_TAUNTER_GOLD_BOLT = LocationData(
@@ -426,5 +476,5 @@ class RAC1LocationData:
     VELDIN_GOING_COMMANDO = LocationData(
         134, RAC1PLANET.VELDIN, RAC1SKILLPOINT.VELDIN_GOING_COMMANDO, None, {RAC1POOL.SKILLPOINT},
         veldin_global_rule)
-    VELDIN_DREK = LocationData(None, RAC1PLANET.VELDIN, RAC1LOCATION.VELDIN_DREK, None,
+    VELDIN_DREK = LocationData(planet=RAC1PLANET.VELDIN, name=RAC1LOCATION.VELDIN_DREK,
                                access_rule=veldin_defeat_drek_rule)

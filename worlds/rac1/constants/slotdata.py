@@ -4,6 +4,7 @@
 class RAC1SLOT:
     """String constants for RAC1 slot data constants."""
     DEATHLINK = "death_link"
+    START_INVENTORY_FROM_POOL = "start_inventory_from_pool"
     STARTING_ITEM = "starting_item"
     STARTING_LOCATION = "starting_location"
     SHUFFLE_WEAPONS = "shuffle_weapons"

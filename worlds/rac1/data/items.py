@@ -1,27 +1,34 @@
-﻿from dataclasses import dataclass
-from typing import Sequence
+﻿"""This module defines data for items in RAC1"""
 
-from BaseClasses import Item, ItemClassification
+from dataclasses import dataclass
+
+from BaseClasses import ItemClassification
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.pools import RAC1POOL
-from worlds.rac1.constants.progressive_orders import RAC1ORDER
-from worlds.rac1.options import (GoldWeaponProgression,
-                                 NanotechProgression, PackProgression, RacOptions,
-                                 ShuffleExtraItems, ShuffleHelmets, ShuffleInfobots)
 
 
 @dataclass
-class ItemData(Item):
+class ItemData:
     item_id: int
     name: str
     pool: str
     classification: ItemClassification
     quantity: int = 1
+    max_capacity: int = 1
 
-
-@dataclass
-class CollectableData(ItemData):
-    max_capacity: int = 0x7F
+    def __init__(self,
+                 item_id: int,
+                 name: str,
+                 pool: str = RAC1POOL.FILLER,
+                 classification: ItemClassification = ItemClassification.filler,
+                 quantity: int = 1,
+                 max_capacity: int = 1):
+        self.item_id = item_id
+        self.name = name
+        self.pool = pool
+        self.classification = classification
+        self.quantity = quantity
+        self.max_capacity = max_capacity
 
 
 class RAC1ItemData:
@@ -80,11 +87,11 @@ class RAC1ItemData:
     PROGRESSIVE_PACK = ItemData(80, RAC1ITEM.PROGRESSIVE_PACK, RAC1POOL.PACKS, ItemClassification.progression)
     PROGRESSIVE_SUCK = ItemData(82, RAC1ITEM.PROGRESSIVE_SUCK, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_BOMB = ItemData(83, RAC1ITEM.PROGRESSIVE_BOMB, RAC1POOL.WEAPONS, ItemClassification.progression)
-    PROGRESSIVE_DEVASTATOR = ItemData(84, RAC1ITEM.PROGRESSIVE_DEVASTATOR,
-                                      RAC1POOL.WEAPONS, ItemClassification.progression)
+    PROGRESSIVE_DEVASTATOR = ItemData(84, RAC1ITEM.PROGRESSIVE_DEVASTATOR, RAC1POOL.WEAPONS,
+                                      ItemClassification.progression)
     PROGRESSIVE_BLASTER = ItemData(85, RAC1ITEM.PROGRESSIVE_BLASTER, RAC1POOL.WEAPONS, ItemClassification.progression)
-    PROGRESSIVE_PYROCITOR = ItemData(86, RAC1ITEM.PROGRESSIVE_PYROCITOR,
-                                     RAC1POOL.WEAPONS, ItemClassification.progression)
+    PROGRESSIVE_PYROCITOR = ItemData(86, RAC1ITEM.PROGRESSIVE_PYROCITOR, RAC1POOL.WEAPONS,
+                                     ItemClassification.progression)
     PROGRESSIVE_MINE = ItemData(87, RAC1ITEM.PROGRESSIVE_MINE, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_TESLA = ItemData(88, RAC1ITEM.PROGRESSIVE_TESLA, RAC1POOL.WEAPONS, ItemClassification.progression)
     PROGRESSIVE_DOOM = ItemData(89, RAC1ITEM.PROGRESSIVE_DOOM, RAC1POOL.WEAPONS, ItemClassification.useful)
@@ -226,65 +233,37 @@ class RAC1ItemData:
     GOLD_BOLT_40 = ItemData(301, RAC1ITEM.GOLD_BOLT_40, RAC1POOL.GOLD_BOLTS,
                             ItemClassification.progression_deprioritized_skip_balancing, 40)
 
-    BOLT_PACK = ItemData(302, RAC1ITEM.BOLT_PACK_GENERIC, RAC1POOL.FILLER,
-                         ItemClassification.filler)
-    BOLT_PACK_0 = ItemData(400, RAC1ITEM.BOLT_PACK_0, RAC1POOL.FILLER,
-                           ItemClassification.filler, 0)
-    BOLT_PACK_1 = ItemData(401, RAC1ITEM.BOLT_PACK_1, RAC1POOL.FILLER,
-                           ItemClassification.filler)
-    BOLT_PACK_10 = ItemData(402, RAC1ITEM.BOLT_PACK_10, RAC1POOL.FILLER,
-                            ItemClassification.filler, 10)
-    BOLT_PACK_100 = ItemData(403, RAC1ITEM.BOLT_PACK_100, RAC1POOL.FILLER,
-                             ItemClassification.filler, 100)
-    BOLT_PACK_250 = ItemData(404, RAC1ITEM.BOLT_PACK_250, RAC1POOL.FILLER,
-                             ItemClassification.filler, 250)
-    BOLT_PACK_500 = ItemData(405, RAC1ITEM.BOLT_PACK_500, RAC1POOL.FILLER,
-                             ItemClassification.filler, 500)
-    BOLT_PACK_750 = ItemData(406, RAC1ITEM.BOLT_PACK_750, RAC1POOL.FILLER,
-                             ItemClassification.filler, 750)
-    BOLT_PACK_1000 = ItemData(407, RAC1ITEM.BOLT_PACK_1000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 1000)
-    BOLT_PACK_2000 = ItemData(408, RAC1ITEM.BOLT_PACK_2000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 2000)
-    BOLT_PACK_3000 = ItemData(409, RAC1ITEM.BOLT_PACK_3000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 3000)
-    BOLT_PACK_4000 = ItemData(410, RAC1ITEM.BOLT_PACK_4000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 4000)
-    BOLT_PACK_5000 = ItemData(411, RAC1ITEM.BOLT_PACK_5000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 5000)
-    BOLT_PACK_6000 = ItemData(412, RAC1ITEM.BOLT_PACK_6000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 6000)
-    BOLT_PACK_7000 = ItemData(413, RAC1ITEM.BOLT_PACK_7000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 7000)
-    BOLT_PACK_8000 = ItemData(414, RAC1ITEM.BOLT_PACK_8000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 8000)
-    BOLT_PACK_9000 = ItemData(415, RAC1ITEM.BOLT_PACK_9000, RAC1POOL.FILLER,
-                              ItemClassification.filler, 9000)
-    BOLT_PACK_10000 = ItemData(416, RAC1ITEM.BOLT_PACK_10000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 10000)
-    BOLT_PACK_12500 = ItemData(417, RAC1ITEM.BOLT_PACK_12500, RAC1POOL.FILLER,
-                               ItemClassification.filler, 12500)
-    BOLT_PACK_15000 = ItemData(418, RAC1ITEM.BOLT_PACK_15000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 15000)
-    BOLT_PACK_17500 = ItemData(419, RAC1ITEM.BOLT_PACK_17500, RAC1POOL.FILLER,
-                               ItemClassification.filler, 17500)
-    BOLT_PACK_20000 = ItemData(420, RAC1ITEM.BOLT_PACK_20000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 20000)
-    BOLT_PACK_25000 = ItemData(421, RAC1ITEM.BOLT_PACK_25000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 25000)
-    BOLT_PACK_30000 = ItemData(422, RAC1ITEM.BOLT_PACK_30000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 30000)
-    BOLT_PACK_40000 = ItemData(423, RAC1ITEM.BOLT_PACK_40000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 40000)
-    BOLT_PACK_50000 = ItemData(424, RAC1ITEM.BOLT_PACK_50000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 50000)
-    BOLT_PACK_75000 = ItemData(425, RAC1ITEM.BOLT_PACK_75000, RAC1POOL.FILLER,
-                               ItemClassification.filler, 75000)
-    BOLT_PACK_100000 = ItemData(426, RAC1ITEM.BOLT_PACK_100000, RAC1POOL.FILLER,
-                                ItemClassification.filler, 100000)
+    BOLT_PACK = ItemData(302, RAC1ITEM.BOLT_PACK_GENERIC)
+    BOLT_PACK_0 = ItemData(400, RAC1ITEM.BOLT_PACK_0, quantity=0)
+    BOLT_PACK_1 = ItemData(401, RAC1ITEM.BOLT_PACK_1)
+    BOLT_PACK_10 = ItemData(402, RAC1ITEM.BOLT_PACK_10, quantity=10)
+    BOLT_PACK_100 = ItemData(403, RAC1ITEM.BOLT_PACK_100, quantity=100)
+    BOLT_PACK_250 = ItemData(404, RAC1ITEM.BOLT_PACK_250, quantity=250)
+    BOLT_PACK_500 = ItemData(405, RAC1ITEM.BOLT_PACK_500, quantity=500)
+    BOLT_PACK_750 = ItemData(406, RAC1ITEM.BOLT_PACK_750, quantity=750)
+    BOLT_PACK_1000 = ItemData(407, RAC1ITEM.BOLT_PACK_1000, quantity=1000)
+    BOLT_PACK_2000 = ItemData(408, RAC1ITEM.BOLT_PACK_2000, quantity=2000)
+    BOLT_PACK_3000 = ItemData(409, RAC1ITEM.BOLT_PACK_3000, quantity=3000)
+    BOLT_PACK_4000 = ItemData(410, RAC1ITEM.BOLT_PACK_4000, quantity=4000)
+    BOLT_PACK_5000 = ItemData(411, RAC1ITEM.BOLT_PACK_5000, quantity=5000)
+    BOLT_PACK_6000 = ItemData(412, RAC1ITEM.BOLT_PACK_6000, quantity=6000)
+    BOLT_PACK_7000 = ItemData(413, RAC1ITEM.BOLT_PACK_7000, quantity=7000)
+    BOLT_PACK_8000 = ItemData(414, RAC1ITEM.BOLT_PACK_8000, quantity=8000)
+    BOLT_PACK_9000 = ItemData(415, RAC1ITEM.BOLT_PACK_9000, quantity=9000)
+    BOLT_PACK_10000 = ItemData(416, RAC1ITEM.BOLT_PACK_10000, quantity=10000)
+    BOLT_PACK_12500 = ItemData(417, RAC1ITEM.BOLT_PACK_12500, quantity=12500)
+    BOLT_PACK_15000 = ItemData(418, RAC1ITEM.BOLT_PACK_15000, quantity=15000)
+    BOLT_PACK_17500 = ItemData(419, RAC1ITEM.BOLT_PACK_17500, quantity=17500)
+    BOLT_PACK_20000 = ItemData(420, RAC1ITEM.BOLT_PACK_20000, quantity=20000)
+    BOLT_PACK_25000 = ItemData(421, RAC1ITEM.BOLT_PACK_25000, quantity=25000)
+    BOLT_PACK_30000 = ItemData(422, RAC1ITEM.BOLT_PACK_30000, quantity=30000)
+    BOLT_PACK_40000 = ItemData(423, RAC1ITEM.BOLT_PACK_40000, quantity=40000)
+    BOLT_PACK_50000 = ItemData(424, RAC1ITEM.BOLT_PACK_50000, quantity=50000)
+    BOLT_PACK_75000 = ItemData(425, RAC1ITEM.BOLT_PACK_75000, quantity=75000)
+    BOLT_PACK_100000 = ItemData(426, RAC1ITEM.BOLT_PACK_100000, quantity=100000)
 
 
-WEAPONS: Sequence[ItemData] = [
+WEAPONS: list[ItemData] = [
     RAC1ItemData.TAUNTER,
     RAC1ItemData.VISIBOMB,
     RAC1ItemData.WALLOPER,
@@ -292,7 +271,7 @@ WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.DRONE_DEVICE,
 ]
 
-NON_PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
+NON_PROGRESSIVE_WEAPONS: list[ItemData] = [
     RAC1ItemData.SUCK_CANNON,
     RAC1ItemData.BOMB_GLOVE,
     RAC1ItemData.DEVASTATOR,
@@ -305,7 +284,7 @@ NON_PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.DECOY_GLOVE,
 ]
 
-PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
+PROGRESSIVE_WEAPONS: list[ItemData] = [
     RAC1ItemData.PROGRESSIVE_SUCK,
     RAC1ItemData.PROGRESSIVE_BOMB,
     RAC1ItemData.PROGRESSIVE_DEVASTATOR,
@@ -318,7 +297,7 @@ PROGRESSIVE_WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.PROGRESSIVE_DECOY,
 ]
 
-GOLD_WEAPONS: Sequence[ItemData] = [
+GOLD_WEAPONS: list[ItemData] = [
     RAC1ItemData.GOLD_SUCK_CANNON,
     RAC1ItemData.GOLD_BOMB_GLOVE,
     RAC1ItemData.GOLD_DEVASTATOR,
@@ -331,20 +310,7 @@ GOLD_WEAPONS: Sequence[ItemData] = [
     RAC1ItemData.GOLD_DECOY_GLOVE,
 ]
 
-PROGRESSIVE_GOLD_WEAPONS: Sequence[ItemData] = [
-    RAC1ItemData.GOLD_SUCK_CANNON,
-    RAC1ItemData.GOLD_BOMB_GLOVE,
-    RAC1ItemData.GOLD_DEVASTATOR,
-    RAC1ItemData.GOLD_BLASTER,
-    RAC1ItemData.GOLD_PYROCITOR,
-    RAC1ItemData.GOLD_MINE_GLOVE,
-    RAC1ItemData.GOLD_TESLA_CLAW,
-    RAC1ItemData.GOLD_GLOVE_OF_DOOM,
-    RAC1ItemData.GOLD_MORPH_O_RAY,
-    RAC1ItemData.GOLD_DECOY_GLOVE,
-]
-
-GADGETS: Sequence[ItemData] = [
+GADGETS: list[ItemData] = [
     RAC1ItemData.HYDRODISPLACER,
     RAC1ItemData.TRESPASSER,
     RAC1ItemData.METAL_DETECTOR,
@@ -353,53 +319,53 @@ GADGETS: Sequence[ItemData] = [
     RAC1ItemData.SWINGSHOT,
 ]
 
-PACKS: Sequence[ItemData] = [
+PACKS: list[ItemData] = [
     RAC1ItemData.HELI_PACK,
     RAC1ItemData.THRUSTER_PACK,
     RAC1ItemData.HYDRO_PACK,
 ]
 
-PROGRESSIVE_PACKS: Sequence[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_PACK] * 3,
+PROGRESSIVE_PACKS: list[ItemData] = [
+    RAC1ItemData.PROGRESSIVE_PACK,
 ]
 
-HELMETS: Sequence[ItemData] = [
+HELMETS: list[ItemData] = [
     RAC1ItemData.SONIC_SUMMONER,
     RAC1ItemData.O2_MASK,
     RAC1ItemData.PILOTS_HELMET,
 ]
 
-BOOTS: Sequence[ItemData] = [
+BOOTS: list[ItemData] = [
     RAC1ItemData.MAGNEBOOTS,
     RAC1ItemData.GRINDBOOTS,
 ]
 
-EXTRA_ITEMS: Sequence[ItemData] = [
+EXTRA_ITEMS: list[ItemData] = [
     RAC1ItemData.MAP_O_MATIC,
     RAC1ItemData.BOLT_GRABBER,
     RAC1ItemData.CODEBOT,
 ]
 
-HOVERBOARDS: Sequence[ItemData] = [
+HOVERBOARDS: list[ItemData] = [
     RAC1ItemData.HOVERBOARD,
     RAC1ItemData.ZOOMERATOR,
 ]
 
-TRADES: Sequence[ItemData] = [
+TRADES: list[ItemData] = [
     RAC1ItemData.PERSUADER,
     RAC1ItemData.RARITANIUM,
 ]
 
-NON_PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
+NON_PROGRESSIVE_NANOTECHS: list[ItemData] = [
     RAC1ItemData.PREMIUM_NANOTECH,
     RAC1ItemData.ULTRA_NANOTECH,
 ]
 
-PROGRESSIVE_NANOTECHS: Sequence[ItemData] = [
-    *[RAC1ItemData.PROGRESSIVE_NANOTECH] * 2,
+PROGRESSIVE_NANOTECHS: list[ItemData] = [
+    RAC1ItemData.PROGRESSIVE_NANOTECH,
 ]
 
-GOLD_BOLTS: Sequence[ItemData] = [
+GOLD_BOLTS: list[ItemData] = [
     RAC1ItemData.GOLD_BOLT,
     RAC1ItemData.GOLD_BOLT_1,
     RAC1ItemData.GOLD_BOLT_2,
@@ -443,7 +409,81 @@ GOLD_BOLTS: Sequence[ItemData] = [
     RAC1ItemData.GOLD_BOLT_40,
 ]
 
-BOLT_PACKS: Sequence[ItemData] = [
+GOLD_BOLT_SIZE_TO_PACK: dict[int, str] = {
+    RAC1ItemData.GOLD_BOLT.quantity: RAC1ITEM.GOLD_BOLT,
+    RAC1ItemData.GOLD_BOLT_1.quantity: RAC1ITEM.GOLD_BOLT_1,
+    RAC1ItemData.GOLD_BOLT_2.quantity: RAC1ITEM.GOLD_BOLT_2,
+    RAC1ItemData.GOLD_BOLT_3.quantity: RAC1ITEM.GOLD_BOLT_3,
+    RAC1ItemData.GOLD_BOLT_4.quantity: RAC1ITEM.GOLD_BOLT_4,
+    RAC1ItemData.GOLD_BOLT_5.quantity: RAC1ITEM.GOLD_BOLT_5,
+    RAC1ItemData.GOLD_BOLT_6.quantity: RAC1ITEM.GOLD_BOLT_6,
+    RAC1ItemData.GOLD_BOLT_7.quantity: RAC1ITEM.GOLD_BOLT_7,
+    RAC1ItemData.GOLD_BOLT_8.quantity: RAC1ITEM.GOLD_BOLT_8,
+    RAC1ItemData.GOLD_BOLT_9.quantity: RAC1ITEM.GOLD_BOLT_9,
+    RAC1ItemData.GOLD_BOLT_10.quantity: RAC1ITEM.GOLD_BOLT_10,
+    RAC1ItemData.GOLD_BOLT_11.quantity: RAC1ITEM.GOLD_BOLT_11,
+    RAC1ItemData.GOLD_BOLT_12.quantity: RAC1ITEM.GOLD_BOLT_12,
+    RAC1ItemData.GOLD_BOLT_13.quantity: RAC1ITEM.GOLD_BOLT_13,
+    RAC1ItemData.GOLD_BOLT_14.quantity: RAC1ITEM.GOLD_BOLT_14,
+    RAC1ItemData.GOLD_BOLT_15.quantity: RAC1ITEM.GOLD_BOLT_15,
+    RAC1ItemData.GOLD_BOLT_16.quantity: RAC1ITEM.GOLD_BOLT_16,
+    RAC1ItemData.GOLD_BOLT_17.quantity: RAC1ITEM.GOLD_BOLT_17,
+    RAC1ItemData.GOLD_BOLT_18.quantity: RAC1ITEM.GOLD_BOLT_18,
+    RAC1ItemData.GOLD_BOLT_19.quantity: RAC1ITEM.GOLD_BOLT_19,
+    RAC1ItemData.GOLD_BOLT_20.quantity: RAC1ITEM.GOLD_BOLT_20,
+    RAC1ItemData.GOLD_BOLT_21.quantity: RAC1ITEM.GOLD_BOLT_21,
+    RAC1ItemData.GOLD_BOLT_22.quantity: RAC1ITEM.GOLD_BOLT_22,
+    RAC1ItemData.GOLD_BOLT_23.quantity: RAC1ITEM.GOLD_BOLT_23,
+    RAC1ItemData.GOLD_BOLT_24.quantity: RAC1ITEM.GOLD_BOLT_24,
+    RAC1ItemData.GOLD_BOLT_25.quantity: RAC1ITEM.GOLD_BOLT_25,
+    RAC1ItemData.GOLD_BOLT_26.quantity: RAC1ITEM.GOLD_BOLT_26,
+    RAC1ItemData.GOLD_BOLT_27.quantity: RAC1ITEM.GOLD_BOLT_27,
+    RAC1ItemData.GOLD_BOLT_28.quantity: RAC1ITEM.GOLD_BOLT_28,
+    RAC1ItemData.GOLD_BOLT_29.quantity: RAC1ITEM.GOLD_BOLT_29,
+    RAC1ItemData.GOLD_BOLT_30.quantity: RAC1ITEM.GOLD_BOLT_30,
+    RAC1ItemData.GOLD_BOLT_31.quantity: RAC1ITEM.GOLD_BOLT_31,
+    RAC1ItemData.GOLD_BOLT_32.quantity: RAC1ITEM.GOLD_BOLT_32,
+    RAC1ItemData.GOLD_BOLT_33.quantity: RAC1ITEM.GOLD_BOLT_33,
+    RAC1ItemData.GOLD_BOLT_34.quantity: RAC1ITEM.GOLD_BOLT_34,
+    RAC1ItemData.GOLD_BOLT_35.quantity: RAC1ITEM.GOLD_BOLT_35,
+    RAC1ItemData.GOLD_BOLT_36.quantity: RAC1ITEM.GOLD_BOLT_36,
+    RAC1ItemData.GOLD_BOLT_37.quantity: RAC1ITEM.GOLD_BOLT_37,
+    RAC1ItemData.GOLD_BOLT_38.quantity: RAC1ITEM.GOLD_BOLT_38,
+    RAC1ItemData.GOLD_BOLT_39.quantity: RAC1ITEM.GOLD_BOLT_39,
+    RAC1ItemData.GOLD_BOLT_40.quantity: RAC1ITEM.GOLD_BOLT_40,
+}
+
+BOLT_SIZE_TO_PACK: dict[int, str] = {
+    RAC1ItemData.BOLT_PACK_0.quantity: RAC1ITEM.BOLT_PACK_0,
+    RAC1ItemData.BOLT_PACK_1.quantity: RAC1ITEM.BOLT_PACK_1,
+    RAC1ItemData.BOLT_PACK_10.quantity: RAC1ITEM.BOLT_PACK_10,
+    RAC1ItemData.BOLT_PACK_100.quantity: RAC1ITEM.BOLT_PACK_100,
+    RAC1ItemData.BOLT_PACK_250.quantity: RAC1ITEM.BOLT_PACK_250,
+    RAC1ItemData.BOLT_PACK_500.quantity: RAC1ITEM.BOLT_PACK_500,
+    RAC1ItemData.BOLT_PACK_750.quantity: RAC1ITEM.BOLT_PACK_750,
+    RAC1ItemData.BOLT_PACK_1000.quantity: RAC1ITEM.BOLT_PACK_1000,
+    RAC1ItemData.BOLT_PACK_2000.quantity: RAC1ITEM.BOLT_PACK_2000,
+    RAC1ItemData.BOLT_PACK_3000.quantity: RAC1ITEM.BOLT_PACK_3000,
+    RAC1ItemData.BOLT_PACK_4000.quantity: RAC1ITEM.BOLT_PACK_4000,
+    RAC1ItemData.BOLT_PACK_5000.quantity: RAC1ITEM.BOLT_PACK_5000,
+    RAC1ItemData.BOLT_PACK_6000.quantity: RAC1ITEM.BOLT_PACK_6000,
+    RAC1ItemData.BOLT_PACK_7000.quantity: RAC1ITEM.BOLT_PACK_7000,
+    RAC1ItemData.BOLT_PACK_8000.quantity: RAC1ITEM.BOLT_PACK_8000,
+    RAC1ItemData.BOLT_PACK_9000.quantity: RAC1ITEM.BOLT_PACK_9000,
+    RAC1ItemData.BOLT_PACK_10000.quantity: RAC1ITEM.BOLT_PACK_10000,
+    RAC1ItemData.BOLT_PACK_12500.quantity: RAC1ITEM.BOLT_PACK_12500,
+    RAC1ItemData.BOLT_PACK_15000.quantity: RAC1ITEM.BOLT_PACK_15000,
+    RAC1ItemData.BOLT_PACK_17500.quantity: RAC1ITEM.BOLT_PACK_17500,
+    RAC1ItemData.BOLT_PACK_20000.quantity: RAC1ITEM.BOLT_PACK_20000,
+    RAC1ItemData.BOLT_PACK_25000.quantity: RAC1ITEM.BOLT_PACK_25000,
+    RAC1ItemData.BOLT_PACK_30000.quantity: RAC1ITEM.BOLT_PACK_30000,
+    RAC1ItemData.BOLT_PACK_40000.quantity: RAC1ITEM.BOLT_PACK_40000,
+    RAC1ItemData.BOLT_PACK_50000.quantity: RAC1ITEM.BOLT_PACK_50000,
+    RAC1ItemData.BOLT_PACK_75000.quantity: RAC1ITEM.BOLT_PACK_75000,
+    RAC1ItemData.BOLT_PACK_100000.quantity: RAC1ITEM.BOLT_PACK_100000,
+}
+
+BOLT_PACKS: list[ItemData] = [
     RAC1ItemData.BOLT_PACK,
     RAC1ItemData.BOLT_PACK_0,
     RAC1ItemData.BOLT_PACK_1,
@@ -474,7 +514,7 @@ BOLT_PACKS: Sequence[ItemData] = [
     RAC1ItemData.BOLT_PACK_100000,
 ]
 
-PLANETS: Sequence[ItemData] = [
+PLANETS: list[ItemData] = [
     RAC1ItemData.NOVALIS,
     RAC1ItemData.ARIDIA,
     RAC1ItemData.KERWAN,
@@ -495,7 +535,7 @@ PLANETS: Sequence[ItemData] = [
     RAC1ItemData.VELDIN,
 ]
 
-STARTING_PLANETS: Sequence[ItemData] = [
+STARTING_PLANETS: list[ItemData] = [
     RAC1ItemData.NOVALIS,
     RAC1ItemData.KERWAN,
     RAC1ItemData.BLARG,
@@ -503,7 +543,7 @@ STARTING_PLANETS: Sequence[ItemData] = [
     RAC1ItemData.ORXON,
 ]
 
-# SKILLPOINTS: Sequence[ItemData] = [
+# SKILLPOINTS: list[ItemData] = [
 #     RAC1ItemData.TAKE_AIM,
 #     RAC1ItemData.SWING_IT,
 #     RAC1ItemData.TRANSPORTED,
@@ -536,397 +576,30 @@ STARTING_PLANETS: Sequence[ItemData] = [
 #     RAC1ItemData.GOING_COMMANDO,
 # ]
 
-ALL_ITEMS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS, *GADGETS,
-                                 *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *BOOTS,
-                                 *EXTRA_ITEMS, *HOVERBOARDS,
-                                 *TRADES, *NON_PROGRESSIVE_NANOTECHS,
-                                 *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS, *PLANETS, *BOLT_PACKS]
+ALL_ITEMS: list[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS, *GADGETS,
+                             *PACKS, *PROGRESSIVE_PACKS, *HELMETS, *BOOTS, *EXTRA_ITEMS, *HOVERBOARDS, *TRADES,
+                             *NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS, *GOLD_BOLTS, *PLANETS, *BOLT_PACKS]
 
-ITEM_POOL: Sequence[ItemData] = [*PLANETS, *WEAPONS, *GADGETS, *EXTRA_ITEMS, *HELMETS, *BOOTS, *TRADES, *HOVERBOARDS]
+ITEM_POOL: list[ItemData] = [*PLANETS, *WEAPONS, *GADGETS, *EXTRA_ITEMS, *HELMETS, *BOOTS, *TRADES, *HOVERBOARDS]
 
-STARTING_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS]
-ALL_WEAPONS: Sequence[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS]
-ALL_PACKS: Sequence[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
-ALL_HELMETS: Sequence[ItemData] = [*HELMETS]
-ALL_BOOTS: Sequence[ItemData] = [*BOOTS]
-ALL_EXTRA_ITEMS: Sequence[ItemData] = [*EXTRA_ITEMS, *HOVERBOARDS,
-                                       *TRADES, *NON_PROGRESSIVE_NANOTECHS,
-                                       *PROGRESSIVE_NANOTECHS]
-ALL_HOVERBOARD: Sequence[ItemData] = [*HOVERBOARDS]
-ALL_TRADE: Sequence[ItemData] = [*TRADES]
-ALL_NANOTECH: Sequence[ItemData] = [*NON_PROGRESSIVE_NANOTECHS, *PROGRESSIVE_NANOTECHS]
-ALL_STARTING: Sequence[ItemData] = [*STARTING_WEAPONS, *GADGETS]
+STARTING_WEAPONS: list[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS]
+ALL_WEAPONS: list[ItemData] = [*WEAPONS, *NON_PROGRESSIVE_WEAPONS, *PROGRESSIVE_WEAPONS, *GOLD_WEAPONS]
+ALL_PACKS: list[ItemData] = [*PACKS, *PROGRESSIVE_PACKS]
+ALL_HELMETS: list[ItemData] = [*HELMETS]
+ALL_BOOTS: list[ItemData] = [*BOOTS]
+ALL_EXTRA_ITEMS: list[ItemData] = [*EXTRA_ITEMS, *HOVERBOARDS, *TRADES, *NON_PROGRESSIVE_NANOTECHS,
+                                   *PROGRESSIVE_NANOTECHS]
 
-SUCK_GROUP: Sequence[ItemData] = [RAC1ItemData.SUCK_CANNON,
-                                  RAC1ItemData.GOLD_SUCK_CANNON, RAC1ItemData.PROGRESSIVE_SUCK]
-BOMB_GROUP: Sequence[ItemData] = [RAC1ItemData.BOMB_GLOVE, RAC1ItemData.GOLD_BOMB_GLOVE, RAC1ItemData.PROGRESSIVE_BOMB]
-DEVASTATOR_GROUP: Sequence[ItemData] = [RAC1ItemData.DEVASTATOR,
-                                        RAC1ItemData.GOLD_DEVASTATOR, RAC1ItemData.PROGRESSIVE_DEVASTATOR]
-BLASTER_GROUP: Sequence[ItemData] = [RAC1ItemData.BLASTER, RAC1ItemData.GOLD_BLASTER, RAC1ItemData.PROGRESSIVE_BLASTER]
-PYROCITOR_GROUP: Sequence[ItemData] = [RAC1ItemData.PYROCITOR,
-                                       RAC1ItemData.GOLD_PYROCITOR, RAC1ItemData.PROGRESSIVE_PYROCITOR]
-MINE_GROUP: Sequence[ItemData] = [RAC1ItemData.MINE_GLOVE, RAC1ItemData.GOLD_MINE_GLOVE, RAC1ItemData.PROGRESSIVE_MINE]
-TESLA_GROUP: Sequence[ItemData] = [RAC1ItemData.TESLA_CLAW,
-                                   RAC1ItemData.GOLD_TESLA_CLAW, RAC1ItemData.PROGRESSIVE_TESLA]
-DOOM_GROUP: Sequence[ItemData] = [RAC1ItemData.GLOVE_OF_DOOM,
-                                  RAC1ItemData.GOLD_GLOVE_OF_DOOM, RAC1ItemData.PROGRESSIVE_DOOM]
-MORPH_GROUP: Sequence[ItemData] = [RAC1ItemData.MORPH_O_RAY,
-                                   RAC1ItemData.GOLD_MORPH_O_RAY, RAC1ItemData.PROGRESSIVE_MORPH]
-DECOY_GROUP: Sequence[ItemData] = [RAC1ItemData.DECOY_GLOVE,
-                                   RAC1ItemData.GOLD_DECOY_GLOVE, RAC1ItemData.PROGRESSIVE_DECOY]
-
-
-def get_bolt_pack(_options) -> str:
-    lookup: dict[int, str] = {
-        RAC1ItemData.BOLT_PACK_0.quantity: RAC1ITEM.BOLT_PACK_0,
-        RAC1ItemData.BOLT_PACK_1.quantity: RAC1ITEM.BOLT_PACK_1,
-        RAC1ItemData.BOLT_PACK_10.quantity: RAC1ITEM.BOLT_PACK_10,
-        RAC1ItemData.BOLT_PACK_100.quantity: RAC1ITEM.BOLT_PACK_100,
-        RAC1ItemData.BOLT_PACK_250.quantity: RAC1ITEM.BOLT_PACK_250,
-        RAC1ItemData.BOLT_PACK_500.quantity: RAC1ITEM.BOLT_PACK_500,
-        RAC1ItemData.BOLT_PACK_750.quantity: RAC1ITEM.BOLT_PACK_750,
-        RAC1ItemData.BOLT_PACK_1000.quantity: RAC1ITEM.BOLT_PACK_1000,
-        RAC1ItemData.BOLT_PACK_2000.quantity: RAC1ITEM.BOLT_PACK_2000,
-        RAC1ItemData.BOLT_PACK_3000.quantity: RAC1ITEM.BOLT_PACK_3000,
-        RAC1ItemData.BOLT_PACK_4000.quantity: RAC1ITEM.BOLT_PACK_4000,
-        RAC1ItemData.BOLT_PACK_5000.quantity: RAC1ITEM.BOLT_PACK_5000,
-        RAC1ItemData.BOLT_PACK_6000.quantity: RAC1ITEM.BOLT_PACK_6000,
-        RAC1ItemData.BOLT_PACK_7000.quantity: RAC1ITEM.BOLT_PACK_7000,
-        RAC1ItemData.BOLT_PACK_8000.quantity: RAC1ITEM.BOLT_PACK_8000,
-        RAC1ItemData.BOLT_PACK_9000.quantity: RAC1ITEM.BOLT_PACK_9000,
-        RAC1ItemData.BOLT_PACK_10000.quantity: RAC1ITEM.BOLT_PACK_10000,
-        RAC1ItemData.BOLT_PACK_12500.quantity: RAC1ITEM.BOLT_PACK_12500,
-        RAC1ItemData.BOLT_PACK_15000.quantity: RAC1ITEM.BOLT_PACK_15000,
-        RAC1ItemData.BOLT_PACK_17500.quantity: RAC1ITEM.BOLT_PACK_17500,
-        RAC1ItemData.BOLT_PACK_20000.quantity: RAC1ITEM.BOLT_PACK_20000,
-        RAC1ItemData.BOLT_PACK_25000.quantity: RAC1ITEM.BOLT_PACK_25000,
-        RAC1ItemData.BOLT_PACK_30000.quantity: RAC1ITEM.BOLT_PACK_30000,
-        RAC1ItemData.BOLT_PACK_40000.quantity: RAC1ITEM.BOLT_PACK_40000,
-        RAC1ItemData.BOLT_PACK_50000.quantity: RAC1ITEM.BOLT_PACK_50000,
-        RAC1ItemData.BOLT_PACK_75000.quantity: RAC1ITEM.BOLT_PACK_75000,
-        RAC1ItemData.BOLT_PACK_100000.quantity: RAC1ITEM.BOLT_PACK_100000,
-    }
-    return lookup[_options.pack_size_bolts.value]
-
-def progression_rules(world):
-    world.orders = {
-        RAC1ORDER.SUCK_CANNON: [RAC1ItemData.SUCK_CANNON.item_id, RAC1ItemData.GOLD_SUCK_CANNON.item_id],
-        RAC1ORDER.BOMB_GLOVE: [RAC1ItemData.BOMB_GLOVE.item_id, RAC1ItemData.GOLD_BOMB_GLOVE.item_id],
-        RAC1ORDER.DEVASTATOR: [RAC1ItemData.DEVASTATOR.item_id, RAC1ItemData.GOLD_DEVASTATOR.item_id],
-        RAC1ORDER.BLASTER: [RAC1ItemData.BLASTER.item_id, RAC1ItemData.GOLD_BLASTER.item_id],
-        RAC1ORDER.PYROCITOR: [RAC1ItemData.PYROCITOR.item_id, RAC1ItemData.GOLD_PYROCITOR.item_id],
-        RAC1ORDER.MINE_GLOVE: [RAC1ItemData.MINE_GLOVE.item_id, RAC1ItemData.GOLD_MINE_GLOVE.item_id],
-        RAC1ORDER.TESLA_CLAW: [RAC1ItemData.TESLA_CLAW.item_id, RAC1ItemData.GOLD_TESLA_CLAW.item_id],
-        RAC1ORDER.GLOVE_OF_DOOM: [RAC1ItemData.GLOVE_OF_DOOM.item_id, RAC1ItemData.GOLD_GLOVE_OF_DOOM.item_id],
-        RAC1ORDER.MORPH_O_RAY: [RAC1ItemData.MORPH_O_RAY.item_id, RAC1ItemData.GOLD_MORPH_O_RAY.item_id],
-        RAC1ORDER.DECOY_GLOVE: [RAC1ItemData.DECOY_GLOVE.item_id, RAC1ItemData.GOLD_DECOY_GLOVE.item_id],
-        RAC1ORDER.PACKS: [RAC1ItemData.HELI_PACK.item_id,
-                          RAC1ItemData.THRUSTER_PACK.item_id, RAC1ItemData.HYDRO_PACK.item_id],
-        RAC1ORDER.NANOTECH: [RAC1ItemData.PREMIUM_NANOTECH.item_id, RAC1ItemData.ULTRA_NANOTECH.item_id],
-    }
-    world.progressive_convert = {
-        RAC1ITEM.HELI_PACK: {RAC1ITEM.HELI_PACK: 1},
-        RAC1ITEM.THRUSTER_PACK: {RAC1ITEM.THRUSTER_PACK: 1},
-        RAC1ITEM.HYDRO_PACK: {RAC1ITEM.HYDRO_PACK: 1},
-        RAC1ITEM.SUCK_CANNON: {RAC1ITEM.SUCK_CANNON: 1},
-        RAC1ITEM.GOLD_SUCK_CANNON: {RAC1ITEM.SUCK_CANNON: 1, RAC1ITEM.GOLD_SUCK_CANNON: 1},
-        RAC1ITEM.BOMB_GLOVE: {RAC1ITEM.BOMB_GLOVE: 1},
-        RAC1ITEM.GOLD_BOMB_GLOVE: {RAC1ITEM.BOMB_GLOVE: 1, RAC1ITEM.GOLD_BOMB_GLOVE: 1},
-        RAC1ITEM.DEVASTATOR: {RAC1ITEM.DEVASTATOR: 1},
-        RAC1ITEM.GOLD_DEVASTATOR: {RAC1ITEM.DEVASTATOR: 1, RAC1ITEM.GOLD_DEVASTATOR: 1},
-        RAC1ITEM.BLASTER: {RAC1ITEM.BLASTER: 1},
-        RAC1ITEM.GOLD_BLASTER: {RAC1ITEM.BLASTER: 1, RAC1ITEM.GOLD_BLASTER: 1},
-        RAC1ITEM.PYROCITOR: {RAC1ITEM.PYROCITOR: 1},
-        RAC1ITEM.GOLD_PYROCITOR: {RAC1ITEM.PYROCITOR: 1, RAC1ITEM.GOLD_PYROCITOR: 1},
-        RAC1ITEM.MINE_GLOVE: {RAC1ITEM.MINE_GLOVE: 1},
-        RAC1ITEM.GOLD_MINE_GLOVE: {RAC1ITEM.MINE_GLOVE: 1, RAC1ITEM.GOLD_MINE_GLOVE: 1},
-        RAC1ITEM.TESLA_CLAW: {RAC1ITEM.TESLA_CLAW: 1},
-        RAC1ITEM.GOLD_TESLA_CLAW: {RAC1ITEM.TESLA_CLAW: 1, RAC1ITEM.GOLD_TESLA_CLAW: 1},
-        RAC1ITEM.GLOVE_OF_DOOM: {RAC1ITEM.GLOVE_OF_DOOM: 1},
-        RAC1ITEM.GOLD_GLOVE_OF_DOOM: {RAC1ITEM.GLOVE_OF_DOOM: 1, RAC1ITEM.GOLD_GLOVE_OF_DOOM: 1},
-        RAC1ITEM.MORPH_O_RAY: {RAC1ITEM.MORPH_O_RAY: 1},
-        RAC1ITEM.GOLD_MORPH_O_RAY: {RAC1ITEM.MORPH_O_RAY: 1, RAC1ITEM.GOLD_MORPH_O_RAY: 1},
-        RAC1ITEM.DECOY_GLOVE: {RAC1ITEM.DECOY_GLOVE: 1},
-        RAC1ITEM.GOLD_DECOY_GLOVE: {RAC1ITEM.DECOY_GLOVE: 1, RAC1ITEM.GOLD_DECOY_GLOVE: 1},
-        RAC1ITEM.PREMIUM_NANOTECH: {RAC1ITEM.PREMIUM_NANOTECH: 1, RAC1ITEM.PROGRESSIVE_NANOTECH: 1},
-        RAC1ITEM.ULTRA_NANOTECH: {RAC1ITEM.ULTRA_NANOTECH: 1, RAC1ITEM.PROGRESSIVE_NANOTECH: 2},
-    }
-    match world.options.progressive_weapons.value:
-        case GoldWeaponProgression.option_normal:
-            world.progressive_convert[RAC1ITEM.SUCK_CANNON] = {RAC1ITEM.SUCK_CANNON: 1,
-                                                               RAC1ITEM.GOLD_SUCK_CANNON: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_SUCK_CANNON] = {RAC1ITEM.GOLD_SUCK_CANNON: 1}
-            world.progressive_convert[RAC1ITEM.BOMB_GLOVE] = {RAC1ITEM.BOMB_GLOVE: 1,
-                                                              RAC1ITEM.GOLD_BOMB_GLOVE: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BOMB_GLOVE] = {RAC1ITEM.GOLD_BOMB_GLOVE: 1}
-            world.progressive_convert[RAC1ITEM.DEVASTATOR] = {RAC1ITEM.DEVASTATOR: 1,
-                                                              RAC1ITEM.GOLD_DEVASTATOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DEVASTATOR] = {RAC1ITEM.GOLD_DEVASTATOR: 1}
-            world.progressive_convert[RAC1ITEM.BLASTER] = {RAC1ITEM.BLASTER: 1,
-                                                           RAC1ITEM.GOLD_BLASTER: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BLASTER] = {RAC1ITEM.GOLD_BLASTER: 1}
-            world.progressive_convert[RAC1ITEM.PYROCITOR] = {RAC1ITEM.PYROCITOR: 1,
-                                                             RAC1ITEM.GOLD_PYROCITOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_PYROCITOR] = {RAC1ITEM.GOLD_PYROCITOR: 1}
-            world.progressive_convert[RAC1ITEM.MINE_GLOVE] = {RAC1ITEM.MINE_GLOVE: 1,
-                                                              RAC1ITEM.GOLD_MINE_GLOVE: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MINE_GLOVE] = {RAC1ITEM.GOLD_MINE_GLOVE: 1}
-            world.progressive_convert[RAC1ITEM.TESLA_CLAW] = {RAC1ITEM.TESLA_CLAW: 1,
-                                                              RAC1ITEM.GOLD_TESLA_CLAW: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_TESLA_CLAW] = {RAC1ITEM.GOLD_TESLA_CLAW: 1}
-            world.progressive_convert[RAC1ITEM.GLOVE_OF_DOOM] = {RAC1ITEM.GLOVE_OF_DOOM: 1,
-                                                                 RAC1ITEM.GOLD_GLOVE_OF_DOOM: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_GLOVE_OF_DOOM] = {RAC1ITEM.GOLD_GLOVE_OF_DOOM: 1}
-            world.progressive_convert[RAC1ITEM.MORPH_O_RAY] = {RAC1ITEM.MORPH_O_RAY: 1,
-                                                               RAC1ITEM.GOLD_MORPH_O_RAY: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MORPH_O_RAY] = {RAC1ITEM.GOLD_MORPH_O_RAY: 1}
-            world.progressive_convert[RAC1ITEM.DECOY_GLOVE] = {RAC1ITEM.DECOY_GLOVE: 1,
-                                                               RAC1ITEM.GOLD_DECOY_GLOVE: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DECOY_GLOVE] = {RAC1ITEM.GOLD_DECOY_GLOVE: 1}
-        case GoldWeaponProgression.option_progressive:
-            world.progressive_convert[RAC1ITEM.SUCK_CANNON] = {RAC1ITEM.PROGRESSIVE_SUCK: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_SUCK_CANNON] = {RAC1ITEM.PROGRESSIVE_SUCK: 2}
-            world.progressive_convert[RAC1ITEM.BOMB_GLOVE] = {RAC1ITEM.PROGRESSIVE_BOMB: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BOMB_GLOVE] = {RAC1ITEM.PROGRESSIVE_BOMB: 2}
-            world.progressive_convert[RAC1ITEM.DEVASTATOR] = {RAC1ITEM.PROGRESSIVE_DEVASTATOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DEVASTATOR] = {RAC1ITEM.PROGRESSIVE_DEVASTATOR: 2}
-            world.progressive_convert[RAC1ITEM.BLASTER] = {RAC1ITEM.PROGRESSIVE_BLASTER: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_BLASTER] = {RAC1ITEM.PROGRESSIVE_BLASTER: 2}
-            world.progressive_convert[RAC1ITEM.PYROCITOR] = {RAC1ITEM.PROGRESSIVE_PYROCITOR: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_PYROCITOR] = {RAC1ITEM.PROGRESSIVE_PYROCITOR: 2}
-            world.progressive_convert[RAC1ITEM.MINE_GLOVE] = {RAC1ITEM.PROGRESSIVE_MINE: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MINE_GLOVE] = {RAC1ITEM.PROGRESSIVE_MINE: 2}
-            world.progressive_convert[RAC1ITEM.TESLA_CLAW] = {RAC1ITEM.PROGRESSIVE_TESLA: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_TESLA_CLAW] = {RAC1ITEM.PROGRESSIVE_TESLA: 2}
-            world.progressive_convert[RAC1ITEM.GLOVE_OF_DOOM] = {RAC1ITEM.PROGRESSIVE_DOOM: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_GLOVE_OF_DOOM] = {RAC1ITEM.PROGRESSIVE_DOOM: 2}
-            world.progressive_convert[RAC1ITEM.MORPH_O_RAY] = {RAC1ITEM.PROGRESSIVE_MORPH: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_MORPH_O_RAY] = {RAC1ITEM.PROGRESSIVE_MORPH: 2}
-            world.progressive_convert[RAC1ITEM.DECOY_GLOVE] = {RAC1ITEM.PROGRESSIVE_DECOY: 1}
-            world.progressive_convert[RAC1ITEM.GOLD_DECOY_GLOVE] = {RAC1ITEM.PROGRESSIVE_DECOY: 2}
-        case _:
-            pass
-
-    match world.options.progressive_packs.value:
-        case PackProgression.option_progressive:
-            world.progressive_convert[RAC1ITEM.HELI_PACK] = {RAC1ITEM.PROGRESSIVE_PACK: 1}
-            world.progressive_convert[RAC1ITEM.THRUSTER_PACK] = {RAC1ITEM.PROGRESSIVE_PACK: 2}
-            world.progressive_convert[RAC1ITEM.HYDRO_PACK] = {RAC1ITEM.PROGRESSIVE_PACK: 3}
-        case PackProgression.option_progressive_reversed:
-            world.orders[RAC1ORDER.PACKS].reverse()
-            world.progressive_convert[RAC1ITEM.HELI_PACK] = {RAC1ITEM.PROGRESSIVE_PACK: 3}
-            world.progressive_convert[RAC1ITEM.THRUSTER_PACK] = {RAC1ITEM.PROGRESSIVE_PACK: 2}
-            world.progressive_convert[RAC1ITEM.HYDRO_PACK] = {RAC1ITEM.PROGRESSIVE_PACK: 1}
-        case PackProgression.option_progressive_random:
-            world.random.shuffle(world.orders[RAC1ORDER.PACKS])
-            world.progressive_convert[RAC1ITEM.HELI_PACK] = {
-                RAC1ITEM.PROGRESSIVE_PACK: 1 + world.orders[RAC1ORDER.PACKS].index(RAC1ItemData.HELI_PACK.item_id)}
-            world.progressive_convert[RAC1ITEM.THRUSTER_PACK] = {
-                RAC1ITEM.PROGRESSIVE_PACK: 1 + world.orders[RAC1ORDER.PACKS].index(RAC1ItemData.THRUSTER_PACK.item_id)}
-            world.progressive_convert[RAC1ITEM.HYDRO_PACK] = {
-                RAC1ITEM.PROGRESSIVE_PACK: 1 + world.orders[RAC1ORDER.PACKS].index(RAC1ItemData.HYDRO_PACK.item_id)}
-        case _:
-            pass
-
-    match world.options.progressive_nanotech.value:
-        case NanotechProgression.option_progressive:
-            world.progressive_convert[RAC1ITEM.PREMIUM_NANOTECH] = {RAC1ITEM.PROGRESSIVE_NANOTECH: 1}
-            world.progressive_convert[RAC1ITEM.ULTRA_NANOTECH] = {RAC1ITEM.PROGRESSIVE_NANOTECH: 2}
-        case NanotechProgression.option_progressive_reversed:
-            world.orders[RAC1ORDER.NANOTECH].reverse()
-            world.progressive_convert[RAC1ITEM.PREMIUM_NANOTECH] = {RAC1ITEM.PROGRESSIVE_NANOTECH: 2}
-            world.progressive_convert[RAC1ITEM.ULTRA_NANOTECH] = {RAC1ITEM.PROGRESSIVE_NANOTECH: 1}
-        case NanotechProgression.option_progressive_random:
-            world.random.shuffle(world.orders[RAC1ORDER.NANOTECH])
-            world.progressive_convert[RAC1ITEM.PREMIUM_NANOTECH] = {
-                RAC1ITEM.PROGRESSIVE_NANOTECH:
-                    1 + world.orders[RAC1ORDER.NANOTECH].index(RAC1ItemData.PREMIUM_NANOTECH.item_id)}
-            world.progressive_convert[RAC1ITEM.ULTRA_NANOTECH] = {
-                RAC1ITEM.PROGRESSIVE_NANOTECH:
-                    1 + world.orders[RAC1ORDER.NANOTECH].index(RAC1ItemData.ULTRA_NANOTECH.item_id)}
-        case _:
-            pass
-    return
-
-def get_gold_bolts(_options) -> str:
-    lookup: dict[int, str] = {}
-    for gold_bolt in GOLD_BOLTS:
-        if gold_bolt == RAC1ITEM.GOLD_BOLT:
-            continue
-        lookup.update({gold_bolt.quantity: gold_bolt.name})
-    return lookup[_options.pack_size_gold_bolts.value]
-
-
-def get_pool(_options) -> Sequence[ItemData]:
-    pool = []
-    for item in ITEM_POOL:
-        pool += [item]
-    if _options.progressive_weapons.value > GoldWeaponProgression.option_normal:
-        for item in PROGRESSIVE_WEAPONS:
-            pool += [item, item]
-    else:
-        for item in NON_PROGRESSIVE_WEAPONS:
-            pool += [item]
-        for item in GOLD_WEAPONS:
-            pool += [item]
-    if _options.progressive_packs.value > PackProgression.option_vanilla:
-        for item in PROGRESSIVE_PACKS:
-            pool += [item]
-    else:
-        for item in PACKS:
-            pool += [item]
-    if _options.progressive_nanotech.value > NanotechProgression.option_vanilla:
-        for item in PROGRESSIVE_NANOTECHS:
-            pool += [item]
-    else:
-        for item in NON_PROGRESSIVE_NANOTECHS:
-            pool += [item]
-    lookup: dict[int, tuple[ItemData, int]] = {
-        1: (RAC1ItemData.GOLD_BOLT_1, 40),
-        2: (RAC1ItemData.GOLD_BOLT_2, 30),
-        3: (RAC1ItemData.GOLD_BOLT_3, 20),
-        4: (RAC1ItemData.GOLD_BOLT_4, 15),
-        5: (RAC1ItemData.GOLD_BOLT_5, 12),
-        6: (RAC1ItemData.GOLD_BOLT_6, 10),
-        7: (RAC1ItemData.GOLD_BOLT_7, 9),
-        8: (RAC1ItemData.GOLD_BOLT_8, 8),
-        9: (RAC1ItemData.GOLD_BOLT_9, 7),
-        10: (RAC1ItemData.GOLD_BOLT_10, 6),
-        11: (RAC1ItemData.GOLD_BOLT_11, 5),
-        12: (RAC1ItemData.GOLD_BOLT_12, 5),
-        13: (RAC1ItemData.GOLD_BOLT_13, 5),
-        14: (RAC1ItemData.GOLD_BOLT_14, 4),
-        15: (RAC1ItemData.GOLD_BOLT_15, 4),
-        16: (RAC1ItemData.GOLD_BOLT_16, 4),
-        17: (RAC1ItemData.GOLD_BOLT_17, 4),
-        18: (RAC1ItemData.GOLD_BOLT_18, 4),
-        19: (RAC1ItemData.GOLD_BOLT_19, 4),
-        20: (RAC1ItemData.GOLD_BOLT_20, 3),
-        21: (RAC1ItemData.GOLD_BOLT_21, 3),
-        22: (RAC1ItemData.GOLD_BOLT_22, 3),
-        23: (RAC1ItemData.GOLD_BOLT_23, 3),
-        24: (RAC1ItemData.GOLD_BOLT_24, 3),
-        25: (RAC1ItemData.GOLD_BOLT_25, 3),
-        26: (RAC1ItemData.GOLD_BOLT_26, 3),
-        27: (RAC1ItemData.GOLD_BOLT_27, 3),
-        28: (RAC1ItemData.GOLD_BOLT_28, 3),
-        29: (RAC1ItemData.GOLD_BOLT_29, 3),
-        30: (RAC1ItemData.GOLD_BOLT_30, 2),
-        31: (RAC1ItemData.GOLD_BOLT_31, 2),
-        32: (RAC1ItemData.GOLD_BOLT_32, 2),
-        33: (RAC1ItemData.GOLD_BOLT_33, 2),
-        34: (RAC1ItemData.GOLD_BOLT_34, 2),
-        35: (RAC1ItemData.GOLD_BOLT_35, 2),
-        36: (RAC1ItemData.GOLD_BOLT_36, 2),
-        37: (RAC1ItemData.GOLD_BOLT_37, 2),
-        38: (RAC1ItemData.GOLD_BOLT_38, 2),
-        39: (RAC1ItemData.GOLD_BOLT_39, 2),
-        40: (RAC1ItemData.GOLD_BOLT_40, 1),
-    }
-    for _ in range(lookup[_options.pack_size_gold_bolts.value][1]):
-        pool += [lookup[_options.pack_size_gold_bolts.value][0]]
-    return pool
-
-
-def get_starting_planets(_options) -> Sequence[ItemData]:
-    planets: Sequence[ItemData] = []
-    for item in STARTING_PLANETS:
-        planets += [item]
-    if _options.shuffle_infobots.value >= ShuffleInfobots.option_unrestricted:
-        planets += [RAC1ItemData.ARIDIA]
-        if _options.shuffle_helmets.value >= ShuffleInfobots.option_unrestricted:
-            planets += [RAC1ItemData.GASPAR]
-        if _options.shuffle_gold_bolts.value:
-            planets += [RAC1ItemData.HOVEN]
-    return planets
-
-
-def from_id(item_id: int) -> ItemData:
-    matching = [item for item in ALL_ITEMS if item.item_id == item_id]
-    if len(matching) == 0:
-        raise ValueError(f"No item data for item id '{item_id}'")
-    assert len(matching) < 2, f"{len(matching)} item data found with id '{item_id}'. Items are: {matching}"
-    return matching[0]
-
-
-def from_name(item_name: str) -> ItemData:
-    matching = [item for item in ALL_ITEMS if item.name == item_name]
-    if len(matching) == 0:
-        raise ValueError(f"No item data for '{item_name}'")
-    # if item_name != GOLD_BOLT :
-    #     assert len(matching) < 2, f"Multiple item data with name '{item_name}'. Please report."
-    return matching[0]
-
-
-def get_item_groups() -> dict[str, set[str]]:
-    groups: dict[str, set[str]] = {
-        RAC1POOL.WEAPONS: {w.name for w in ALL_WEAPONS},
-        RAC1POOL.GADGETS: {g.name for g in GADGETS},
-        RAC1POOL.PACKS: {p.name for p in ALL_PACKS},
-        RAC1POOL.HELMETS: {h.name for h in ALL_HELMETS},
-        RAC1POOL.BOOTS: {b.name for b in ALL_BOOTS},
-        RAC1POOL.EXTRA_ITEMS: {e.name for e in ALL_EXTRA_ITEMS},
-        RAC1POOL.GOLD_BOLTS: {c.name for c in GOLD_BOLTS},
-        RAC1POOL.INFOBOTS: {i.name for i in PLANETS},
-        # RAC1POOL.SKILLPOINT: {s.name for s in SKILLPOINTS},
-    }
-    return groups
-
-
-def check_progressive_item(_options: 'RacOptions', item: str) -> str:
-    new_item = item
-    match from_name(item).pool:
-        case RAC1POOL.WEAPONS | RAC1POOL.GOLD_WEAPONS:
-            if _options.progressive_weapons.value > GoldWeaponProgression.option_normal:
-                match item:
-                    case RAC1ITEM.SUCK_CANNON:
-                        new_item = RAC1ITEM.PROGRESSIVE_SUCK
-                    case RAC1ITEM.GOLD_SUCK_CANNON:
-                        new_item = RAC1ITEM.PROGRESSIVE_SUCK
-                    case RAC1ITEM.BOMB_GLOVE:
-                        new_item = RAC1ITEM.PROGRESSIVE_BOMB
-                    case RAC1ITEM.GOLD_BOMB_GLOVE:
-                        new_item = RAC1ITEM.PROGRESSIVE_BOMB
-                    case RAC1ITEM.DEVASTATOR:
-                        new_item = RAC1ITEM.PROGRESSIVE_DEVASTATOR
-                    case RAC1ITEM.GOLD_DEVASTATOR:
-                        new_item = RAC1ITEM.PROGRESSIVE_DEVASTATOR
-                    case RAC1ITEM.BLASTER:
-                        new_item = RAC1ITEM.PROGRESSIVE_BLASTER
-                    case RAC1ITEM.GOLD_BLASTER:
-                        new_item = RAC1ITEM.PROGRESSIVE_BLASTER
-                    case RAC1ITEM.PYROCITOR:
-                        new_item = RAC1ITEM.PROGRESSIVE_PYROCITOR
-                    case RAC1ITEM.GOLD_PYROCITOR:
-                        new_item = RAC1ITEM.PROGRESSIVE_PYROCITOR
-                    case RAC1ITEM.MINE_GLOVE:
-                        new_item = RAC1ITEM.PROGRESSIVE_MINE
-                    case RAC1ITEM.GOLD_MINE_GLOVE:
-                        new_item = RAC1ITEM.PROGRESSIVE_MINE
-                    case RAC1ITEM.TESLA_CLAW:
-                        new_item = RAC1ITEM.PROGRESSIVE_TESLA
-                    case RAC1ITEM.GOLD_TESLA_CLAW:
-                        new_item = RAC1ITEM.PROGRESSIVE_TESLA
-                    case RAC1ITEM.GLOVE_OF_DOOM:
-                        new_item = RAC1ITEM.PROGRESSIVE_DOOM
-                    case RAC1ITEM.GOLD_GLOVE_OF_DOOM:
-                        new_item = RAC1ITEM.PROGRESSIVE_DOOM
-                    case RAC1ITEM.MORPH_O_RAY:
-                        new_item = RAC1ITEM.PROGRESSIVE_MORPH
-                    case RAC1ITEM.GOLD_MORPH_O_RAY:
-                        new_item = RAC1ITEM.PROGRESSIVE_MORPH
-                    case RAC1ITEM.DECOY_GLOVE:
-                        new_item = RAC1ITEM.PROGRESSIVE_DECOY
-                    case RAC1ITEM.GOLD_DECOY_GLOVE:
-                        new_item = RAC1ITEM.PROGRESSIVE_DECOY
-        case RAC1POOL.PACKS:
-            if _options.progressive_packs.value:
-                new_item = RAC1ITEM.PROGRESSIVE_PACK
-        case RAC1POOL.EXTRA_ITEMS:
-            match item:
-                case RAC1ITEM.PREMIUM_NANOTECH | RAC1ITEM.ULTRA_NANOTECH:
-                    if _options.progressive_nanotech.value:
-                        new_item = RAC1ITEM.PROGRESSIVE_NANOTECH
-        case _:
-            pass
-    return new_item
+SUCK_GROUP: list[ItemData] = [RAC1ItemData.SUCK_CANNON, RAC1ItemData.GOLD_SUCK_CANNON, RAC1ItemData.PROGRESSIVE_SUCK]
+BOMB_GROUP: list[ItemData] = [RAC1ItemData.BOMB_GLOVE, RAC1ItemData.GOLD_BOMB_GLOVE, RAC1ItemData.PROGRESSIVE_BOMB]
+DEVASTATOR_GROUP: list[ItemData] = [RAC1ItemData.DEVASTATOR, RAC1ItemData.GOLD_DEVASTATOR,
+                                    RAC1ItemData.PROGRESSIVE_DEVASTATOR]
+BLASTER_GROUP: list[ItemData] = [RAC1ItemData.BLASTER, RAC1ItemData.GOLD_BLASTER, RAC1ItemData.PROGRESSIVE_BLASTER]
+PYROCITOR_GROUP: list[ItemData] = [RAC1ItemData.PYROCITOR, RAC1ItemData.GOLD_PYROCITOR,
+                                   RAC1ItemData.PROGRESSIVE_PYROCITOR]
+MINE_GROUP: list[ItemData] = [RAC1ItemData.MINE_GLOVE, RAC1ItemData.GOLD_MINE_GLOVE, RAC1ItemData.PROGRESSIVE_MINE]
+TESLA_GROUP: list[ItemData] = [RAC1ItemData.TESLA_CLAW, RAC1ItemData.GOLD_TESLA_CLAW, RAC1ItemData.PROGRESSIVE_TESLA]
+DOOM_GROUP: list[ItemData] = [RAC1ItemData.GLOVE_OF_DOOM, RAC1ItemData.GOLD_GLOVE_OF_DOOM,
+                              RAC1ItemData.PROGRESSIVE_DOOM]
+MORPH_GROUP: list[ItemData] = [RAC1ItemData.MORPH_O_RAY, RAC1ItemData.GOLD_MORPH_O_RAY, RAC1ItemData.PROGRESSIVE_MORPH]
+DECOY_GROUP: list[ItemData] = [RAC1ItemData.DECOY_GLOVE, RAC1ItemData.GOLD_DECOY_GLOVE, RAC1ItemData.PROGRESSIVE_DECOY]

@@ -1,3 +1,5 @@
+"""This module defines UnitTests for RAC1 goal completion"""
+
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.locations.goldbolts import RAC1BOLT
 from worlds.rac1.constants.locations.planets import RAC1PLANET

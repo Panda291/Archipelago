@@ -194,11 +194,7 @@ class RacWorld(World):
         rac_logger.debug(f"___Group Shuffled Pools___")
         self.preplaced_items += self.fill_pool(useful_pools, 2)
 
-        boss_location = self.multiworld.get_location(RAC1LOCATION.VELDIN_DREK, self.player)
-        boss_location.place_locked_item(self.create_event("Victory"))
-        self.set_completion_rule(Has("Victory"))
-
-    def fill_pool(self, pools, scope) -> list[str]:
+    def fill_pool(self, pools: list[str], scope: Scope) -> list[str]:
         # this step should fill in items that have restricted locations, then also return them so they are removed
         # from the pool
         add_items: list[str] = []
@@ -228,6 +224,8 @@ class RacWorld(World):
                     raise OptionError(f"Options for 'random_item' are currently disabled")
         return add_items
 
+    def set_rules(self):
+        self.set_completion_rule(Has("Victory"))
 
     def create_item(self, name: str, override: Optional[ItemClassification] = None) -> Item:
         return create_item(self, name)

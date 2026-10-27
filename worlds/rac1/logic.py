@@ -357,7 +357,7 @@ fleet_infobot_rule = has_magneboots & has_pilots_helmet & HasAll(RAC1ITEM.HOLOGU
 fleet_water_rule = has_o2_mask & has_hydro_pack
 fleet_second_bolt_rule = has_magneboots & has_pilots_helmet & HasAll(RAC1ITEM.HOLOGUISE, RAC1ITEM.SWINGSHOT)
 fleet_sneaky_rule = Has(RAC1ITEM.HOLOGUISE) & Has(RAC1ITEM.SWINGSHOT)
-fleet_careful_cruise_rule = has_hydro_pack
+fleet_careful_cruise_rule = has_hydro_pack & has_o2_mask
 
 # Veldin
 veldin_global_rule = has_magneboots & can_ground_pound & HasAll(RAC1ITEM.TRESPASSER, RAC1ITEM.HYDRODISPLACER)

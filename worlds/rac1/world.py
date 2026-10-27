@@ -3,11 +3,11 @@ import logging
 from enum import Enum
 from typing import Any, Counter, Mapping, Optional
 
-from BaseClasses import Item, ItemClassification
+from BaseClasses import Item, ItemClassification, Tutorial
 from Fill import FillError
 from Options import OptionError
 from rule_builder.rules import Has
-from worlds.AutoWorld import World
+from worlds.AutoWorld import World, WebWorld
 from worlds.rac1.constants.items import RAC1ITEM
 from worlds.rac1.constants.options import RAC1OPTION
 from worlds.rac1.constants.pools import RAC1POOL
@@ -19,13 +19,24 @@ from worlds.rac1.items import (check_progressive_item, create_item, from_name, g
                                get_starting_planets, progression_rules)
 from worlds.rac1.options import (get_options_as_dict, GoldWeaponProgression, ItemOptions, RacOptions, ShuffleGadgets,
                                  ShuffleGoldBolts, ShuffleGoldWeapons, ShuffleInfobots, ShuffleSkillPoints,
-                                 ShuffleWeapons, StartingItem, StartingLocation)
+                                 ShuffleWeapons, StartingItem, StartingLocation, rac1_option_groups)
 from worlds.rac1.regions import create_regions
 from worlds.rac1.universal_tracker import setup_options_from_slot_data
 
 rac_logger = logging.getLogger(RAC1OPTION.GAME_TITLE_FULL)
 rac_logger.setLevel(logging.DEBUG)
 
+class RacWeb(WebWorld):
+    tutorials = [Tutorial(
+        "Multiworld Setup Guide",
+        "A guide to setting up Ratchet and Clank for Archipelago",
+        "English",
+        "setup.md",
+        "setup/en",
+        ["Panad"],
+    )]
+    rich_text_options_doc = True
+    option_groups = rac1_option_groups
 
 class RacWorld(World):
     """
@@ -35,6 +46,7 @@ class RacWorld(World):
     Interactive.
     """
     game = RAC1OPTION.GAME_TITLE_FULL
+    web = RacWeb()
     options_dataclass = RacOptions
     options: RacOptions
     topology_present = False

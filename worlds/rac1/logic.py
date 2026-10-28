@@ -284,6 +284,7 @@ aridia_cave_rule = has_explosive_weapon
 # Kerwan
 kerwan_train_rule = can_improved_jump
 kerwan_course_gb_rule = can_glide
+kerwan_qwarktastic_rule = HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) | HasProgressive(RAC1ITEM.DEVASTATOR)
 
 # Eudora
 eudora_suck_cannon_rule = can_glide

@@ -18,7 +18,7 @@ class RAC1VENDOR:
     EUDORA_GLOVE_OF_DOOM = "Eudora: Vendor - 7,500"
     RILGAR_MINE_GLOVE = "Rilgar: Vendor - 7,500"
     RILGAR_RYNO = "Rilgar: Shady Salesman - 150,000"
-    BLARG_TAUNTER = "Blarg: Vendor - 2,500"
+    BLARG_TAUNTER = "Blarg Station: Vendor - 2,500"
     BATALIA_DEVASTATOR = "Batalia: Vendor - 10,000"
     GASPAR_WALLOPER = "Gaspar: Vendor - 7,500"
     ORXON_PREMIUM_NANOTECH = "Orxon: Buy the premium nanotech - 4,000"

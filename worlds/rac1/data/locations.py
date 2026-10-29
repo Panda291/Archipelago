@@ -14,7 +14,7 @@ from worlds.rac1.logic import (aridia_cave_rule, aridia_laser_rule, aridia_tresp
                                blarg_outside_gold_bolt_rule, can_glide, can_heli_high_jump, can_improved_jump,
                                eudora_henchman_rule, eudora_skillpoint_rule, eudora_suck_cannon_rule,
                                fleet_careful_cruise_rule, fleet_infobot_rule, fleet_second_bolt_rule, fleet_sneaky_rule,
-                               fleet_water_rule, gaspar_skillpoint_rule, gemlik_bolt_rule, gemlik_quark_rule,
+                               fleet_water_rule, gaspar_skillpoint_rule, gemlik_bolt_rule, gemlik_qwark_rule,
                                gemlik_sitting_ducks_rule, has_10k_bolts, has_40k_bolts, has_7500_bolts,
                                has_grindboots, has_long_range_weapon, has_magneboots,
                                has_medium_range_weapon, has_morph, has_o2_mask, has_zoomerator, hoven_infobot_rule,
@@ -199,8 +199,8 @@ class RAC1LocationData:
         eudora_skillpoint_rule)
 
     # Rilgar
-    RILGAR_QUARK_INFOBOT = LocationData(
-        25, RAC1PLANET.RILGAR, RAC1LOCATION.RILGAR_QUARK_INFOBOT, RAC1ITEM.UMBRIS, {RAC1POOL.INFOBOTS},
+    RILGAR_QWARK_INFOBOT = LocationData(
+        25, RAC1PLANET.RILGAR, RAC1LOCATION.RILGAR_QWARK_INFOBOT, RAC1ITEM.UMBRIS, {RAC1POOL.INFOBOTS},
         rilgar_bouncer_rule)
     RILGAR_PLATINUM_ZOOMERATOR = LocationData(
         26, RAC1PLANET.RILGAR, RAC1LOCATION.RILGAR_PLATINUM_ZOOMERATOR, RAC1ITEM.ZOOMERATOR, {RAC1POOL.EXTRA_ITEMS},
@@ -368,9 +368,9 @@ class RAC1LocationData:
         {RAC1POOL.SKILLPOINT}, has_long_range_weapon)
 
     # Gemlik
-    GEMLIK_QUARK_FIGHT = LocationData(
-        69, RAC1PLANET.GEMLIK, RAC1LOCATION.GEMLIK_QUARK_FIGHT, RAC1ITEM.OLTANIS, {RAC1POOL.INFOBOTS},
-        gemlik_quark_rule)
+    GEMLIK_QWARK_FIGHT = LocationData(
+        69, RAC1PLANET.GEMLIK, RAC1LOCATION.GEMLIK_QWARK_FIGHT, RAC1ITEM.OLTANIS, {RAC1POOL.INFOBOTS},
+        gemlik_qwark_rule)
     GEMLIK_GOLD_BOLT = LocationData(
         70, RAC1PLANET.GEMLIK, RAC1BOLT.GEMLIK, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         gemlik_bolt_rule)

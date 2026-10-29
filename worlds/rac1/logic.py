@@ -331,11 +331,11 @@ hoven_infobot_rule = has_short_range_weapon & can_improved_jump
 hoven_raritanium_rule = can_improved_jump & Has(RAC1ITEM.SWINGSHOT)
 
 # Gemlik
-gemlik_quark_rule = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT,
+gemlik_qwark_rule = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT,
                                                                                         RAC1ITEM.TRESPASSER)
 gemlik_bolt_rule = can_improved_jump & HasAll(RAC1ITEM.VISIBOMB, RAC1ITEM.TRESPASSER)
-gemlik_sitting_ducks_rule = gemlik_quark_rule & Has(RAC1ITEM.VISIBOMB)
-# gemlik_gold_weapon_rule = gemlik_quark_rule & has_40_gold_bolts & has_bolts
+gemlik_sitting_ducks_rule = gemlik_qwark_rule & Has(RAC1ITEM.VISIBOMB)
+# gemlik_gold_weapon_rule = gemlik_qwark_rule & has_40_gold_bolts & has_bolts
 
 # Oltanis
 oltanis_main_bolt_rule = has_grindboots & Has(RAC1ITEM.SWINGSHOT)

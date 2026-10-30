@@ -18,7 +18,7 @@ class RAC1ITEM:
     DECOY_GLOVE = "Decoy Glove"
     DRONE_DEVICE = "Drone Device"
     TESLA_CLAW = "Tesla Claw"
-    MORPH_O_RAY = "Morph-O-ray"
+    MORPH_O_RAY = "Morph-o-ray"
     RYNO = "R.Y.N.O."
     WRENCH = "Wrench"
 

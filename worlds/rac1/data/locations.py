@@ -14,23 +14,23 @@ from worlds.rac1.logic import (aridia_cave_rule, aridia_laser_rule, aridia_tresp
                                blarg_outside_gold_bolt_rule, can_glide, can_heli_high_jump, can_improved_jump,
                                eudora_henchman_rule, eudora_skillpoint_rule, eudora_suck_cannon_rule,
                                fleet_careful_cruise_rule, fleet_infobot_rule, fleet_second_bolt_rule, fleet_sneaky_rule,
-                               fleet_water_rule, gaspar_skillpoint_rule, gemlik_bolt_rule, gemlik_quark_rule,
+                               fleet_water_rule, gaspar_skillpoint_rule, gemlik_bolt_rule, gemlik_qwark_rule,
                                gemlik_sitting_ducks_rule, has_10k_bolts, has_40k_bolts, has_7500_bolts,
-                               has_explosive_weapon, has_grindboots, has_long_range_weapon, has_magneboots,
+                               has_grindboots, has_long_range_weapon, has_magneboots,
                                has_medium_range_weapon, has_morph, has_o2_mask, has_zoomerator, hoven_infobot_rule,
                                hoven_raritanium_rule, kalebo_hologuise_rule, kalebo_magician_rule,
-                               kerwan_course_gb_rule, kerwan_train_rule, novalis_cave_gb_rule, novalis_gold_weapon_10k,
-                               novalis_gold_weapon_20k, novalis_gold_weapon_30k, novalis_gold_weapon_60k,
-                               novalis_underwater_caves_rule, oltanis_final_bolt_rule, oltanis_main_bolt_rule,
-                               oltanis_shattered_glass, orxon_hey_over_here_rule, orxon_nanotech_rule,
-                               orxon_ratchet_infobot_rule, orxon_sniper_rule, orxon_ultra_nanotech_rule,
-                               orxon_visibomb_bolt_rule, orxon_visibomb_rule, pokitaru_gold_bolt_rule,
-                               pokitaru_persuader_rule, pokitaru_ship_rule, quartu_bolt_grabber_rule,
-                               quartu_codebot_rule, quartu_infiltrate_rule, rilgar_bouncer_rule, rilgar_hoverboard_rule,
-                               rilgar_ryno_rule, rilgar_underwater_bolt_rule, umbris_jump_bolt_rule,
-                               umbris_pressure_bolt_rule, umbris_snagglebeast_rule, veldin_defeat_drek_rule,
-                               veldin_global_rule, veldin_grind_bolt_rule, veldin_halfway_bolt_rule,
-                               veldin_taunter_bolt_rule)
+                               kerwan_course_gb_rule, kerwan_train_rule, kerwan_qwarktastic_rule, novalis_cave_gb_rule,
+                               novalis_gold_weapon_10k, novalis_gold_weapon_20k, novalis_gold_weapon_30k,
+                               novalis_gold_weapon_60k, novalis_underwater_caves_rule, oltanis_final_bolt_rule,
+                               oltanis_main_bolt_rule, oltanis_shattered_glass, orxon_hey_over_here_rule,
+                               orxon_nanotech_rule, orxon_ratchet_infobot_rule, orxon_sniper_rule,
+                               orxon_ultra_nanotech_rule, orxon_visibomb_bolt_rule, orxon_visibomb_rule,
+                               pokitaru_gold_bolt_rule, pokitaru_persuader_rule, pokitaru_ship_rule,
+                               quartu_bolt_grabber_rule, quartu_codebot_rule, quartu_infiltrate_rule,
+                               rilgar_bouncer_rule, rilgar_hoverboard_rule, rilgar_ryno_rule,
+                               rilgar_underwater_bolt_rule, umbris_jump_bolt_rule, umbris_pressure_bolt_rule,
+                               umbris_snagglebeast_rule, veldin_defeat_drek_rule, veldin_global_rule,
+                               veldin_grind_bolt_rule, veldin_halfway_bolt_rule, veldin_taunter_bolt_rule)
 
 DEFAULT_LIST = list(
     [RAC1POOL.WEAPONS, RAC1POOL.GADGETS, RAC1POOL.PACKS, RAC1POOL.HELMETS, RAC1POOL.BOOTS, RAC1POOL.EXTRA_ITEMS,
@@ -180,7 +180,7 @@ class RAC1LocationData:
         has_long_range_weapon)
     KERWAN_QWARKTASTIC = LocationData(
         110, RAC1PLANET.KERWAN, RAC1SKILLPOINT.KERWAN_QWARKTASTIC, None, {RAC1POOL.SKILLPOINT},
-        has_explosive_weapon)
+        kerwan_qwarktastic_rule)
 
     # Eudora
     EUDORA_HENCHMAN = LocationData(
@@ -199,8 +199,8 @@ class RAC1LocationData:
         eudora_skillpoint_rule)
 
     # Rilgar
-    RILGAR_QUARK_INFOBOT = LocationData(
-        25, RAC1PLANET.RILGAR, RAC1LOCATION.RILGAR_QUARK_INFOBOT, RAC1ITEM.UMBRIS, {RAC1POOL.INFOBOTS},
+    RILGAR_QWARK_INFOBOT = LocationData(
+        25, RAC1PLANET.RILGAR, RAC1LOCATION.RILGAR_QWARK_INFOBOT, RAC1ITEM.UMBRIS, {RAC1POOL.INFOBOTS},
         rilgar_bouncer_rule)
     RILGAR_PLATINUM_ZOOMERATOR = LocationData(
         26, RAC1PLANET.RILGAR, RAC1LOCATION.RILGAR_PLATINUM_ZOOMERATOR, RAC1ITEM.ZOOMERATOR, {RAC1POOL.EXTRA_ITEMS},
@@ -368,9 +368,9 @@ class RAC1LocationData:
         {RAC1POOL.SKILLPOINT}, has_long_range_weapon)
 
     # Gemlik
-    GEMLIK_QUARK_FIGHT = LocationData(
-        69, RAC1PLANET.GEMLIK, RAC1LOCATION.GEMLIK_QUARK_FIGHT, RAC1ITEM.OLTANIS, {RAC1POOL.INFOBOTS},
-        gemlik_quark_rule)
+    GEMLIK_QWARK_FIGHT = LocationData(
+        69, RAC1PLANET.GEMLIK, RAC1LOCATION.GEMLIK_QWARK_FIGHT, RAC1ITEM.OLTANIS, {RAC1POOL.INFOBOTS},
+        gemlik_qwark_rule)
     GEMLIK_GOLD_BOLT = LocationData(
         70, RAC1PLANET.GEMLIK, RAC1BOLT.GEMLIK, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         gemlik_bolt_rule)

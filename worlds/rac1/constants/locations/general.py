@@ -19,7 +19,7 @@ class RAC1LOCATION:
     BLARG_EXPLOSION_INFOBOT = "Blarg Station: Destroy the Warship"
     BLARG_GRINDBOOTS = "Blarg Station: Explore the Space Station"
     UMBRIS_SNAGGLEBEAST_INFOBOT = "Umbris: Defeat the Snagglebeast"
-    BATALIA_GRINDRAIL_INFOBOT = "Batalia: Ride the grindrail"
+    BATALIA_GRINDRAIL_INFOBOT = "Batalia: Ride the Grindrail"
     BATALIA_COMMANDER_INFOBOT = "Batalia: Commando"
     BATALIA_METAL_DETECTOR = "Batalia: Shoot down the Bombers"
     GASPAR_PILOT_HELMET = "Gaspar: Get the Pilot's Helmet"

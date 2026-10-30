@@ -35,7 +35,7 @@ class RAC1BOLT:
     OLTANIS_MAGNET_2 = "Oltanis: Gold Bolt: Magneboot path: Ledge hang"
     OLTANIS_FINAL = "Oltanis: Gold Bolt: All Objectives"
     QUARTU_MOM = "Quartu: Gold Bolt: Behind Clank's mother"
-    QUARTU_CODEBOT = "Quartu: Gold Bolt: Codebot door"
+    QUARTU_CODEBOT = "Quartu: Gold Bolt: CodeBot door"
     KALEBO_GRIND = "Kalebo III: Gold Bolt: On the Grindrail"
     KALEBO_BREAK_ROOM = "Kalebo III: Gold Bolt: Employee break room"
     FLEET_WATER = "Drek's Fleet: Gold Bolt: Water section"

@@ -151,7 +151,7 @@ class RAC1ItemData:
 
     # Collectables
     GOLD_BOLT = ItemData(261, RAC1ITEM.GOLD_BOLT, RAC1POOL.GOLD_BOLTS,
-                         ItemClassification.progression_deprioritized_skip_balancing)
+                         ItemClassification.progression_deprioritized_skip_balancing, 0)
     GOLD_BOLT_1 = ItemData(262, RAC1ITEM.GOLD_BOLT_1, RAC1POOL.GOLD_BOLTS,
                            ItemClassification.progression_deprioritized_skip_balancing)
     GOLD_BOLT_2 = ItemData(263, RAC1ITEM.GOLD_BOLT_2, RAC1POOL.GOLD_BOLTS,

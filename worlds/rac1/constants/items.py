@@ -18,7 +18,7 @@ class RAC1ITEM:
     DECOY_GLOVE = "Decoy Glove"
     DRONE_DEVICE = "Drone Device"
     TESLA_CLAW = "Tesla Claw"
-    MORPH_O_RAY = "Morph-O-ray"
+    MORPH_O_RAY = "Morph-o-ray"
     RYNO = "R.Y.N.O."
     WRENCH = "Wrench"
 
@@ -46,7 +46,7 @@ class RAC1ITEM:
     HYDRO_PACK = "Hydro-Pack"
     O2_MASK = "O2 Mask"
     SONIC_SUMMONER = "Sonic Summoner"
-    PILOTS_HELMET = "Pilots Helmet"
+    PILOTS_HELMET = "Pilot's Helmet"
     GRINDBOOTS = "Grindboots"
     MAGNEBOOTS = "Magneboots"
     HOVERBOARD = "Hoverboard"

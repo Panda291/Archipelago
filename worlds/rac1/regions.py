@@ -29,14 +29,7 @@ def create_regions(world: 'RacWorld'):
         if planet_data.locations:
             region = Region(planet_data.name, world.player, world.multiworld)
             world.multiworld.regions.append(region)
-            if region.name is not RAC1PLANET.GENERAL:
-                menu.connect(region, f'{RAC1PLANET.MENU} -> {region.name}', Has(PLANET_NAME_TO_ITEM[planet_data.name]))
-            if planet_data.name is RAC1PLANET.RILGAR:
-                region.connect(world.get_region(RAC1PLANET.GENERAL), "Rilgar Hoverboard Race",
-                               planet_data.locations[1].access_rule)
-            if planet_data.name is RAC1PLANET.KALEBO:
-                region.connect(world.get_region(RAC1PLANET.GENERAL), "Kalebo Hoverboard Race",
-                               planet_data.locations[0].access_rule)
+            menu.connect(region, f'{RAC1PLANET.MENU} -> {region.name}', Has(PLANET_NAME_TO_ITEM[planet_data.name]))
 
             for location_data in planet_data.locations:
                 if world.options.shuffle_skill_points == 0 and RAC1POOL.SKILLPOINT in location_data.pools:

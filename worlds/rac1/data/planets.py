@@ -16,10 +16,6 @@ class PlanetData(NamedTuple):
 
 
 class RAC1PlanetData:
-    GENERAL = PlanetData(RAC1PLANET.GENERAL, 0, [
-        RAC1LocationData.HOVERBOARD_TRICKY
-    ])
-
     NOVALIS = PlanetData(RAC1PLANET.NOVALIS, 1, [
         RAC1LocationData.NOVALIS_PLUMBER,
         RAC1LocationData.NOVALIS_MAYOR,
@@ -80,6 +76,7 @@ class RAC1PlanetData:
         RAC1LocationData.RILGAR_RYNO,
         RAC1LocationData.RILGAR_MAZE_GOLD_BOLT,
         RAC1LocationData.RILGAR_WATERWORKS_GOLD_BOLT,
+        RAC1LocationData.RILGAR_TRICKY,
         RAC1LocationData.RILGAR_CLUCK_CLUCK,
         RAC1LocationData.RILGAR_SPEEDY,
     ])
@@ -231,7 +228,6 @@ PLANET_NAME_TO_ITEM: dict[str, str] = {
 }
 
 LOGIC_PLANETS: list[PlanetData] = [
-    RAC1PlanetData.GENERAL,
     RAC1PlanetData.NOVALIS,
     RAC1PlanetData.ARIDIA,
     RAC1PlanetData.KERWAN,

@@ -74,7 +74,7 @@ class RAC1PlanetData:
     ])
 
     RILGAR = PlanetData(RAC1PLANET.RILGAR, 5, [
-        RAC1LocationData.RILGAR_QUARK_INFOBOT,
+        RAC1LocationData.RILGAR_QWARK_INFOBOT,
         RAC1LocationData.RILGAR_PLATINUM_ZOOMERATOR,
         RAC1LocationData.RILGAR_MINE_GLOVE,
         RAC1LocationData.RILGAR_RYNO,
@@ -156,7 +156,7 @@ class RAC1PlanetData:
     ])
 
     GEMLIK = PlanetData(RAC1PLANET.GEMLIK, 13, [
-        RAC1LocationData.GEMLIK_QUARK_FIGHT,
+        RAC1LocationData.GEMLIK_QWARK_FIGHT,
         RAC1LocationData.GEMLIK_GOLD_BOLT,
         RAC1LocationData.GEMLIK_SITTING_DUCKS,
     ])

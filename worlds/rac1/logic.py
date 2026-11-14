@@ -284,6 +284,7 @@ aridia_cave_rule = has_explosive_weapon
 # Kerwan
 kerwan_train_rule = can_improved_jump
 kerwan_course_gb_rule = can_glide
+kerwan_qwarktastic_rule = HasAny(RAC1ITEM.VISIBOMB, RAC1ITEM.RYNO) | HasProgressive(RAC1ITEM.DEVASTATOR)
 
 # Eudora
 eudora_suck_cannon_rule = can_glide
@@ -330,16 +331,16 @@ hoven_infobot_rule = has_short_range_weapon & can_improved_jump
 hoven_raritanium_rule = can_improved_jump & Has(RAC1ITEM.SWINGSHOT)
 
 # Gemlik
-gemlik_quark_rule = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT,
+gemlik_qwark_rule = has_magneboots & can_improved_jump & has_long_range_weapon & HasAll(RAC1ITEM.SWINGSHOT,
                                                                                         RAC1ITEM.TRESPASSER)
 gemlik_bolt_rule = can_improved_jump & HasAll(RAC1ITEM.VISIBOMB, RAC1ITEM.TRESPASSER)
-gemlik_sitting_ducks_rule = gemlik_quark_rule & Has(RAC1ITEM.VISIBOMB)
-# gemlik_gold_weapon_rule = gemlik_quark_rule & has_40_gold_bolts & has_bolts
+gemlik_sitting_ducks_rule = gemlik_qwark_rule & Has(RAC1ITEM.VISIBOMB)
+# gemlik_gold_weapon_rule = gemlik_qwark_rule & has_40_gold_bolts & has_bolts
 
 # Oltanis
 oltanis_main_bolt_rule = has_grindboots & Has(RAC1ITEM.SWINGSHOT)
 oltanis_final_bolt_rule = has_grindboots & has_magneboots & Has(RAC1ITEM.SWINGSHOT)
-oltanis_shattered_glass = oltanis_final_bolt_rule & has_medium_range_weapon
+oltanis_shattered_glass = (oltanis_final_bolt_rule & has_medium_range_weapon) | Has(RAC1ITEM.VISIBOMB)
 
 # Quartu
 quartu_infiltrate_rule = can_ground_pound & HasAll(RAC1ITEM.HOLOGUISE, RAC1ITEM.SWINGSHOT)

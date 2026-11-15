@@ -189,10 +189,10 @@ def get_pool(world: "RacWorld") -> list[Item]:
             if _options.progressive_weapons.value < GoldWeaponProgression.option_progressive:
                 continue
             count = 2
-        if (item in NON_PROGRESSIVE_WEAPONS and _options.progressive_weapons.value !=
+        if (item in NON_PROGRESSIVE_WEAPONS and _options.progressive_weapons.value >
                 GoldWeaponProgression.option_normal):
             continue
-        if item in GOLD_WEAPONS and _options.progressive_weapons.value != GoldWeaponProgression.option_normal:
+        if item in GOLD_WEAPONS and _options.progressive_weapons.value > GoldWeaponProgression.option_normal:
             continue
         if item in PROGRESSIVE_PACKS:
             if _options.progressive_packs.value == PackProgression.option_vanilla:

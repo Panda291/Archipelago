@@ -30,7 +30,8 @@ from worlds.rac1.logic import (aridia_cave_rule, aridia_laser_rule, aridia_tresp
                                rilgar_bouncer_rule, rilgar_hoverboard_rule, rilgar_ryno_rule,
                                rilgar_underwater_bolt_rule, umbris_jump_bolt_rule, umbris_pressure_bolt_rule,
                                umbris_snagglebeast_rule, veldin_defeat_drek_rule, veldin_global_rule,
-                               veldin_grind_bolt_rule, veldin_halfway_bolt_rule, veldin_taunter_bolt_rule)
+                               veldin_grind_bolt_rule, veldin_halfway_bolt_rule, veldin_taunter_bolt_rule,
+                               rilgar_tricky_rule)
 
 DEFAULT_LIST = list(
     [RAC1POOL.WEAPONS, RAC1POOL.GADGETS, RAC1POOL.PACKS, RAC1POOL.HELMETS, RAC1POOL.BOOTS, RAC1POOL.EXTRA_ITEMS,
@@ -211,7 +212,7 @@ class RAC1LocationData:
         30, RAC1PLANET.RILGAR, RAC1BOLT.RILGAR_WATERWORKS, RAC1ITEM.GOLD_BOLT_1, {RAC1POOL.GOLD_BOLTS},
         rilgar_underwater_bolt_rule)
     RILGAR_TRICKY = LocationData(
-        112, RAC1PLANET.RILGAR, RAC1SKILLPOINT.RILGAR_TRICKY, None, {RAC1POOL.SKILLPOINT}, Has(RAC1ITEM.ZOOMERATOR))
+        112, RAC1PLANET.RILGAR, RAC1SKILLPOINT.RILGAR_TRICKY, None, {RAC1POOL.SKILLPOINT}, rilgar_tricky_rule)
     RILGAR_CLUCK_CLUCK = LocationData(
         113, RAC1PLANET.RILGAR, RAC1SKILLPOINT.RILGAR_CLUCK_CLUCK, None, {RAC1POOL.SKILLPOINT},
         has_morph)

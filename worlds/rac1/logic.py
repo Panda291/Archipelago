@@ -296,6 +296,7 @@ rilgar_hoverboard_rule = has_hoverboard & can_improved_jump
 rilgar_bouncer_rule = can_improved_jump & HasAll(RAC1ITEM.SWINGSHOT, RAC1ITEM.HYDRODISPLACER)
 rilgar_underwater_bolt_rule = rilgar_bouncer_rule & has_o2_mask
 rilgar_ryno_rule = can_improved_jump & has_150k_bolts
+rilgar_tricky_rule = rilgar_hoverboard_rule & Has(RAC1ITEM.ZOOMERATOR)
 
 # Blarg
 blarg_outside_gold_bolt_rule = has_o2_mask & Has(RAC1ITEM.TRESPASSER)

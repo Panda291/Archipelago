@@ -1,6 +1,7 @@
 # Setup Guide for Ratchet & Clank Archipelago
 
 This guide is meant to help you get up and running with Ratchet & Clank in your Archipelago run.
+A [video guide](https://www.youtube.com/watch?v=qqtAEtubqEk) exists thanks to Josh Dopa Gaming.
 
 ## Requirements
 

@@ -59,3 +59,4 @@ The following wonderful people helped on this project:
 [Myth197](https://github.com/Myth197) - APWorld
 [SharloBun](https://www.twitch.tv/sharlobun) - Playtesting
 [Amondo](https://github.com/AmondoVagyok) - Playtesting
+[Josh Dopa Gaming](https://www.youtube.com/@JoshDopaGaming) - Video Guide
